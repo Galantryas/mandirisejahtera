@@ -191,5 +191,24 @@
 			// print_r($result);exit;
 			return $result;
 		}
+		
+		public function getAcctCreditsPaymentsPokokLast($credits_account_id){
+			$this->db->select('acct_credits_payment.credits_payment_date, acct_credits_payment.credits_payment_principal');
+			$this->db->from('acct_credits_payment');
+			$this->db->where('acct_credits_payment.credits_payment_principal >', 0);
+			$this->db->where('acct_credits_payment.credits_account_id', $credits_account_id);
+			$this->db->order_by('acct_credits_payment.credits_payment_id', 'DESC');
+			$result = $this->db->get()->row_array();
+			return $result;
+		}
+		
+		public function getAcctCreditsPaymentsLast($credits_account_id){
+			$this->db->select('acct_credits_payment.credits_payment_date, acct_credits_payment.credits_payment_principal');
+			$this->db->from('acct_credits_payment');
+			$this->db->where('acct_credits_payment.credits_account_id', $credits_account_id);
+			$this->db->order_by('acct_credits_payment.credits_payment_id', 'DESC');
+			$result = $this->db->get()->row_array();
+			return $result;
+		}
 	}
 ?>

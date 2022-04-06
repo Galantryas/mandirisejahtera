@@ -457,6 +457,8 @@ input:read-only {
 					angsuranflat();
 				} else if(payment_type_id == 2){
 					angsurananuitas();
+				} else if(payment_type_id == 3){
+					angsuranflat();
 				}
 				
 
@@ -491,6 +493,8 @@ input:read-only {
 					angsuranflat();
 				} else if(payment_type_id == 2){
 					angsurananuitas();
+				} else if(payment_type_id == 3){
+					angsuranflat();
 				}
 				
 				receivedamount();
@@ -567,6 +571,10 @@ input:read-only {
 							angsuranflat();
 						} else if(payment_type_id == 2){
 							angsurananuitas();
+						} else if(payment_type_id == 3){
+							angsuranflat();
+						}else if(payment_type_id == 4){
+							angsuranflat();
 						}
 					
 				}else{
@@ -1166,7 +1174,8 @@ input:read-only {
 								<tr>
 									<td>Angsuran Pokok</td>
 									<td>:</td>
-									<td><input type="text" class="easyui-textbox" name="credits_account_principal_amount_view" id="credits_account_principal_amount_view" autocomplete="off" value="<?php echo $data['credits_account_principal_amount_view'];?>" readonly/>
+									<td>
+										<input type="text" class="easyui-textbox" name="credits_account_principal_amount_view" id="credits_account_principal_amount_view" autocomplete="off" value="<?php echo $data['credits_account_principal_amount_view'];?>" readonly/>
 										<input type="hidden" class="easyui-textbox" name="credits_account_principal_amount" id="credits_account_principal_amount" autocomplete="off" value="<?php echo $data['credits_account_principal_amount'];?>"/>
 									</td>
 									<td>Angsuran Bunga</td>

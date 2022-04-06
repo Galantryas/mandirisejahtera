@@ -230,10 +230,11 @@
 			}else if(angsuran_total == '' || parseFloat(angsuran_total) == 0.00){
 				alert("Cek Alokasi Angsuran ! ");
 				return false;
-			}else if(pokok_angsuran == '' || parseFloat(pokok_angsuran) == 0.00){
-				alert("Angsuran Pokok Wajib diisi !");
-				return false;
 			}
+			// else if(pokok_angsuran == '' || parseFloat(pokok_angsuran) == 0.00){
+			// 	alert("Angsuran Pokok Wajib diisi !");
+			// 	return false;
+			// }
 
 			$.ajax({
 					type: 'post',
@@ -296,11 +297,11 @@
 
 	// print_r($credits_payment_day_of_delay);exit;
 
-	if(substr($accountcredit['credits_account_payment_to'], -1) == '*'){
-		$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -2, 1);
-	}else{
-		$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -1) + 1;
-	}
+	// if(substr($accountcredit['credits_account_payment_to'], -1) == '*'){
+	// 	$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -2, 1);
+	// }else{
+	$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -1) + 1;
+	// }
 
 
 	$credits_payment_fine_amount 		= (($accountcredit['credits_account_payment_amount'] * $accountcredit['credits_fine']) / 100 ) * $credits_payment_day_of_delay;
@@ -308,10 +309,16 @@
 
 	if($accountcredit['payment_type_id'] == 1){
 		$angsuranpokok 		= $accountcredit['credits_account_principal_amount'];
-		$angsuranbunga 	 	= $accountcredit['credits_account_interest_amount'];
+		$angsuranbunga 	 	= $accountcredit['credits_account_interest_amount'] + $interest_plus;
 	} else if($accountcredit['payment_type_id'] == 2){
-		$angsuranbunga 	 	= ($accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']) /100;
-		$angsuranpokok 		= $accountcredit['credits_account_payment_amount'] - $angsuranbunga;
+		$angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranpokok 		= $anuitas[$angsuranke]['angsuran_pokok'];
+	} else if($accountcredit['payment_type_id'] == 3){
+		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranpokok 		= $slidingrate[$angsuranke]['angsuran_pokok'];
+	} else if($accountcredit['payment_type_id'] == 4){
+		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
+		$angsuranpokok		= 0;
 	}
 ?>
 <script>
@@ -474,8 +481,13 @@
 										<td>Angsuran Pokok</td>
 										<td>:</td> 
 										<td>
-											<input type="text" class="easyui-textbox" name="angsuran_pokok_view" id="angsuran_pokok_view"  value="<?php echo number_format($angsuranpokok, 2); ?>" readonly/>
+											<?php if($accountcredit['payment_type_id'] == 4){ ?>
+												<input type="text" class="easyui-textbox" name="angsuran_pokok_view" id="angsuran_pokok_view"  value="<?php echo number_format($angsuranpokok, 2); ?>"/>
+											<?php }else{ ?>
+												<input type="text" class="easyui-textbox" name="angsuran_pokok_view" id="angsuran_pokok_view"  value="<?php echo number_format($angsuranpokok, 2); ?>" readonly/>
+											<?php } ?>
 											<input type="hidden" class="easyui-textbox" name="angsuran_pokok" id="angsuran_pokok" value="<?php echo $angsuranpokok; ?>" />
+											<input type="hidden" class="easyui-textbox" name="payment_type_id" id="payment_type_id" value="<?php echo $accountcredit['payment_type_id']; ?>" />
 											<input type="hidden" class="easyui-textbox" name="credits_payment_principal_actualy" id="credits_payment_principal_actualy" autocomplete="off" value="<?php echo intval($angsuranpokok);?>"/>
 
 										</td>

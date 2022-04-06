@@ -218,7 +218,7 @@
 		function defaultpassword(){
 			$result = $this->User_model->getDetail($this->uri->segment(3));
 			$pass = $this->User_model->getPassword();
-			$old_avatar 	= $result['avatar'];
+			// $old_avatar 	= $result['avatar'];
 			$last_username 	= $result['username'];
 			$password = $pass;
 			$repassword = $pass;
@@ -245,64 +245,9 @@
 							$data['password'] = $data['password'];
 						}
 					}
-					if($_FILES['user_avatar']['error'] == 0 && $_FILES['user_avatar']['size']>0){
-						//upload and update the file
-						$config['upload_path'] = './img/users/';
-						$config['allowed_types'] = 'gif|jpg|png|jpeg';
-						$config['overwrite'] = false;
-						$config['remove_spaces'] = true;
-						//$config['max_size']	= '100';// in KB
-
-						$this->load->library('upload', $config);
-
-						if ( ! $this->upload->do_upload('user_avatar')){
-							$msg = "<div class='alert alert-error'>                
-									".$this->upload->display_errors('', '')."
-								</div> ";
-							$this->session->set_userdata('message',$msg);
-							redirect('user');
-						} else {
-							//Image Resizing
-							$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
-							$config['maintain_ratio'] = FALSE;
-							$config['width'] = 50;
-							$config['height'] = 50;
-
-							$this->load->library('image_lib', $config);
-
-							if ( ! $this->image_lib->resize()){
-								$msg = "<div class='alert alert-error'>                
-									".$this->upload->display_errors('', '')."
-								</div> ";
-								$this->session->set_userdata('message',$msg);
-								redirect('user');
-							} else {
-									
-									if(file_exists(FCPATH."img/users/".$old_avatar)){
-									unlink(FCPATH."img/users/".$old_avatar);
-								}
-								$data['avatar'] = $this->upload->file_name;
-								if($this->User_model->saveEdituser($data,$last_username)){
-									$auth = $this->session->userdata('auth');
-									$this->fungsi->set_log($auth['username'],'1004','Application.user.processEdituser',$auth['username'],'Edit user Account');
-									$msg = "<div class='alert alert-success'>                
-												Reset Password Successfully
-											</div> ";
-									$this->session->set_userdata('message',$msg);
-									redirect('user');
-								}else{
-									$msg = "<div class='alert alert-error'>                
-												Reset Password UnSuccessful
-											</div> ";
-									$this->session->set_userdata('message',$msg);
-									redirect('user');
-								}
-							}
-						}
-					} else {
 						if($this->User_model->saveEdituser($data,$last_username)){
 							$auth = $this->session->userdata('auth');
-							$this->fungsi->set_log($auth['username'],'1004','Application.user.processEdituser',$auth['username'],'Edit user Account');
+							// $this->fungsi->set_log($auth['username'],'1004','Application.user.processEdituser',$auth['username'],'Edit user Account');
 							$msg = "<div class='alert alert-success'>                
 										Reset Password Successfully
 									</div> ";
@@ -315,7 +260,7 @@
 							$this->session->set_userdata('message',$msg);
 							redirect('user');
 						}
-					}
+					
 				// }else{
 					// $msg = "<div class='alert alert-error'>                
 								// username already exist !!!

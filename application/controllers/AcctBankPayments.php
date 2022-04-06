@@ -99,6 +99,117 @@
 	        echo json_encode($output);
 		}
 
+		function rate3($nprest, $vlrparc, $vp, $guess = 0.25) {
+			$maxit = 100;
+			$precision = 14;
+			$guess = round($guess,$precision);
+			for ($i=0 ; $i<$maxit ; $i++) {
+				$divdnd = $vlrparc - ( $vlrparc * (pow(1 + $guess , -$nprest)) ) - ($vp * $guess);
+				$divisor = $nprest * $vlrparc * pow(1 + $guess , (-$nprest - 1)) - $vp;
+				$newguess = $guess - ( $divdnd / $divisor );
+				$newguess = round($newguess, $precision);
+				if ($newguess == $guess) {
+					return $newguess;
+				} else {
+					$guess = $newguess;
+				}
+			}
+			return null;
+		}
+		
+		public function anuitas($id){
+			$creditsaccount 	= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
+
+			$pinjaman 	= $creditsaccount['credits_account_amount'];
+			$bunga 		= $creditsaccount['credits_account_interest'] / 100;
+			$period 	= $creditsaccount['credits_account_period'];
+
+
+
+			$bungaA 		= pow((1 + $bunga), $period);
+			$bungaB 		= pow((1 + $bunga), $period) - 1;
+			$bAnuitas 		= ($bungaA / $bungaB);
+			// $totangsuran 	= $pinjaman * $bunga * $bAnuitas;
+			$totangsuran 	= round(($pinjaman*($bunga))+$pinjaman/$period);
+			$rate			= $this->rate3($period, $totangsuran, $pinjaman);
+
+
+			$sisapinjaman = $pinjaman;
+			for ($i=1; $i <= $period ; $i++) {
+
+				if($creditsaccount['credits_payment_period'] == 1){
+					$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$i." months", strtotime($creditsaccount['credits_account_date']))); 
+				} else {
+					$a = $i * 7;
+
+					$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$a." days", strtotime($creditsaccount['credits_account_date']))); 
+				}
+				
+				$angsuranbunga 		= $sisapinjaman * $rate;
+				$angsuranpokok 		= $totangsuran - $angsuranbunga;
+				// $angsuranpokok		= $pinjaman * (($bunga)/(1-(1+$bunga)-$i));
+				$sisapokok 			= $sisapinjaman - $angsuranpokok;
+
+				$pola[$i]['ke']					= $i;
+				$pola[$i]['tanggal_angsuran']	= $tanggal_angsuran;
+				$pola[$i]['opening_balance']	= $sisapinjaman;
+				$pola[$i]['angsuran']			= $totangsuran;
+				$pola[$i]['angsuran_pokok']		= $angsuranpokok;
+				$pola[$i]['angsuran_bunga']		= $angsuranbunga;
+				$pola[$i]['last_balance']		= $sisapokok;
+
+				$sisapinjaman = $sisapinjaman - $angsuranpokok;
+			}
+
+			return $pola;
+
+		}
+
+		public function slidingrate($id){
+			$credistaccount					= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
+
+			$total_credits_account 			= $credistaccount['credits_account_amount'];
+			$credits_account_interest 		= $credistaccount['credits_account_interest'];
+			$credits_account_period 		= $credistaccount['credits_account_period'];
+
+			$installment_pattern			= array();
+			$opening_balance				= $total_credits_account;
+
+			for($i=1; $i<=$credits_account_period; $i++){
+				
+				if($credistaccount['credits_payment_period'] == 2){
+					$a = $i * 7;
+
+					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$a." days", strtotime($credistaccount['credits_account_date'])));
+
+				} else {
+
+					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$i." months", strtotime($credistaccount['credits_account_date'])));
+				}
+				
+				$angsuran_pokok									= $credistaccount['credits_account_principal_amount'];				
+
+				$angsuran_margin								= $opening_balance*$credits_account_interest/100;				
+
+				$angsuran 										= $angsuran_pokok + $angsuran_margin;
+
+				$last_balance 									= $opening_balance - $angsuran_pokok;
+
+				$installment_pattern[$i]['opening_balance']		= $opening_balance;
+				$installment_pattern[$i]['ke'] 					= $i;
+				$installment_pattern[$i]['tanggal_angsuran'] 	= $tanggal_angsuran;
+				$installment_pattern[$i]['angsuran'] 			= $angsuran;
+				$installment_pattern[$i]['angsuran_pokok']		= $angsuran_pokok;
+				$installment_pattern[$i]['angsuran_bunga'] 		= $angsuran_margin;
+				$installment_pattern[$i]['last_balance'] 		= $last_balance;
+				
+				$opening_balance 								= $last_balance;
+			}
+			
+			return $installment_pattern;
+			
+		}
+
 		public function addAcctBankPayment(){	
 			$credits_account_id 	= $this->uri->segment(3);
 
@@ -109,9 +220,71 @@
 			$token = md5(date('Y-m-d H:i:s'));
 			$this->session->set_userdata('acctcreditspaymentcashtoken-', $token);
 
+			$accountcredit	= $this->AcctCreditAccount_model->getDetailByID($credits_account_id);
+			$total			= ceil($accountcredit['credits_account_payment_amount']/1000)*1000;
+			$interest_plus	= $total - $accountcredit['credits_account_payment_amount'];
+			$accountcredit['credits_account_payment_amount'] = $total;
+
+			if($accountcredit['payment_type_id'] == 2){
+				$anuitas = $this->anuitas($accountcredit['credits_account_id']);
+				$data['main_view']['anuitas']			= $anuitas;
+			}
+
+			if($accountcredit['payment_type_id'] == 3){
+				$slidingrate 	= $this->slidingrate($accountcredit['credits_account_id']);
+				$angsuranke 	= substr($accountcredit['credits_account_payment_to'], -1) + 1;
+				$payment_amount = $slidingrate[$angsuranke]['angsuran_bunga'] + $slidingrate[$angsuranke]['angsuran_pokok'];
+				$total			= ceil($payment_amount/1000)*1000;
+				$interest_plus	= $total - $payment_amount;
+				$accountcredit['credits_account_payment_amount'] = $total;
+
+				$data['main_view']['slidingrate']	= $slidingrate;
+			}
+
+			if($accountcredit['payment_type_id'] == 4){
+				$last_pokok		= $this->AcctBankPayment_model->getAcctCreditsPaymentsPokokLast($accountcredit['credits_account_id']);
+				$last_payment	= $this->AcctBankPayment_model->getAcctCreditsPaymentsLast($accountcredit['credits_account_id']);
+				if($last_pokok){
+					$start_date 		= tgltodb($last_pokok['credits_payment_date']);
+					$end_date 			= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
+					$date1				= new DateTime($last_pokok['credits_payment_date']);
+					$date2				= new DateTime($end_date);
+					$date3				= new DateTime(date('Y-m-d'));
+					$interval_month		= $date1->diff($date2);
+					$interval_payments	= $date1->diff($date3);
+					if($last_payment){
+						$date4 				= new DateTime($last_payment['credits_payment_date']);
+						$interval_payments	= $date4->diff($date3);
+					}
+					$interest_month 	= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
+					$angsuran_bunga 	= $interest_month / $interval_month->days * $interval_payments->days;
+				}else{
+					$start_date 		= tgltodb($accountcredit['credits_account_date']);
+					$end_date 			= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
+					$date1				= new DateTime($accountcredit['credits_account_date']);
+					$date2				= new DateTime($end_date);
+					$date3				= new DateTime(date('Y-m-d'));
+					$interval_month		= $date1->diff($date2);
+					$interval_payments	= $date1->diff($date3);
+					if($last_payment){
+						$date4 				= new DateTime($last_payment['credits_payment_date']);
+						$interval_payments	= $date4->diff($date3);
+					}
+					$interest_month 	= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
+					$angsuran_bunga 	= $interest_month / $interval_month->days * $interval_payments->days;
+				}
+
+				$total			= ceil($angsuran_bunga/1000)*1000;
+				$interest_plus	= $total - $angsuran_bunga;
+
+				$accountcredit['credits_account_payment_amount'] 		= $total;
+				$data['main_view']['angsuran_bunga_menurunharian']		=  $angsuran_bunga;
+			}
+
 			$data['main_view']['acctbankaccount']		= create_double($this->AcctBankPayment_model->getAcctBankAccount(),'bank_account_id', 'bank_account_code');	
 			
-			$data['main_view']['accountcredit']			= $this->AcctCreditAccount_model->getDetailByID($credits_account_id);
+			$data['main_view']['accountcredit']			= $accountcredit;
+			$data['main_view']['interest_plus']			= $interest_plus;
 			$data['main_view']['detailpayment']			= $this->AcctBankPayment_model->getDataByIDCredit($credits_account_id);
 			$data['main_view']['content']				= 'AcctBankPayment/FormAddAcctBankPayment_view';
 			$this->load->view('MainPage_view',$data);
@@ -160,40 +333,20 @@
 			$total_angsuran 						= $this->input->post('jangka_waktu', true);
 			$angsuran_ke 							= $this->input->post('credits_payment_to', true);
 			$angsuran_tiap							= $this->input->post('credits_payment_period', true);
+			$payment_type_id						= $this->input->post('payment_type_id', true);
 
-			$pokok 									= $this->input->post('angsuran_pokok');
-			$credits_account_temp_installment 		= $this->input->post('credits_account_temp_installment',true);
 			$angsuran_ke 							= $this->input->post('credits_payment_to', true);
 			$angsuran_tiap 							= $this->input->post('credits_payment_period', true);
-			$angsuran_seharusnya  					= $this->input->post('credits_payment_principal_actualy', true);
-			$temp_cicilan = 0; $credits_payment_to="";
-			$jumlah_angsuran_kali_ini = 0;
-			$pembayaran_angsuran_bulan_ini =$pokok+$credits_account_temp_installment;
-			if($pembayaran_angsuran_bulan_ini >= $angsuran_seharusnya){
-				$jumlah_angsuran_kali_ini = floor($pembayaran_angsuran_bulan_ini / $angsuran_seharusnya);
-				$temp_cicilan = fmod($pembayaran_angsuran_bulan_ini, $angsuran_seharusnya);
-				$jumlah_angsurran = $jumlah_angsuran_kali_ini+$angsuran_ke;
-					for($i = $angsuran_ke; $i < $jumlah_angsurran; $i++){
-						$credits_payment_to = $credits_payment_to.','.$i;
-					}
-					if(substr($credits_payment_to, -1) >= $total_angsuran){
-						$credits_account_status = 1;
-					} else {
-						$credits_account_status = 0;
-					}
-					if($angsuran_tiap == 1){
-						$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
-						$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." months", strtotime($credits_account_payment_date_old)));
-					} else {
-						$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
-						$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." weeks", strtotime($credits_account_payment_date_old)));
-					}
-			}else{
-				$temp_cicilan = $pembayaran_angsuran_bulan_ini;
-				$credits_payment_to = $angsuran_ke.'*';
-				$credits_account_status = 0;
-				$credits_account_payment_date 	= tgltodb($this->input->post('credits_account_payment_date'));
 
+			if($angsuran_ke < $total_angsuran){
+				if($angsuran_tiap == 1){
+					$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
+					$credits_account_payment_date 		= date('Y-m-d', strtotime("+1 months", strtotime($credits_account_payment_date_old)));
+				} else {
+					$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
+					$credits_account_payment_date 		= date('Y-m-d', strtotime("+1 weeks", strtotime($credits_account_payment_date_old)));
+				}
+				
 			}
 
 			// print_r($credits_account_payment_date);exit;
@@ -215,12 +368,24 @@
 				'credits_interest_last_balance'				=> $this->input->post('sisa_bunga_awal', true) + $this->input->post('angsuran_interest', true),
 				'credits_payment_fine'						=> $this->input->post('credits_payment_fine', true),
 				'credits_account_payment_date'				=> $credits_account_payment_date,
-				'credits_payment_to'						=> $credits_payment_to,
+				'credits_payment_to'						=> $this->input->post('credits_payment_to', true),
 				'credits_payment_day_of_delay'				=> $this->input->post('credits_payment_day_of_delay', true),
 				'credits_payment_token'						=> $this->input->post('credits_payment_token', true),
 				'created_id'								=> $auth['user_id'],
 				'created_on'								=> date('Y-m-d H:i:s'),
 			);
+
+			$credits_account_status = 0;
+
+			if($payment_type_id == 4){
+				if($data['credits_principal_last_balance'] <= 0){
+					$credits_account_status = 1;
+				}
+			}else{
+				if($angsuran_ke == $total_angsuran){
+					$credits_account_status = 1;
+				}
+			}
 
 			$member_mandatory_savings = $this->input->post('member_mandatory_savings', true);
 			
@@ -250,7 +415,7 @@
 							"credits_account_interest_last_balance"			=> $data['credits_interest_last_balance'],
 							"credits_account_status"						=> $credits_account_status,
 							"credits_account_accumulated_fines"				=> $this->input->post('credits_account_accumulated_fines', true),
-							'credits_account_temp_installment'				=> $temp_cicilan,
+							// 'credits_account_temp_installment'				=> $temp_cicilan,
 
 						);
 

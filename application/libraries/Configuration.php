@@ -246,7 +246,7 @@ class Configuration {
 	}
 
 	public function PaymentType(){
-		$payment_type = array (9 => 'Pilih Salah Satu', 1 => 'Flat', 2 => 'Flat Anuitas');
+		$payment_type = array (9 => 'Pilih Salah Satu', 1 => 'Flat', 2 => 'Flat Anuitas', 3 => 'Slidingrate', 4 => 'Menurun Harian');
 
 		return $payment_type;
 	}
