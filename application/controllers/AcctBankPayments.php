@@ -245,33 +245,33 @@
 				$last_pokok		= $this->AcctBankPayment_model->getAcctCreditsPaymentsPokokLast($accountcredit['credits_account_id']);
 				$last_payment	= $this->AcctBankPayment_model->getAcctCreditsPaymentsLast($accountcredit['credits_account_id']);
 				if($last_pokok){
-					$start_date 		= tgltodb($last_pokok['credits_payment_date']);
-					$end_date 			= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
-					$date1				= new DateTime($last_pokok['credits_payment_date']);
-					$date2				= new DateTime($end_date);
-					$date3				= new DateTime(date('Y-m-d'));
-					$interval_month		= $date1->diff($date2);
-					$interval_payments	= $date1->diff($date3);
+					$start_date 			= tgltodb($last_pokok['credits_payment_date']);
+					$end_date 				= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
+					$date1					= new DateTime($last_pokok['credits_payment_date']);
+					$date2					= new DateTime($end_date);
+					$date3					= new DateTime(date('Y-m-d'));
+					$interval_month			= $date1->diff($date2);
+					$interval_payments		= $date1->diff($date3);
 					if($last_payment){
 						$date4 				= new DateTime($last_payment['credits_payment_date']);
 						$interval_payments	= $date4->diff($date3);
 					}
-					$interest_month 	= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
-					$angsuran_bunga 	= $interest_month / $interval_month->days * $interval_payments->days;
+					$interest_month 		= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
+					$angsuran_bunga 		= $interest_month / $interval_month->days * $interval_payments->days;
 				}else{
-					$start_date 		= tgltodb($accountcredit['credits_account_date']);
-					$end_date 			= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
-					$date1				= new DateTime($accountcredit['credits_account_date']);
-					$date2				= new DateTime($end_date);
-					$date3				= new DateTime(date('Y-m-d'));
-					$interval_month		= $date1->diff($date2);
-					$interval_payments	= $date1->diff($date3);
+					$start_date 			= tgltodb($accountcredit['credits_account_date']);
+					$end_date 				= date('Y-m-d', strtotime("+1 months", strtotime($start_date)));
+					$date1					= new DateTime($accountcredit['credits_account_date']);
+					$date2					= new DateTime($end_date);
+					$date3					= new DateTime(date('Y-m-d'));
+					$interval_month			= $date1->diff($date2);
+					$interval_payments		= $date1->diff($date3);
 					if($last_payment){
 						$date4 				= new DateTime($last_payment['credits_payment_date']);
 						$interval_payments	= $date4->diff($date3);
 					}
-					$interest_month 	= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
-					$angsuran_bunga 	= $interest_month / $interval_month->days * $interval_payments->days;
+					$interest_month 		= $accountcredit['credits_account_last_balance'] * $accountcredit['credits_account_interest']/100;
+					$angsuran_bunga 		= $interest_month / $interval_month->days * $interval_payments->days;
 				}
 
 				$total			= ceil($angsuran_bunga/1000)*1000;

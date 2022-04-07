@@ -3686,7 +3686,7 @@
 				
 			$pdf->writeHTML($tblket, true, false, false, false, '');
 			
-			}else if($acctcreditsaccount['credits_id'] == 14 || $acctcreditsaccount['credits_id'] == 15){
+			}else if($acctcreditsaccount['credits_id'] == 13){
 			
 				$tblheader = "
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
@@ -4416,7 +4416,7 @@
 				
 				$pdf->writeHTML($tblket, true, false, false, false, '');
 			
-			}else if($acctcreditsaccount['credits_id'] == 13){
+			}else if($acctcreditsaccount['credits_id'] == 14 || $acctcreditsaccount['credits_id'] == 15){
 			
 				$tblheader = "
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">

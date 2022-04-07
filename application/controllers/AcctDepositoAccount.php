@@ -1674,14 +1674,14 @@
 			$deposito_accrual_last_balance = $this->AcctDepositoAccount_model->getAcctDepositoAccrualLastBalance($data['deposito_account_id']);
 			$acctdepositoaccount 		   = $this->AcctDepositoAccount_model->getAcctDepositoAccountDetail($data['deposito_account_id']);
 
-			$interest_total		 		   = $deposito_accrual_last_balance + $acctdepositoaccount['deposito_account_nisbah'];
-			if($interest_total > 240000){
-				$tax_total	= $interest_total * 10 / 100;
-			}else{
-				$tax_total 	= 0;
-			}
+			// $interest_total		 		   = $deposito_accrual_last_balance + $acctdepositoaccount['deposito_account_nisbah'];
+			// if($interest_total > 240000){
+			// 	$tax_total	= $interest_total * 10 / 100;
+			// }else{
+			// 	$tax_total 	= 0;
+			// }
 
-			$total_amount				   = $interest_total + $this->input->post('deposito_account_amount', true) - $tax_total;
+			$total_amount				   			= $this->input->post('deposito_account_amount', true);
 
 			$deposito_account_closed_token 			= $this->AcctDepositoAccount_model->getDepositoAccountClosedToken($data['deposito_account_closed_token']);
 			
@@ -1779,42 +1779,42 @@
 							);
 							$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_credit);
 								
-							if($tax_total > 0){
+							// if($tax_total > 0){
 								
-								$account_id_default_status = $this->AcctDepositoAccount_model->getAccountIDDefaultStatus($preferencecompany['account_savings_tax_id']);
+							// 	$account_id_default_status = $this->AcctDepositoAccount_model->getAccountIDDefaultStatus($preferencecompany['account_savings_tax_id']);
 
-								$data_debet = array (
-									'journal_voucher_id'			=> $journal_voucher_id,
-									'account_id'					=> $preferencecompany['account_savings_tax_id'],
-									'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-									'journal_voucher_amount'		=> $tax_total,
-									'journal_voucher_debit_amount'	=> $tax_total,
-									'account_id_default_status'		=> $account_id_default_status,
-									'account_id_status'				=> 0,
-									'journal_voucher_item_token'	=> 'PJ1'.$data['deposito_account_closed_token'].$tax_total,
-									'created_id' 					=> $auth['user_id']
-								);
+							// 	$data_debet = array (
+							// 		'journal_voucher_id'			=> $journal_voucher_id,
+							// 		'account_id'					=> $preferencecompany['account_savings_tax_id'],
+							// 		'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+							// 		'journal_voucher_amount'		=> $tax_total,
+							// 		'journal_voucher_debit_amount'	=> $tax_total,
+							// 		'account_id_default_status'		=> $account_id_default_status,
+							// 		'account_id_status'				=> 0,
+							// 		'journal_voucher_item_token'	=> 'PJ1'.$data['deposito_account_closed_token'].$tax_total,
+							// 		'created_id' 					=> $auth['user_id']
+							// 	);
 	
-								$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_debet);
+							// 	$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_debet);
 	
-								$account_id = $this->AcctDepositoAccount_model->getAccountID($acctdepositoaccount_last['deposito_id']);
+							// 	$account_id = $this->AcctDepositoAccount_model->getAccountID($acctdepositoaccount_last['deposito_id']);
 
-								$account_id_default_status = $this->AcctDepositoAccount_model->getAccountIDDefaultStatus($account_id);
+							// 	$account_id_default_status = $this->AcctDepositoAccount_model->getAccountIDDefaultStatus($account_id);
 	
-								$data_credit =array(
-									'journal_voucher_id'			=> $journal_voucher_id,
-									'account_id'					=> $account_id,
-									'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-									'journal_voucher_amount'		=> $tax_total,
-									'journal_voucher_credit_amount'	=> $tax_total,
-									'account_id_default_status'		=> $account_id_default_status,
-									'account_id_status'				=> 1,
-									'journal_voucher_item_token'	=> 'PJ2'.$data['deposito_account_closed_token'].$account_id,
-									'created_id' 					=> $auth['user_id']
-								);
+							// 	$data_credit =array(
+							// 		'journal_voucher_id'			=> $journal_voucher_id,
+							// 		'account_id'					=> $account_id,
+							// 		'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+							// 		'journal_voucher_amount'		=> $tax_total,
+							// 		'journal_voucher_credit_amount'	=> $tax_total,
+							// 		'account_id_default_status'		=> $account_id_default_status,
+							// 		'account_id_status'				=> 1,
+							// 		'journal_voucher_item_token'	=> 'PJ2'.$data['deposito_account_closed_token'].$account_id,
+							// 		'created_id' 					=> $auth['user_id']
+							// 	);
 	
-								$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_credit);
-							}
+							// 	$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_credit);
+							// }
 							
 							if($amount_administration > 0){
 								$data_debet = array (
@@ -1984,6 +1984,49 @@
 								if($journal_voucher_item_token->num_rows()==0){
 									$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_credit);
 								}
+								
+							
+							if($amount_administration > 0){
+								$data_debet = array (
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $preferencecompany['account_cash_id'],
+									'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+									'journal_voucher_amount'		=> $amount_administration,
+									'journal_voucher_debit_amount'	=> $amount_administration,
+									'account_id_default_status'		=> $account_id_default_status,
+									'account_id_status'				=> 0,
+									'journal_voucher_item_token'	=> 'STR1'.$data['deposito_account_closed_token'].$amount_administration,
+									'created_id' 					=> $auth['user_id']
+								);
+	
+								$journal_voucher_item_token 	= $this->AcctDepositoAccount_model->getAcctJournalVoucherItemToken($data_debet['journal_voucher_item_token']);
+					
+								if($journal_voucher_item_token->num_rows()==0){
+									$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_debet);
+								}
+	
+								$preferencecompany = $this->AcctDepositoAccount_model->getPreferenceCompany();
+	
+								$account_id_default_status = $this->AcctDepositoAccount_model->getAccountIDDefaultStatus($preferencecompany['account_mutation_adm_id']);
+	
+								$data_credit =array(
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $preferencecompany['account_mutation_adm_id'],
+									'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+									'journal_voucher_amount'		=> $amount_administration,
+									'journal_voucher_credit_amount'	=> $amount_administration,
+									'account_id_default_status'		=> $account_id_default_status,
+									'account_id_status'				=> 1,
+									'journal_voucher_item_token'	=> 'STR2'.$data['deposito_account_closed_token'].$preferencecompany['account_mutation_adm_id'],
+									'created_id' 					=> $auth['user_id']
+								);
+	
+								$journal_voucher_item_token 	= $this->AcctDepositoAccount_model->getAcctJournalVoucherItemToken($data_credit['journal_voucher_item_token']);
+					
+								if($journal_voucher_item_token->num_rows()==0){
+									$this->AcctDepositoAccount_model->insertAcctJournalVoucherItem($data_credit);
+								}
+							}
 							}
 						}
 					}
