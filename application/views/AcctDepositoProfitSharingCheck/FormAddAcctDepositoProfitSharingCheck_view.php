@@ -227,11 +227,11 @@ $token 	= $this->session->userdata('acctdepositoprofitsharingcheck-'.$sesi['uniq
 									</td>
 								</tr>
 								<tr>
-									<!-- <td width="35%">Rek Simpanan<span class="required">*</span></td>
+									<td width="35%">Rek Simpanan<span class="required">*</span></td>
 									<td width="5%"></td>
-									<td width="20%"> -->
-											<!-- <input type="text"  class="easyui-textbox" size="4" name="savings_account_no" id="savings_account_no" autocomplete="off" value="<?php echo set_value('savings_account_no', $acctsavingsaccount['savings_account_no']);?>" style="width: 100%" readonly/>
-											&nbsp <a href="#" role="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#simpananlist">Cari No. Rek</a> -->
+									<td width="20%">
+											<input type="text"  class="easyui-textbox" size="4" name="savings_account_no" id="savings_account_no" autocomplete="off" value="<?php echo set_value('savings_account_no', $acctsavingsaccount['savings_account_no']);?>" style="width: 100%" readonly/>
+											&nbsp <a href="#" role="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#simpananlist">Cari No. Rek</a>
 
 											<input type="hidden"  name="savings_account_id" id="savings_account_id" autocomplete="off" value="<?php echo set_value('savings_account_id', $savings_account_id);?>" readonly/>
 											<input type="hidden"   name="savings_id" id="savings_id" autocomplete="off" value="<?php echo set_value('savings_id', $acctsavingsaccount['savings_id']);?>" readonly/>

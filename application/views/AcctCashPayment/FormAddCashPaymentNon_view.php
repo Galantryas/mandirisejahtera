@@ -108,7 +108,7 @@ input:-moz-read-only { /* For Firefox */
  function hitungtotal(){
 		var pokok_angsuran 		= document.getElementById("credits_payment_principal").value;
 		var interest_angsuran 	= document.getElementById("credits_payment_interest").value;
-		var pendapatan_jasa		= document.getElementById("interest_income").value;
+		// var pendapatan_jasa		= document.getElementById("interest_income").value;
 		var bayar_denda 		= document.getElementById("credits_payment_fine").value;
 		var pendapatan_lain		= document.getElementById("others_income").value;
 		var simpanan_wajib 		= document.getElementById("member_mandatory_savings").value;
@@ -125,9 +125,9 @@ input:-moz-read-only { /* For Firefox */
 			bayar_denda = 0
 		}
 
-		if(pendapatan_jasa == ''){
-			pendapatan_jasa = 0
-		}
+		// if(pendapatan_jasa == ''){
+		// 	pendapatan_jasa = 0
+		// }
 
 		if(pendapatan_lain == ''){
 			pendapatan_lain = 0
@@ -136,7 +136,7 @@ input:-moz-read-only { /* For Firefox */
 			simpanan_wajib = 0
 		}
 
-		var total 				= parseFloat(pokok_angsuran) + parseFloat(interest_angsuran) + parseFloat(pendapatan_jasa) + parseFloat(pendapatan_lain) + parseFloat(bayar_denda) + parseFloat(simpanan_wajib);
+		var total 				= parseFloat(pokok_angsuran) + parseFloat(interest_angsuran) + parseFloat(pendapatan_lain) + parseFloat(bayar_denda) + parseFloat(simpanan_wajib);
 		
 		$('#total_view').textbox('setValue',toRp(total));
 		$('#total').textbox('setValue',total);
@@ -288,10 +288,11 @@ input:-moz-read-only { /* For Firefox */
 			}else if(angsuran_total == '' || parseFloat(angsuran_total) == 0.00){
 				alert("Cek Alokasi Angsuran ! ");
 				return false;
-			}else if(pokok_angsuran == '' || parseFloat(pokok_angsuran) == 0.00){
-				alert("Angsuran Pokok Wajib diisi !");
-				return false;
 			}
+			// else if(pokok_angsuran == '' || parseFloat(pokok_angsuran) == 0.00){
+			// 	alert("Angsuran Pokok Wajib diisi !");
+			// 	return false;
+			// }
 			
 			$.ajax({
 					type: 'post',
@@ -324,11 +325,11 @@ input:-moz-read-only { /* For Firefox */
 	// $credits_payment_date 			= '2019-12-20';
 	$date1 							= date_create($credits_payment_date);
 	$date2 							= date_create($credit_account['credits_account_payment_date']);
-	if(substr($credit_account['credits_account_payment_to'], -1) == '*'){
-		$angsuranke 					= substr($credit_account['credits_account_payment_to'], -2, 1);
-	}else{
-		$angsuranke 					= substr($credit_account['credits_account_payment_to'], -1) + 1;
-	}
+	// if(substr($credit_account['credits_account_payment_to'], -1) == '*'){
+	// 	$angsuranke 					= substr($credit_account['credits_account_payment_to'], -2, 1);
+	// }else{
+	$angsuranke 					= substr($credit_account['credits_account_payment_to'], -1) + 1;
+	// }
 
 	if($date1 > $date2){
 		$interval                       = $date1->diff($date2);
@@ -342,10 +343,16 @@ input:-moz-read-only { /* For Firefox */
 
 	if($credit_account['payment_type_id'] == 1){
 		$angsuranpokok 		= $credit_account['credits_account_principal_amount'];
-		$angsuranbunga 	 	= $credit_account['credits_account_interest_amount'];
+		$angsuranbunga 	 	= $credit_account['credits_account_interest_amount'] + $interest_plus;
 	} else if($credit_account['payment_type_id'] == 2){
-		$angsuranbunga 	 	= ($credit_account['credits_account_last_balance'] * $credit_account['credits_account_interest']) /100;
-		$angsuranpokok 		= $credit_account['credits_account_payment_amount'] - $angsuranbunga;
+		$angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranpokok 		= $anuitas[$angsuranke]['angsuran_pokok'];
+	} else if($credit_account['payment_type_id'] == 3){
+		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranpokok 		= $slidingrate[$angsuranke]['angsuran_pokok'];
+	} else if($credit_account['payment_type_id'] == 4){
+		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
+		$angsuranpokok		= 0;
 	}
 ?>
 <script>
@@ -516,7 +523,12 @@ input:-moz-read-only { /* For Firefox */
 										<td width="35%">Angsuran Pokok (Rp)<span class="required">*</span></td>
 										<td width="5%"></td>
 										<td width="60%">
-											<input type="text" class="easyui-textbox" name="credits_payment_principal_view" id="credits_payment_principal_view" autocomplete="off" value="<?php echo number_format($angsuranpokok, 2);?>" style="width: 70%" readonly/>
+											<?php if($credit_account['payment_type_id'] == 4){ ?>
+												<input type="text" class="easyui-textbox" name="credits_payment_principal_view" id="credits_payment_principal_view" autocomplete="off" value="<?php echo number_format($angsuranpokok, 2);?>" style="width: 70%"/>
+											<?php }else{ ?>
+												<input type="text" class="easyui-textbox" name="credits_payment_principal_view" id="credits_payment_principal_view" autocomplete="off" value="<?php echo number_format($angsuranpokok, 2);?>" style="width: 70%" readonly/>
+											<?php } ?>
+											<input type="hidden" class="easyui-textbox" name="payment_type_id" id="payment_type_id" value="<?php echo $accountcredit['payment_type_id']; ?>" />
 											<input type="hidden" class="easyui-textbox" name="credits_payment_principal" id="credits_payment_principal" autocomplete="off" value="<?php echo intval($angsuranpokok);?>"/>
 											<input type="hidden" class="easyui-textbox" name="credits_payment_principal_actualy" id="credits_payment_principal_actualy" autocomplete="off" value="<?php echo intval($angsuranpokok);?>"/>
 										</td>
@@ -529,14 +541,6 @@ input:-moz-read-only { /* For Firefox */
 											<input type="hidden" class="easyui-textbox" name="credits_payment_interest" id="credits_payment_interest" autocomplete="off" value="<?php echo $angsuranbunga;?>" />
 										</td>
 									</tr>
-									 <tr>
-										<td>Pendapatan Bunga (Rp)</td>
-										<td>:</td> 
-										<td>
-											<input type="text" class="easyui-textbox" name="interest_income_view" id="interest_income_view"  value=""/>
-											<input type="hidden" class="easyui-textbox" name="interest_income" id="interest_income" value="" />
-										</td>
-									 </tr>
 									<tr>
 										<td width="35%">Sanksi (Rp)<span class="required">*</span></td>
 										<td width="5%"></td>

@@ -151,67 +151,122 @@
 						);
 						$this->AcctDepositoProfitSharingCheck_model->updateAcctDepositoAccount($data_depositoaccount);
 
-						$acctdepositoprofitsharing_last 	= $this->AcctDepositoProfitSharingCheck_model->getAcctDepositoProfitSharing_Last($data['deposito_profit_sharing_id']);
+						$total_amount	= $data['deposito_profit_sharing_amount'];
+						$tax_amount		= 0;
+						if($total_amount > 240000){
+							$tax_amount 			= $total_amount * 10 / 100;
+						}
+						$total_amount_min_tax	= $total_amount - $tax_amount;
 
-					
-						$journal_voucher_period = date("Ym", strtotime($data['deposito_profit_sharing_date']));
-						
-						$data_journal = array(
-							'branch_id'						=> $auth['branch_id'],
-							'journal_voucher_period' 		=> $journal_voucher_period,
-							'journal_voucher_date'			=> date('Y-m-d'),
-							'journal_voucher_title'			=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
-							'journal_voucher_description'	=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
-							'transaction_module_id'			=> $transaction_module_id,
-							'transaction_module_code'		=> $transaction_module_code,
-							'transaction_journal_id' 		=> $acctdepositoprofitsharing_last['deposito_profit_sharing_id'],
-							'transaction_journal_no' 		=> $acctdepositoprofitsharing_last['deposito_account_no'],
-							'journal_voucher_token'			=> $data['deposito_profit_sharing_token'],	
-							'created_id' 					=> $auth['user_id'],
-							'created_on' 					=> date('Y-m-d H:i:s'),
+						$data_transfer = array (
+							'branch_id'							=> $auth['branch_id'],
+							'savings_transfer_mutation_date'	=> date('Y-m-d'),
+							'savings_transfer_mutation_amount'	=> $total_amount_min_tax,
+							'operated_name'						=> 'SYS',
+							'created_id'						=> $auth['user_id'],
+							'created_on'						=> date('Y-m-d H:i:s'),
 						);
-						
-						$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucher($data_journal);
+	
+						if($this->AcctSavingsTransferMutation_model->insertAcctSavingsTransferMutation($data_transfer)){
+							$savings_transfer_mutation_id = $this->AcctSavingsTransferMutation_model->getSavingsTransferMutationID($data_transfer['created_on']);
+	
+							$data_transfer_to = array (
+								'savings_transfer_mutation_id'				=> $savings_transfer_mutation_id,
+								'savings_account_id'						=> $data['savings_account_id'],
+								'savings_id'								=> $data_savings['savings_id'],
+								'member_id'									=> $data_savings['member_id'],
+								'branch_id'									=> $auth['branch_id'],
+								'mutation_id'								=> $preferencecompany['deposito_basil_id'],
+								'savings_account_opening_balance'			=> $data_savings['savings_account_opening_balance'],
+								'savings_transfer_mutation_to_amount'		=> $total_amount_min_tax,
+								'savings_account_last_balance'				=> $data_savings['savings_account_last_balance'],
+							);
+	
+							if($this->AcctSavingsTransferMutation_model->insertAcctSavingsTransferMutationTo($data_transfer_to)){
 
-						$journal_voucher_id = $this->AcctDepositoProfitSharingCheck_model->getJournalVoucherID($data_journal['created_id']);
-
-						$account_basil_id 	= $this->AcctDepositoProfitSharingCheck_model->getAccountBasilID($data['deposito_id']);
-
-						$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_basil_id);
-
-						$data_debet = array (
-							'journal_voucher_id'			=> $journal_voucher_id,
-							'account_id'					=> $account_basil_id,
-							'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
-							'journal_voucher_amount'		=> ABS($data['deposito_profit_sharing_amount']),
-							'journal_voucher_debit_amount'	=> ABS($data['deposito_profit_sharing_amount']),
-							'account_id_default_status'		=> $account_id_default_status,
-							'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_basil_id,	
-							'account_id_status'				=> 0,
-							'created_id' 					=> $auth['user_id'],
-						);
-
-						$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_debet);
-
-						$account_id = $this->AcctDepositoProfitSharingCheck_model->getDepositoAccountID($data['deposito_id']);
-
-						$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_id);
-
-						$data_credit =array(
-							'journal_voucher_id'			=> $journal_voucher_id,
-							'account_id'					=> $account_id,
-							'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
-							'journal_voucher_amount'		=> ABS($data['deposito_profit_sharing_amount']),
-							'journal_voucher_credit_amount'	=> ABS($data['deposito_profit_sharing_amount']),
-							'account_id_default_status'		=> $account_id_default_status,
-							'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_id,
-							'account_id_status'				=> 1,
-							'created_id' 					=> $auth['user_id'],
+								$acctdepositoprofitsharing_last 	= $this->AcctDepositoProfitSharingCheck_model->getAcctDepositoProfitSharing_Last($data['deposito_profit_sharing_id']);
+		
 							
-						);
+								$journal_voucher_period = date("Ym", strtotime($data['deposito_profit_sharing_date']));
+								
+								$data_journal = array(
+									'branch_id'						=> $auth['branch_id'],
+									'journal_voucher_period' 		=> $journal_voucher_period,
+									'journal_voucher_date'			=> date('Y-m-d'),
+									'journal_voucher_title'			=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
+									'journal_voucher_description'	=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
+									'transaction_module_id'			=> $transaction_module_id,
+									'transaction_module_code'		=> $transaction_module_code,
+									'transaction_journal_id' 		=> $acctdepositoprofitsharing_last['deposito_profit_sharing_id'],
+									'transaction_journal_no' 		=> $acctdepositoprofitsharing_last['deposito_account_no'],
+									'journal_voucher_token'			=> $data['deposito_profit_sharing_token'],	
+									'created_id' 					=> $auth['user_id'],
+									'created_on' 					=> date('Y-m-d H:i:s'),
+								);
+								
+								$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucher($data_journal);
+		
+								$journal_voucher_id = $this->AcctDepositoProfitSharingCheck_model->getJournalVoucherID($data_journal['created_id']);
+		
+								$account_basil_id 	= $this->AcctDepositoProfitSharingCheck_model->getAccountBasilID($data['deposito_id']);
+		
+								$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_basil_id);
+		
+								$data_debet = array (
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $account_basil_id,
+									'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+									'journal_voucher_amount'		=> ABS($total_amount),
+									'journal_voucher_debit_amount'	=> ABS($total_amount),
+									'account_id_default_status'		=> $account_id_default_status,
+									'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_basil_id,	
+									'account_id_status'				=> 0,
+									'created_id' 					=> $auth['user_id'],
+								);
+		
+								$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_debet);
+		
+								$account_id = $this->AcctDepositoProfitSharingCheck_model->getAccountID($data_savings['savings_id']);
+		
+								$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_id);
+		
+								$data_credit =array(
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $account_id,
+									'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+									'journal_voucher_amount'		=> ABS($total_amount_min_tax),
+									'journal_voucher_credit_amount'	=> ABS($total_amount_min_tax),
+									'account_id_default_status'		=> $account_id_default_status,
+									'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_id,
+									'account_id_status'				=> 1,
+									'created_id' 					=> $auth['user_id'],
+									
+								);
+		
+								$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
+								
+								if($tax_amount > 0){
+									$account_savings_tax_id 	= $preferencecompany['account_savings_tax_id'];
 
-						$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
+									$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_savings_tax_id);
 
+									$data_credit = array (
+										'journal_voucher_id'			=> $journal_voucher_id,
+										'account_id'					=> $account_savings_tax_id,
+										'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+										'journal_voucher_amount'		=> ABS($tax_amount),
+										'journal_voucher_credit_amount'	=> ABS($tax_amount),
+										'account_id_default_status'		=> $account_id_default_status,
+										'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_savings_tax_id,	
+										'account_id_status'				=> 0,
+										'created_id' 					=> $auth['user_id'],
+									);
+
+									$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
+								}
+							}
+						}
+						
 						$auth = $this->session->userdata('auth');
 						// $this->fungsi->set_log($auth['username'],'1003','Application.machine.processAddmachine',$auth['username'],'Add New machine');
 						$msg = "<div class='alert alert-success alert-dismissable'>  
@@ -239,79 +294,134 @@
 					);
 					$this->AcctDepositoProfitSharingCheck_model->updateAcctDepositoAccount($data_depositoaccount);
 
-					$acctdepositoprofitsharing_last 	= $this->AcctDepositoProfitSharingCheck_model->getAcctDepositoProfitSharing_Last($data['deposito_profit_sharing_id']);
+					$total_amount	= $data['deposito_profit_sharing_amount'];
+					$tax_amount		= 0;
+					if($total_amount > 240000){
+						$tax_amount 			= $total_amount * 10 / 100;
+					}
+					$total_amount_min_tax	= $total_amount - $tax_amount;
 
-				
-					$journal_voucher_period = date("Ym", strtotime($data['deposito_profit_sharing_date']));
+					$data_transfer = array (
+						'branch_id'							=> $auth['branch_id'],
+						'savings_transfer_mutation_date'	=> date('Y-m-d'),
+						'savings_transfer_mutation_amount'	=> $total_amount_min_tax,
+						'operated_name'						=> 'SYS',
+						'created_id'						=> $auth['user_id'],
+						'created_on'						=> date('Y-m-d H:i:s'),
+					);
+
+					if($this->AcctSavingsTransferMutation_model->insertAcctSavingsTransferMutation($data_transfer)){
+						$savings_transfer_mutation_id = $this->AcctSavingsTransferMutation_model->getSavingsTransferMutationID($data_transfer['created_on']);
+
+						$data_transfer_to = array (
+							'savings_transfer_mutation_id'				=> $savings_transfer_mutation_id,
+							'savings_account_id'						=> $data['savings_account_id'],
+							'savings_id'								=> $data_savings['savings_id'],
+							'member_id'									=> $data_savings['member_id'],
+							'branch_id'									=> $auth['branch_id'],
+							'mutation_id'								=> $preferencecompany['deposito_basil_id'],
+							'savings_account_opening_balance'			=> $data_savings['savings_account_opening_balance'],
+							'savings_transfer_mutation_to_amount'		=> $total_amount_min_tax,
+							'savings_account_last_balance'				=> $data_savings['savings_account_last_balance'],
+						);
+
+						if($this->AcctSavingsTransferMutation_model->insertAcctSavingsTransferMutationTo($data_transfer_to)){
+							$acctdepositoprofitsharing_last 	= $this->AcctDepositoProfitSharingCheck_model->getAcctDepositoProfitSharing_Last($data['deposito_profit_sharing_id']);
+
+							$journal_voucher_period = date("Ym", strtotime($data['deposito_profit_sharing_date']));
+							
+							$data_journal = array(
+								'branch_id'						=> $auth['branch_id'],
+								'journal_voucher_period' 		=> $journal_voucher_period,
+								'journal_voucher_date'			=> date('Y-m-d'),
+								'journal_voucher_title'			=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
+								'journal_voucher_description'	=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
+								'transaction_module_id'			=> $transaction_module_id,
+								'transaction_module_code'		=> $transaction_module_code,
+								'transaction_journal_id' 		=> $acctdepositoprofitsharing_last['deposito_profit_sharing_id'],
+								'transaction_journal_no' 		=> $acctdepositoprofitsharing_last['deposito_account_no'],
+								'journal_voucher_token'			=> $data['deposito_profit_sharing_token'],	
+								'created_id' 					=> $auth['user_id'],
+								'created_on' 					=> date('Y-m-d H:i:s'),
+							);
+							
+							$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucher($data_journal);
+
+							$journal_voucher_id = $this->AcctDepositoProfitSharingCheck_model->getJournalVoucherID($data_journal['created_id']);
+
+							$account_basil_id 	= $this->AcctDepositoProfitSharingCheck_model->getAccountBasilID($data['deposito_id']);
+
+							$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_basil_id);
+
+							$data_debet = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_basil_id,
+								'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+								'journal_voucher_amount'		=> ABS($total_amount),
+								'journal_voucher_debit_amount'	=> ABS($total_amount),
+								'account_id_default_status'		=> $account_id_default_status,
+								'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_basil_id,	
+								'account_id_status'				=> 0,
+								'created_id' 					=> $auth['user_id'],
+							);
+
+							// print_r($data_debet['account_id']);exit;
+
+							$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_debet);
+
+							$account_id = $this->AcctDepositoProfitSharingCheck_model->getAccountID($data_savings['savings_id']);
+
+							$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_id);
+
+							$data_credit =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+								'journal_voucher_amount'		=> ABS($total_amount_min_tax),
+								'journal_voucher_credit_amount'	=> ABS($total_amount_min_tax),
+								'account_id_default_status'		=> $account_id_default_status,
+								'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_id,
+								'account_id_status'				=> 1,
+								'created_id' 					=> $auth['user_id'],
+								
+							);
+
+							$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
+								
+							if($tax_amount > 0){
+								$account_savings_tax_id 	= $preferencecompany['account_savings_tax_id'];
+
+								$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_savings_tax_id);
+
+								$data_credit = array (
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $account_savings_tax_id,
+									'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
+									'journal_voucher_amount'		=> ABS($tax_amount),
+									'journal_voucher_credit_amount'	=> ABS($tax_amount),
+									'account_id_default_status'		=> $account_id_default_status,
+									'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_savings_tax_id,	
+									'account_id_status'				=> 0,
+									'created_id' 					=> $auth['user_id'],
+								);
+
+								$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
+							}
+
+							$auth = $this->session->userdata('auth');
+							// $this->fungsi->set_log($auth['username'],'1003','Application.machine.processAddmachine',$auth['username'],'Add New machine');
+							$msg = "<div class='alert alert-success alert-dismissable'>  
+									<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>					
+										Input Bunga Berjangka Sukses
+									</div> ";
+
+							$this->session->unset_userdata('acctdepositoprofitsharingcheck-'.$unique['unique']);
+							$this->session->set_userdata('message',$msg);
+							redirect('deposito-profit-sharing-check');
+						}
+					}
+
 					
-					$data_journal = array(
-						'branch_id'						=> $auth['branch_id'],
-						'journal_voucher_period' 		=> $journal_voucher_period,
-						'journal_voucher_date'			=> date('Y-m-d'),
-						'journal_voucher_title'			=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
-						'journal_voucher_description'	=> 'JASA SIMP BERJANGKA '.$acctdepositoprofitsharing_last['member_name'],
-						'transaction_module_id'			=> $transaction_module_id,
-						'transaction_module_code'		=> $transaction_module_code,
-						'transaction_journal_id' 		=> $acctdepositoprofitsharing_last['deposito_profit_sharing_id'],
-						'transaction_journal_no' 		=> $acctdepositoprofitsharing_last['deposito_account_no'],
-						'journal_voucher_token'			=> $data['deposito_profit_sharing_token'],	
-						'created_id' 					=> $auth['user_id'],
-						'created_on' 					=> date('Y-m-d H:i:s'),
-					);
-					
-					$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucher($data_journal);
-
-					$journal_voucher_id = $this->AcctDepositoProfitSharingCheck_model->getJournalVoucherID($data_journal['created_id']);
-
-					$account_basil_id 	= $this->AcctDepositoProfitSharingCheck_model->getAccountBasilID($data['deposito_id']);
-
-					$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_basil_id);
-
-					$data_debet = array (
-						'journal_voucher_id'			=> $journal_voucher_id,
-						'account_id'					=> $account_basil_id,
-						'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
-						'journal_voucher_amount'		=> ABS($data['deposito_profit_sharing_amount']),
-						'journal_voucher_debit_amount'	=> ABS($data['deposito_profit_sharing_amount']),
-						'account_id_default_status'		=> $account_id_default_status,
-						'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_basil_id,	
-						'account_id_status'				=> 0,
-						'created_id' 					=> $auth['user_id'],
-					);
-
-					// print_r($data_debet['account_id']);exit;
-
-					$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_debet);
-
-					$account_id = $this->AcctDepositoProfitSharingCheck_model->getDepositoAccountID($data['deposito_id']);
-
-					$account_id_default_status = $this->AcctDepositoProfitSharingCheck_model->getAccountIDDefaultStatus($account_id);
-
-					$data_credit =array(
-						'journal_voucher_id'			=> $journal_voucher_id,
-						'account_id'					=> $account_id,
-						'journal_voucher_description'	=> $data_journal['journal_voucher_description'],
-						'journal_voucher_amount'		=> ABS($data['deposito_profit_sharing_amount']),
-						'journal_voucher_credit_amount'	=> ABS($data['deposito_profit_sharing_amount']),
-						'account_id_default_status'		=> $account_id_default_status,
-						'journal_voucher_item_token'	=> $data['deposito_profit_sharing_token'].$account_id,
-						'account_id_status'				=> 1,
-						'created_id' 					=> $auth['user_id'],
-						
-					);
-
-					$this->AcctDepositoProfitSharingCheck_model->insertAcctJournalVoucherItem($data_credit);
-
-					$auth = $this->session->userdata('auth');
-					// $this->fungsi->set_log($auth['username'],'1003','Application.machine.processAddmachine',$auth['username'],'Add New machine');
-					$msg = "<div class='alert alert-success alert-dismissable'>  
-							<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>					
-								Input Bunga Berjangka Sukses
-							</div> ";
-
-					$this->session->unset_userdata('acctdepositoprofitsharingcheck-'.$unique['unique']);
-					$this->session->set_userdata('message',$msg);
-					redirect('deposito-profit-sharing-check');
 				}
 			} else {
 				$msg = validation_errors("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>", '</div>');

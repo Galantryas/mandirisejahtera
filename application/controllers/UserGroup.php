@@ -35,7 +35,7 @@
 			if($this->form_validation->run()==true){
 				if($this->UserGroup_model->saveNewGroup($data)){
 					$auth = $this->session->userdata('auth');
-					$this->fungsi->set_log($auth['username'],'1006','Application.UserGroup.processAddUserGroup',$auth['username'],'Add New User Group');
+					// $this->fungsi->set_log($auth['username'],'1006','Application.UserGroup.processAddUserGroup',$auth['username'],'Add New User Group');
 					$level = $this->UserGroup_model->getMenuID($data['user_group_name']);
 					foreach($_POST as $key=>$val){
 						$tmp = explode("_",$key);
@@ -116,7 +116,7 @@
 							$this->UserGroup_model->saveMapping($data2);
 						}
 						$auth = $this->session->userdata('auth');
-						$this->fungsi->set_log($auth['username'],'1007','Application.UserGroup.processEditUserGroup',$auth['username'],'Edit User Group');
+						// $this->fungsi->set_log($auth['username'],'1007','Application.UserGroup.processEditUserGroup',$auth['username'],'Edit User Group');
 						$this->fungsi->set_change_log($old_data,$data,$auth['username'],$data['user_group_id']);
 						$msg = "<div class='alert alert-success alert-dismissable'>                  
 								<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>	
@@ -150,7 +150,7 @@
 		function delete(){
 			if($this->UserGroup_model->delete($this->uri->segment(3))){
 				$auth = $this->session->userdata('auth');
-				$this->fungsi->set_log($auth['username'],'1008','Application.UserGroup.delete',$auth['username'],'Delete User Group');
+				// $this->fungsi->set_log($auth['username'],'1008','Application.UserGroup.delete',$auth['username'],'Delete User Group');
 				$msg = "<div class='alert alert-success alert-dismissable'>                  
 						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>	
 							Delete Data User Group Successfully

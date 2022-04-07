@@ -2402,8 +2402,67 @@
 			return $installment_pattern;
 			
 		}
-		
+
 		public function slidingrate($id){
+			$credistaccount					= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
+
+			$total_credits_account 			= $credistaccount['credits_account_amount'];
+			$credits_account_interest 		= $credistaccount['credits_account_interest'];
+			$credits_account_period 		= $credistaccount['credits_account_period'];
+
+			$installment_pattern			= array();
+			$opening_balance				= $total_credits_account;
+
+			for($i=1; $i<=$credits_account_period; $i++){
+				
+				if($credistaccount['credits_payment_period'] == 2){
+					$a = $i * 7;
+
+					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$a." days", strtotime($credistaccount['credits_account_date'])));
+
+				} else {
+
+					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$i." months", strtotime($credistaccount['credits_account_date'])));
+				}
+				
+				$angsuran_pokok									= $credistaccount['credits_account_principal_amount'];				
+
+				$angsuran_margin								= $opening_balance*$credits_account_interest/100;				
+
+				$angsuran 										= $angsuran_pokok + $angsuran_margin;
+
+				$last_balance 									= $opening_balance - $angsuran_pokok;
+
+				$installment_pattern[$i]['opening_balance']		= $opening_balance;
+				$installment_pattern[$i]['ke'] 					= $i;
+				$installment_pattern[$i]['tanggal_angsuran'] 	= $tanggal_angsuran;
+				$installment_pattern[$i]['angsuran'] 			= $angsuran;
+				$installment_pattern[$i]['angsuran_pokok']		= $angsuran_pokok;
+				$installment_pattern[$i]['angsuran_bunga'] 		= $angsuran_margin;
+				$installment_pattern[$i]['last_balance'] 		= $last_balance;
+				
+				$opening_balance 								= $last_balance;
+			}
+			
+			return $installment_pattern;
+			
+		}
+
+		public function menurunharian($id){
+			$credistaccount					= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
+
+			$total_credits_account 			= $credistaccount['credits_account_amount'];
+			$credits_account_interest 		= $credistaccount['credits_account_interest'];
+			$credits_account_period 		= $credistaccount['credits_account_period'];
+
+			$installment_pattern			= array();
+			$opening_balance				= $total_credits_account;
+			
+			return $installment_pattern;
+			
+		}
+		
+		public function slidingrate2($id){
 			$creditsaccount 	= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
 			
 
@@ -2633,40 +2692,12 @@
 			// create new PDF document
 			
 			$pdf = new TCPDF('P', PDF_UNIT, 'A4', true, 'UTF-8', false);
-			// Check the example n. 29 for viewer preferences
-
-			// set document information
-			/*$pdf->SetCreator(PDF_CREATOR);
-			$pdf->SetAuthor('');
-			$pdf->SetTitle('');
-			$pdf->SetSubject('');
-			$pdf->SetKeywords('TCPDF, PDF, example, test, guide');*/
-
-			// set default header data
-			/*$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE);
-			$pdf->SetSubHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_STRING);*/
-
-			// set header and footer fonts
-			/*$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-			$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));*/
-
-			// set default monospaced font
-			/*$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);*/
-
-			// set margins
-			/*$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);*/
 
 			$pdf->SetPrintHeader(false);
 			$pdf->SetPrintFooter(false);
 
-			$pdf->SetMargins(10, 10, 10, 10); // put space of 10 on top
-			/*$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);*/
-			/*$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);*/
-
-			// set auto page breaks
-			/*$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);*/
-
-			// set image scale factor
+			$pdf->SetMargins(10, 10, 10, 10); 
+			
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
@@ -2834,50 +2865,24 @@
 				$datapola=$this->flat($credits_account_id);
 			}else if ($acctcreditsaccount['payment_type_id'] == 2){
 				$datapola=$this->anuitas($credits_account_id);
+			}else if($acctcreditsaccount['payment_type_id'] == 3){
+				$datapola=$this->slidingrate($credits_account_id);
+			}else if($acctcreditsaccount['payment_type_id'] == 4){
+				$datapola=$this->menurunharian($credits_account_id);
 			}
 			
 			require_once('tcpdf/config/tcpdf_config.php');
 			require_once('tcpdf/tcpdf.php');
-			// create new PDF document
 			
 			$pdf = new TCPDF('P', PDF_UNIT, 'A4', true, 'UTF-8', false);
-			// Check the example n. 29 for viewer preferences
-
-			// set document information
-			/*$pdf->SetCreator(PDF_CREATOR);
-			$pdf->SetAuthor('');
-			$pdf->SetTitle('');
-			$pdf->SetSubject('');
-			$pdf->SetKeywords('TCPDF, PDF, example, test, guide');*/
-
-			// set default header data
-			/*$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE);
-			$pdf->SetSubHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_STRING);*/
-
-			// set header and footer fonts
-			/*$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-			$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));*/
-
-			// set default monospaced font
-			/*$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);*/
-
-			// set margins
-			/*$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);*/
 
 			$pdf->SetPrintHeader(false);
 			$pdf->SetPrintFooter(false);
 
-			$pdf->SetMargins(10, 10, 10, 10); // put space of 10 on top
-			/*$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);*/
-			/*$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);*/
-
-			// set auto page breaks
-			/*$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);*/
-
-			// set image scale factor
+			$pdf->SetMargins(10, 10, 10, 10); 
+			
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-			// set some language-dependent strings (optional)
 			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 			    require_once(dirname(__FILE__).'/lang/eng.php');
 			    $pdf->setLanguageArray($l);
@@ -2895,9 +2900,6 @@
 
 			$pdf->SetFont('helvetica', '', 9);
 
-			// -----------------------------------------------------------------------------
-
-			/*print_r($preference_company);*/
 			
 			$base_url = base_url();
 			$img = "<img src=\"".$base_url."assets/layouts/layout/img/".$preferencecompany['logo_koperasi']."\" alt=\"\" width=\"700%\" height=\"300%\"/>";
@@ -2960,13 +2962,13 @@
 							<div style=\"font-size:12px\";><b>Plafon</b></div>
 						</td>
 						<td style=\"text-align:left;\" width=\"50%\">
-							<div style=\"font-size:12px\";><b>: Rp.".number_format($acctcreditsaccount['credits_account_last_balance'])."</b></div>
+							<div style=\"font-size:12px\";><b>: Rp.".number_format($acctcreditsaccount['credits_account_amount'])."</b></div>
 						</td>			
 	 				</tr>
 	 			</table>
 	 			<br><br>
 			";
-				
+			
 			$pdf->writeHTML($tblheader, true, false, false, false, '');
 
 			$tbl1 = "
@@ -3684,7 +3686,7 @@
 				
 			$pdf->writeHTML($tblket, true, false, false, false, '');
 			
-			}else if($acctcreditsaccount['credits_id'] == 14 || $acctcreditsaccount['credits_id'] == 15){
+			}else if($acctcreditsaccount['credits_id'] == 13){
 			
 				$tblheader = "
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
@@ -4414,7 +4416,7 @@
 				
 				$pdf->writeHTML($tblket, true, false, false, false, '');
 			
-			}else if($acctcreditsaccount['credits_id'] == 13){
+			}else if($acctcreditsaccount['credits_id'] == 14 || $acctcreditsaccount['credits_id'] == 15){
 			
 				$tblheader = "
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
