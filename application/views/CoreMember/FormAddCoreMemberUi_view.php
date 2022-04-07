@@ -164,11 +164,11 @@
 				url  : "<?php echo base_url(); ?>member/change-member-class/"+member_class_id,
 				data : {member_class_id: member_class_id},
 				success: function(data){
-					$('#member_class_mandatory_savings_view').textbox({
+					$('#member_principal_savings_view').textbox({
 						value: toRp(data),
 					});
-					function_elements_add('member_class_mandatory_savings', data);
-					$('#member_class_mandatory_savings').textbox({
+					function_elements_add('member_principal_savings', data);
+					$('#member_principal_savings').textbox({
 						value: data,
 					});
 				}
@@ -217,15 +217,15 @@
 	});
 
 	$(document).ready(function(){
-		$('#member_class_mandatory_savings_view').textbox({
+		$('#member_principal_savings_view').textbox({
 			onChange: function(value){
-				var member_class_mandatory_savings_view   = document.getElementById("member_class_mandatory_savings_view").value;
-				function_elements_add('member_class_mandatory_savings', value);
-				$('#member_class_mandatory_savings_view').textbox({
-					value: toRp(member_class_mandatory_savings_view),
+				var member_principal_savings_view   = document.getElementById("member_principal_savings_view").value;
+				function_elements_add('member_principal_savings', value);
+				$('#member_principal_savings_view').textbox({
+					value: toRp(member_principal_savings_view),
 				});
-				$('#member_class_mandatory_savings').textbox({
-					value: member_class_mandatory_savings_view,
+				$('#member_principal_savings').textbox({
+					value: member_principal_savings_view,
 				});
 			}
 			});
@@ -905,17 +905,13 @@
 										<td width="60%"><input type="text" class="easyui-textbox" name="member_mother" id="member_mother" autocomplete="off" value="<?php echo set_value('member_mother',$data['member_mother']);?>" style="width:100%;"/></td>
 									</tr>
 									<tr>
-										<td width="35%">Simpanan Wajib<span class="required" style="color : red">*</span></td>
+										<td width="35%">Simpanan Pokok<span class="required" style="color : red">*</span></td>
 										<td width="5%">:</td>
-										<!-- <td width="60%">
-											<?php 
-												echo form_dropdown('member_class_id', $corememberclass, set_value('member_class_id',$data['member_class_id']),'id="member_class_id" class="easyui-combobox" style="width:100%;"');
-											?>
-												
-										</td> -->
+
+									
 										<td width="60%">
-											<input type="text" class="easyui-textbox" name="member_class_mandatory_savings_view" id="member_class_mandatory_savings_view" value="<?php echo set_value('member_class_mandatory_savings_view',nominal($preferencecompany['member_mandatory_savings']));?>" style="width:100%;" readonly/>
-											<input type="hidden" class="easyui-textbox" name="member_class_mandatory_savings" id="member_class_mandatory_savings" value="<?php echo set_value('member_class_mandatory_savings',$preferencecompany['member_mandatory_savings']);?>" style="width:100%;"/>
+											<input type="text" class="easyui-textbox" name="member_principal_savings_view" id="member_principal_savings_view" value="<?php echo set_value('member_principal_savings_view',nominal($preferencecompany['member_mandatory_savings']));?>" style="width:100%;"/>
+											<input type="hidden" class="easyui-textbox" name="member_principal_savings" id="member_principal_savings" value="<?php echo set_value('member_principal_savings',$preferencecompany['member_mandatory_savings']);?>" style="width:100%;"/>
 										</td>
 									</tr>
 									<!-- <tr>

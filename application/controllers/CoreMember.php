@@ -440,53 +440,55 @@
 				$member_company_mandatory_savings = 0;
 			}
 
-			$member_mandatory_savings = $member_class_mandatory_savings + $member_company_mandatory_savings;
-
+			$member_mandatory_savings = 10000.00;
+			$member_principal_savings = $this->input->post('member_principal_savings', true);
 			$data = array(
-				'branch_id'							=> $auth['branch_id'],
-				'member_no'							=> $this->input->post('member_no', true),
-				'member_name'						=> $this->input->post('member_name', true),
-				'member_nick_name'					=> $this->input->post('member_nick_name', true),
-				'member_gender'						=> $this->input->post('member_gender', true),
-				'province_id'						=> $this->input->post('province_id', true),
-				'city_id'							=> $this->input->post('city_id', true),
-				'kecamatan_id'						=> $this->input->post('kecamatan_id', true),
-				'kelurahan_id'						=> $this->input->post('kelurahan_id', true),
-				'company_id'						=> $this->input->post('company_id', true),
-				'member_job'						=> $this->input->post('member_job', true),
-				'member_identity'					=> $this->input->post('member_identity', true),
-				'member_place_of_birth'				=> $this->input->post('member_place_of_birth', true),
-				'member_date_of_birth'				=> tgltodb($this->input->post('member_date_of_birth', true)),
-				'member_address'					=> $this->input->post('member_address', true),
-				'member_identity_no'				=> $this->input->post('member_identity_no', true), 
-				'member_partner_identity_no'		=> $this->input->post('member_partner_identity_no', true),
-				'member_marital_status'				=> $this->input->post('member_marital_status', true),
-				'member_heir'						=> $this->input->post('member_heir', true),
-				'member_heir_mobile_phone'			=> $this->input->post('member_heir_mobile_phone', true),
-				'member_heir_relationship'			=> $this->input->post('member_heir_relationship', true),
-				'member_postal_code'				=> $this->input->post('member_postal_code', true),
-				'member_mother'						=> $this->input->post('member_mother', true),
-				'member_token'						=> $this->input->post('member_token', true),
-				'member_address_now'				=> $this->input->post('member_address_now', true),
-				'member_phone'						=> $this->input->post('member_phone', true),
-				'member_dependent'					=> $this->input->post('member_dependent', true),
-				'member_home_status'				=> $this->input->post('member_home_status', true),
-				'member_long_stay'					=> $this->input->post('member_long_stay', true),
-				'member_vehicle'					=> $this->input->post('member_vehicle', true),
-				'member_last_education'				=> $this->input->post('member_last_education', true),
-				'member_unit_user'					=> $this->input->post('member_unit_user', true),
-				'member_partner_name'				=> $this->input->post('member_partner_name', true),
-				'member_email'						=> $this->input->post('member_email', true),
-				'member_class_id'					=> $this->input->post('member_class_id', true),
-				'member_class_mandatory_savings'	=> $member_class_mandatory_savings,
-				'member_company_mandatory_savings'	=> $member_company_mandatory_savings,
-				'member_mandatory_savings'			=> $member_mandatory_savings,
-				'member_status'						=> 0,
-				'member_password_default'			=> $member_password,
-				'member_password'					=> md5($member_password),
-				'member_register_date'				=> date('Y-m-d H:i:s'),
-				'created_id'						=> $auth['user_id'],
-				'created_on'						=> date('Y-m-d H:i:s'),
+				'branch_id'										=> $auth['branch_id'],
+				'member_no'										=> $this->input->post('member_no', true),
+				'member_name'									=> $this->input->post('member_name', true),
+				'member_nick_name'								=> $this->input->post('member_nick_name', true),
+				'member_gender'									=> $this->input->post('member_gender', true),
+				'province_id'									=> $this->input->post('province_id', true),
+				'city_id'										=> $this->input->post('city_id', true),
+				'kecamatan_id'									=> $this->input->post('kecamatan_id', true),
+				'kelurahan_id'									=> $this->input->post('kelurahan_id', true),
+				'company_id'									=> $this->input->post('company_id', true),
+				'member_job'									=> $this->input->post('member_job', true),
+				'member_identity'								=> $this->input->post('member_identity', true),
+				'member_place_of_birth'							=> $this->input->post('member_place_of_birth', true),
+				'member_date_of_birth'							=> tgltodb($this->input->post('member_date_of_birth', true)),
+				'member_address'								=> $this->input->post('member_address', true),
+				'member_identity_no'							=> $this->input->post('member_identity_no', true), 
+				'member_partner_identity_no'					=> $this->input->post('member_partner_identity_no', true),
+				'member_marital_status'							=> $this->input->post('member_marital_status', true),
+				'member_heir'									=> $this->input->post('member_heir', true),
+				'member_heir_mobile_phone'						=> $this->input->post('member_heir_mobile_phone', true),
+				'member_heir_relationship'						=> $this->input->post('member_heir_relationship', true),
+				'member_postal_code'							=> $this->input->post('member_postal_code', true),
+				'member_mother'									=> $this->input->post('member_mother', true),
+				'member_token'									=> $this->input->post('member_token', true),
+				'member_address_now'							=> $this->input->post('member_address_now', true),
+				'member_phone'									=> $this->input->post('member_phone', true),
+				'member_dependent'								=> $this->input->post('member_dependent', true),
+				'member_home_status'							=> $this->input->post('member_home_status', true),
+				'member_long_stay'								=> $this->input->post('member_long_stay', true),
+				'member_vehicle'								=> $this->input->post('member_vehicle', true),
+				'member_last_education'							=> $this->input->post('member_last_education', true),
+				'member_unit_user'								=> $this->input->post('member_unit_user', true),
+				'member_partner_name'							=> $this->input->post('member_partner_name', true),
+				'member_email'									=> $this->input->post('member_email', true),
+				'member_class_id'								=> $this->input->post('member_class_id', true),
+				'member_class_mandatory_savings'				=> $member_class_mandatory_savings,
+				'member_company_mandatory_savings'				=> $member_company_mandatory_savings,
+				'member_mandatory_savings'						=> $member_mandatory_savings,
+				'member_status'									=> 1, //langsung bisa buka pinjaman (1) / (0) perlu update
+				'member_password_default'						=> $member_password,
+				'member_password'								=> md5($member_password),
+				'member_register_date'							=> date('Y-m-d H:i:s'),
+				'created_id'									=> $auth['user_id'],
+				'created_on'									=> date('Y-m-d H:i:s'),
+				'member_principal_savings'						=> $member_principal_savings,
+				'member_principal_savings_last_balance'			=> $member_principal_savings,
 			);
 
 			if($member_mandatory_savings <= 0){
@@ -555,7 +557,86 @@
 						);
 
 						$this->CoreMember_model->insertCoreMemberWorking($dataworking);
+						$preferencecompany 			= $this->CoreMember_model->getPreferenceCompany();
 
+						$data_detail = array (
+							'branch_id'						=> $auth['branch_id'],
+							'member_id'						=> $data['member_id'],
+							'mutation_id'					=> $preferencecompany['cash_deposit_id'],
+							'transaction_date'				=> date('Y-m-d'),
+							'principal_savings_amount'		=> $data['member_principal_savings'],
+							'operated_name'					=> $auth['username'],
+							'savings_member_detail_token'	=> $data['member_token'].'ADDMEMBER'.$auth['branch_id'],
+						);
+
+						if($this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail)){
+							if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+
+								$transaction_module_code 	= "AGT";
+
+								$transaction_module_id 		= $this->CoreMember_model->getTransactionModuleID($transaction_module_code);
+								$coremember 				= $this->CoreMember_model->getCoreMember_Detail($dataworking['member_id']);
+								$journal_voucher_period 	= date("Ym", strtotime($coremember['member_register_date']));
+
+								//-------------------------Jurnal Cabang----------------------------------------------------
+								
+								$data_journal_cabang = array(
+									'branch_id'						=> $auth['branch_id'],
+									'journal_voucher_period' 		=> $journal_voucher_period,
+									'journal_voucher_date'			=> date('Y-m-d'),
+									'journal_voucher_title'			=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
+									'journal_voucher_description'	=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
+									'journal_voucher_token'			=> $data['member_token'].$auth['branch_id'],
+									'transaction_module_id'			=> $transaction_module_id,
+									'transaction_module_code'		=> $transaction_module_code,
+									'transaction_journal_id' 		=> $coremember['member_id'],
+									'transaction_journal_no' 		=> $coremember['member_no'],
+									'created_id' 					=> $auth['user_id'],
+									'created_on' 					=> date('Y-m-d H:i:s'),
+								);
+								
+								$this->CoreMember_model->insertAcctJournalVoucher($data_journal_cabang);
+
+								$journal_voucher_id 			= $this->CoreMember_model->getJournalVoucherID($auth['user_id']);
+
+								$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
+
+
+								$account_id_default_status 	= $this->CoreMember_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
+
+								$data_debet = array (
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $preferencecompany['account_cash_id'],
+									'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
+									'journal_voucher_amount'		=> $data['member_principal_savings'],
+									'journal_voucher_debit_amount'	=> $data['member_principal_savings'],
+									'account_id_default_status'		=> $account_id_default_status,
+									'account_id_status'				=> 0,
+									'created_id' 					=> $auth['user_id'],
+									'journal_voucher_item_token'	=> $data['member_token_edit'].$preferencecompany['account_cash_id'],
+								);
+
+								$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);
+
+								$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
+
+								$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+								$data_credit =array(
+									'journal_voucher_id'			=> $journal_voucher_id,
+									'account_id'					=> $account_id,
+									'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
+									'journal_voucher_amount'		=> $data['member_principal_savings'],
+									'journal_voucher_credit_amount'	=> $data['member_principal_savings'],
+									'account_id_default_status'		=> $account_id_default_status,
+									'account_id_status'				=> 1,
+									'created_id' 					=> $auth['user_id'],
+									'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+								);
+
+								$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
+							}
+						}
 						$auth = $this->session->userdata('auth');
 						$this->fungsi->set_log($auth['user_id'], $auth['username'],'1003','Application.CoreMember.processAddCoreMember',$auth['user_id'],'Add New Member');
 						$msg = "<div class='alert alert-success alert-dismissable'>  
@@ -596,7 +677,7 @@
 				$this->session->set_userdata('message',$msg);
 				redirect('member/add');
 			}
-		}
+	}
 
 		public function editCoreMember(){
 			$member_id 	= $this->uri->segment(3);
