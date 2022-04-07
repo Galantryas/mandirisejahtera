@@ -106,11 +106,17 @@
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/edit-date/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green-jungle" role="button"><i class="fa fa-print"></i> Edit Tanggal</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>';
-				}else{
+				}else if($creditsaccount->credits_approve_status == 0){
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>';
+				}else{
+					$row[] = '
+						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
+						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
+						<a href="'.base_url().'credit-account/delete/'.$creditsaccount->credits_account_id.'" class="btn btn-xs red" role="button"><i class="fa fa-trash"></i> Hapus</a>';
 				}
 			    // }
 	            $data[] = $row;
@@ -198,6 +204,33 @@
 						</div> ";
 				$this->session->set_userdata('message',$msg);
 				$url='credit-account/edit-date/'.$data['credits_account_id'];
+				redirect($url);
+			}
+		}
+
+		public function deleteAcctCreditAccount(){
+			$credits_account_id	= $this->uri->segment(3);
+
+			$data = array(
+				'credits_account_id'		=> $credits_account_id,
+				'data_state'			 	=> 1,
+			);
+
+			if($this->AcctCreditAccount_model->updatedata($data, $data['credits_account_id'])){
+				$msg = "<div class='alert alert-success alert-dismissable'>
+						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>					
+							Hapus Pinjaman Berhasil
+						</div> ";
+				$this->session->set_userdata('message',$msg);
+				$url='credit-account';
+				redirect($url);
+			}else{
+				$msg = "<div class='alert alert-danger alert-dismissable'>
+						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>					
+							Hapus Pinjaman Tidak Berhasil
+						</div> ";
+				$this->session->set_userdata('message',$msg);
+				$url='credit-account';
 				redirect($url);
 			}
 		}
@@ -2462,59 +2495,59 @@
 			
 		}
 		
-		public function slidingrate2($id){
-			$creditsaccount 	= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
+		// public function slidingrate2($id){
+		// 	$creditsaccount 	= $this->AcctCreditAccount_model->getCreditsAccount_Detail($id);
 			
 
-			/*print_r("detailpinjaman ");
-			print_r($detailpinjaman);
-			exit;*/
-			$credits_account_net_price 		= $creditsaccount['credits_account_net_price'];
-			$credits_account_um 			= $creditsaccount['credits_account_um'];
-			$credits_account_margin 		= $creditsaccount['credits_account_margin'];
-			$credits_account_period 		= $creditsaccount['credits_account_period'];			
+		// 	/*print_r("detailpinjaman ");
+		// 	print_r($detailpinjaman);
+		// 	exit;*/
+		// 	$credits_account_net_price 		= $creditsaccount['credits_account_net_price'];
+		// 	$credits_account_um 			= $creditsaccount['credits_account_um'];
+		// 	$credits_account_margin 		= $creditsaccount['credits_account_margin'];
+		// 	$credits_account_period 		= $creditsaccount['credits_account_period'];			
 
-			$total_credits_account 			= $credits_account_net_price - $credits_account_um;
+		// 	$total_credits_account 			= $credits_account_net_price - $credits_account_um;
 
 
 
 
 			
-			$jangkawaktuth 		= $jangkawaktu/12;
-			$percentageth 		= ($margin*100)/$pinjaman;
-			$percentagebl 		= round($percentageth/$jangkawaktu,2);
+		// 	$jangkawaktuth 		= $jangkawaktu/12;
+		// 	$percentageth 		= ($margin*100)/$pinjaman;
+		// 	$percentagebl 		= round($percentageth/$jangkawaktu,2);
 			
-			$angsuranpokok 		= round($pinjaman/$jangkawaktuth/12,2);
+		// 	$angsuranpokok 		= round($pinjaman/$jangkawaktuth/12,2);
 			
-			$pola 				= array();
-			$totpinjaman 		= $pinjaman;
-			$totpokok 			= 0;
-			for($i=1; $i<=$jangkawaktu; $i++){
-				if($creditsaccount['credits_payment_period'] == 1){
-					$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$i." months", strtotime($creditsaccount['credits_account_date']))); 
-				} else {
-					$a = $i * 7;
+		// 	$pola 				= array();
+		// 	$totpinjaman 		= $pinjaman;
+		// 	$totpokok 			= 0;
+		// 	for($i=1; $i<=$jangkawaktu; $i++){
+		// 		if($creditsaccount['credits_payment_period'] == 1){
+		// 			$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$i." months", strtotime($creditsaccount['credits_account_date']))); 
+		// 		} else {
+		// 			$a = $i * 7;
 
-					$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$a." days", strtotime($creditsaccount['credits_account_date']))); 
-				}
+		// 			$tanggal_angsuran 	= date('d-m-Y', strtotime("+".$a." days", strtotime($creditsaccount['credits_account_date']))); 
+		// 		}
 
-				$angsuranmargin 				= round(($totpinjaman * $percentageth/100)/$jangkawaktu,2);
-				$totangsuran 					= $angsuranpokok + $angsuranmargin;
-				$totpokok						= $totpokok + $angsuranpokok;
-				$sisapokok 						= $pinjaman - $totpokok;
-				$pola[$i]['ke']					= $i;
-				$pola[$i]['angsuran']			= $totangsuran;
-				$pola[$i]['tanggal_angsuran']	= $tanggal_angsuran;
-				$pola[$i]['angsuran_pokok']		= $angsuranpokok;
-				$pola[$i]['angsuran_margin']	= $angsuranmargin;
-				$pola[$i]['akumulasi_pokok']	= $totpokok;
-				$pola[$i]['sisa_pokok']			= $sisapokok;
-				$totpinjaman					= $totpinjaman - $angsuranpokok;
-			}
+		// 		$angsuranmargin 				= round(($totpinjaman * $percentageth/100)/$jangkawaktu,2);
+		// 		$totangsuran 					= $angsuranpokok + $angsuranmargin;
+		// 		$totpokok						= $totpokok + $angsuranpokok;
+		// 		$sisapokok 						= $pinjaman - $totpokok;
+		// 		$pola[$i]['ke']					= $i;
+		// 		$pola[$i]['angsuran']			= $totangsuran;
+		// 		$pola[$i]['tanggal_angsuran']	= $tanggal_angsuran;
+		// 		$pola[$i]['angsuran_pokok']		= $angsuranpokok;
+		// 		$pola[$i]['angsuran_margin']	= $angsuranmargin;
+		// 		$pola[$i]['akumulasi_pokok']	= $totpokok;
+		// 		$pola[$i]['sisa_pokok']			= $sisapokok;
+		// 		$totpinjaman					= $totpinjaman - $angsuranpokok;
+		// 	}
 			
-			return $pola;
+		// 	return $pola;
 			
-		}
+		// }
 		
 		public function rate1($nper, $pmt, $pv, $fv = 0.0, $type = 0, $guess = 0.1) {
 			$rate = $guess;
@@ -4063,7 +4096,7 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>	
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_interest_amount'])."</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])."</div>
 							</td>	
 						</tr>
 						<tr>
@@ -4076,7 +4109,7 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>	
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp.</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal(($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])+$acctcreditsaccount['credits_account_amount'])."</div>
 							</td>	
 						</tr>
 						<tr>
@@ -4113,9 +4146,9 @@
 							</td>		
 							<td style=\"text-align:left;\" width=\"2%\">
 								<div style=\"font-size:12px;\"><b>: </b></div>
-							</td>	
+							</td>
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_principal_amount'])." per ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_payment_amount'])." per ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
 							</td>	
 						</tr>
 						<tr>

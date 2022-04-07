@@ -117,7 +117,6 @@
 				$row[] = $customers->member_no;
 				$row[] = $customers->member_name;
 				$row[] = $customers->member_address;
-				// $row[] = $customers_company_name;
 				$row[] = $memberstatus[$customers->member_status];
 				$row[] = $customers->member_phone;
 				$row[] = number_format($customers->member_principal_savings_last_balance, 2);
@@ -683,6 +682,7 @@
 			$member_id 	= $this->uri->segment(3);
 
 			$data['main_view']['coremember']		= $this->CoreMember_model->getCoreMember_Detail($member_id);
+			// print_r( $this->CoreMember_model->getCoreMember_Detail($member_id));exit;
 
 			$data['main_view']['corememberworking']	= $this->CoreMember_model->getCoreMemberWorking_Detail($member_id);
 
@@ -772,22 +772,20 @@
 				'member_class_id'						=> $this->input->post('member_class_id', true),
 				'member_class_mandatory_savings'		=> $member_class_mandatory_savings,
 				'member_company_mandatory_savings'		=> $member_company_mandatory_savings,
-				'member_mandatory_savings'				=> $member_mandatory_savings,
+				'member_mandatory_savings'				=> $this->input->post('member_mandatory_savings', true),
 				'member_debet_preference'				=> $this->input->post('member_debet_preference', true),
 				'member_debet_savings_account_id'		=> $this->input->post('member_debet_savings_account_id', true),
 			);
 			// print_r($data);exit;
 
-			if($member_mandatory_savings <= 0){
-				$msg = "<div class='alert alert-danger alert-dismissable'> 
-						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
-							Simpanan Wajib Harus Diisi Salah Satu !
-						</div> ";
-				$this->session->set_userdata('message',$msg);
-				redirect('member/edit/'.$data['member_id']);
-			}
-
-			
+			// if($member_mandatory_savings <= 0){
+			// 	$msg = "<div class='alert alert-danger alert-dismissable'> 
+			// 			<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+			// 				Simpanan Wajib Harus Diisi Salah Satu !
+			// 			</div> ";
+			// 	$this->session->set_userdata('message',$msg);
+			// 	redirect('member/edit/'.$data['member_id']);
+			// }
 
 			$this->form_validation->set_rules('member_name', 'Nama', 'required');
 			$this->form_validation->set_rules('member_address', 'Alamat', 'required');
@@ -3081,14 +3079,6 @@
 				$this->excel->getActiveSheet()->getStyle('B3:P3')->getFont()->setBold(true);	
 				$this->excel->getActiveSheet()->setCellValue('B1',"Master Data Anggota");
 				
-				$this->excel->getActiveSheet()->mergeCells("R1:T1");
-				$this->excel->getActiveSheet()->getStyle('R1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->excel->getActiveSheet()->getStyle('R1')->getFont()->setBold(true)->setSize(16);
-				$this->excel->getActiveSheet()->getStyle('R3:T3')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-				$this->excel->getActiveSheet()->getStyle('R3:T3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->excel->getActiveSheet()->getStyle('R3:T3')->getFont()->setBold(true);	
-				$this->excel->getActiveSheet()->setCellValue('R1',"Data Anggota di Perusahaan");
-				
 				$this->excel->getActiveSheet()->mergeCells("V1:X1");
 				$this->excel->getActiveSheet()->getStyle('V1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->excel->getActiveSheet()->getStyle('V1')->getFont()->setBold(true)->setSize(16);
@@ -3103,7 +3093,7 @@
 				$this->excel->getActiveSheet()->getStyle('Z3:AB3')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 				$this->excel->getActiveSheet()->getStyle('Z3:AB3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->excel->getActiveSheet()->getStyle('Z3:AB3')->getFont()->setBold(true);	
-				$this->excel->getActiveSheet()->setCellValue('Z1',"Data Anggota Berdasar Gender");
+				$this->excel->getActiveSheet()->setCellValue('Z1',"Data Anggota Berdasar Status");
 
 				$this->excel->getActiveSheet()->setCellValue('B3',"No");
 				$this->excel->getActiveSheet()->setCellValue('C3',"No Anggota");
@@ -3120,10 +3110,6 @@
 				$this->excel->getActiveSheet()->setCellValue('N3',"Simpanan Pokok");
 				$this->excel->getActiveSheet()->setCellValue('O3',"Simpanan Khusus");
 				$this->excel->getActiveSheet()->setCellValue('P3',"Simpanan Wajib");
-
-				$this->excel->getActiveSheet()->setCellValue('R3',"No");
-				$this->excel->getActiveSheet()->setCellValue('S3',"Nama Perusahaan");
-				$this->excel->getActiveSheet()->setCellValue('T3',"Jumlah Anggota");
 
 				$this->excel->getActiveSheet()->setCellValue('V3', "No");
 				$this->excel->getActiveSheet()->setCellValue('V4', "1");
@@ -3194,7 +3180,7 @@
 						}
 						$this->excel->getActiveSheet()->setCellValue('L'.$j, $partner_working_type);
 						
-						$this->excel->getActiveSheet()->setCellValue('M'.$j, $val['company_name']);
+						$this->excel->getActiveSheet()->setCellValue('M'.$j, $val['member_company_name']);
 						$this->excel->getActiveSheet()->setCellValue('N'.$j, number_format($val['member_principal_savings'], 2));
 						$this->excel->getActiveSheet()->setCellValue('O'.$j, number_format($val['member_special_savings'], 2));
 						$this->excel->getActiveSheet()->setCellValue('P'.$j, number_format($val['member_mandatory_savings'], 2));	
@@ -3218,47 +3204,6 @@
 						continue;
 					}
 					$j++;
-				}
-				$k = 4;
-				
-						$this->excel->setActiveSheetIndex(0);
-
-						$this->excel->getActiveSheet()->getStyle('R'.$k.':T'.$k)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-						$this->excel->getActiveSheet()->getStyle('R'.$k)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-						$this->excel->getActiveSheet()->getStyle('S'.$k)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-						$this->excel->getActiveSheet()->getStyle('T'.$k)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						
-						
-						$this->excel->getActiveSheet()->setCellValue('R'.$k, '1');
-						$this->excel->getActiveSheet()->setCellValue('S'.$k, 'Tidak Ada');
-						$this->excel->getActiveSheet()->setCellValue('T'.$k, $count_member_entership);
-
-				$i = 5;
-				$no=1;
-				foreach($corecompany as $key=>$company){
-					$no++;
-					if(is_numeric($key)){
-						$count_member_company = 0;
-						$count_member_entership = 0;
-						foreach($coremember->result_array() as $key2=>$member){
-							if($member['company_id'] == $company['company_id']){
-								$count_member_company = $count_member_company + 1;
-							}
-						}
-						$this->excel->setActiveSheetIndex(0);
-						$this->excel->getActiveSheet()->getStyle('R'.$i.':T'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-						$this->excel->getActiveSheet()->getStyle('R'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-						$this->excel->getActiveSheet()->getStyle('S'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-						$this->excel->getActiveSheet()->getStyle('T'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						
-						
-						$this->excel->getActiveSheet()->setCellValue('R'.$i, $no);
-						$this->excel->getActiveSheet()->setCellValue('S'.$i, $company['company_name']);
-						$this->excel->getActiveSheet()->setCellValue('T'.$i, $count_member_company);
-					}else{
-						continue;
-					}
-					$i++;
 				}
 				
 				$this->excel->getActiveSheet()->getStyle('V3:X5')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);

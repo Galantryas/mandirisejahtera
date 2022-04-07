@@ -348,11 +348,38 @@ input:read-only {
 		var bunga 				= (parseFloat(angsuranbunga) * 12) /  parseFloat(pinjaman);
 		var bunga_perbulan 		= (parseFloat(bunga) * 100) / 12;			
 		var bungafix			= bunga_perbulan.toFixed(3);
-	
-		
-				
 
-	
+		$('#credit_account_interest').textbox('setValue',bungafix);
+		$('#credit_account_interest_view').textbox('setValue',bungafix);
+		$('#credits_account_interest_amount').textbox('setValue',angsuranbunga);
+		$('#credits_account_interest_amount_view').textbox('setValue',toRp(angsuranbunga));
+
+		var name 	= 'credit_account_interest';
+		var name2 	= 'credit_account_interest_view';
+		var name3 	= 'credits_account_interest_amount';
+		var name4 	= 'credits_account_interest_amount_view';
+
+		function_elements_add(name, bungafix);
+		function_elements_add(name2, bungafix);
+		function_elements_add(name3, angsuranbunga);
+		function_elements_add(name4, toRp(angsuranbunga));
+	}
+
+	function hitungbungaflatanuitas(){
+		var jumlah_angsuran 	= document.getElementById("credit_account_payment_amount").value;
+		var angsuranpokok 		= document.getElementById("credits_account_principal_amount").value;
+		var pinjaman 			= document.getElementById("credits_account_last_balance_principal").value;
+		var period 				= document.getElementById("credit_account_period").value;
+		var interest 			= document.getElementById("credits_account_interest_amount").value;
+
+		var angsuranpokok		= pinjaman/period;
+
+		var angsuranbunga 		= parseFloat(jumlah_angsuran) - parseFloat(angsuranpokok);
+		
+
+		var bunga 				= (parseFloat(angsuranbunga) * 12) /  parseFloat(pinjaman);
+		var bunga_perbulan 		= (parseFloat(bunga) * 100) / 12;			
+		var bungafix			= bunga_perbulan.toFixed(3);
 
 		$('#credit_account_interest').textbox('setValue',bungafix);
 		$('#credit_account_interest_view').textbox('setValue',bungafix);
@@ -433,6 +460,10 @@ input:read-only {
 				if(value == 1 ){
 					$('#credit_account_payment_amount_view').textbox('readonly',false);  // disable it
 				} else if(value == 2 ){
+					$('#credit_account_payment_amount_view').textbox('readonly',false);  // disable it
+				} else if(value == 3 ){
+					$('#credit_account_payment_amount_view').textbox('readonly',true);  // disable it
+				} else if(value == 4 ){
 					$('#credit_account_payment_amount_view').textbox('readonly',true);  // disable it
 				}
 			}
@@ -458,6 +489,8 @@ input:read-only {
 				} else if(payment_type_id == 2){
 					angsurananuitas();
 				} else if(payment_type_id == 3){
+					angsuranflat();
+				} else if(payment_type_id == 4){
 					angsuranflat();
 				}
 				
@@ -495,6 +528,8 @@ input:read-only {
 					angsurananuitas();
 				} else if(payment_type_id == 3){
 					angsuranflat();
+				} else if(payment_type_id == 4){
+					angsuranflat();
 				}
 				
 				receivedamount();
@@ -517,24 +552,26 @@ input:read-only {
 					loop_payment= 1;
 					return;
 				}
+
 				if(loop_payment ==1){
 					loop_payment =0;
 					var tampil = toRp(value);
-				$('#credit_account_payment_amount').textbox('setValue', value);
-				$('#credit_account_payment_amount_view').textbox('setValue', tampil);
-					
-				function_elements_add(name, value);
-				function_elements_add(name2, tampil);
-
-				//hitungbungaflat();
-				if(payment_type_id == 1){
-					if(interest > 0 || interest != ''){
+					$('#credit_account_payment_amount').textbox('setValue', value);
+					$('#credit_account_payment_amount_view').textbox('setValue', tampil);
 						
+					function_elements_add(name, value);
+					function_elements_add(name2, tampil);
+
+					//hitungbungaflat();
+					if(payment_type_id == 1 || payment_type_id == 3 || payment_type_id == 4){
+						if(interest > 0 || interest != ''){
 							hitungbungaflat();
 						}
-					} 
-					
-				
+					} else if(payment_type_id == 2){
+						if(interest > 0 || interest != ''){
+							hitungbungaflatanuitas();
+						}
+					}
 				}else{
 					loop_payment=1;
 					return;

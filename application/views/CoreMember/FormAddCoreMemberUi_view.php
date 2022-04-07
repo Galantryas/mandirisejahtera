@@ -47,13 +47,13 @@
 				function_elements_add('kecamatan_id', 0);
 				function_elements_add('kelurahan_id', 0);
 				$('#city_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kecamatan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -81,10 +81,10 @@
 				function_elements_add('kecamatan_id', 0);
 				function_elements_add('kelurahan_id', 0);
 				$('#kecamatan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -111,7 +111,7 @@
 				function_elements_add('kelurahan_id', 0);
 
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -818,7 +818,7 @@
 												} else {
 											?>
 												<select name="city_id" id="city_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php
 												}
@@ -836,7 +836,7 @@
 													echo form_dropdown('kecamatan_id', $corekecamatan, set_value('kecamatan_id', $data['kecamatan_id']),'id="kecamatan_id" class="easyui-combobox" style="width:100%;"');
 												} else {
 											?><select name="kecamatan_id" id="kecamatan_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php } ?>
 			
@@ -853,7 +853,7 @@
 													echo form_dropdown('kelurahan_id', $corekelurahan, set_value('kelurahan_id', $data['kelurahan_id']),'id="kelurahan_id" class="easyui-combobox" style="width:100%;"');
 												} else {
 											?><select name="kelurahan_id" id="kelurahan_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php } ?>
 										</td>

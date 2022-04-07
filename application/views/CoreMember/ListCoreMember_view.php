@@ -137,7 +137,6 @@
 									<th width="7%">No Anggota</th>
 									<th width="12%">Nama</th>
 									<th width="15%">Alamat</th>
-									<!-- <th width="15%">Perusahaan</th> -->
 									<th width="8%">Status</th>
 									<th width="8%">No. Telp</th>
 									<th width="10%">Simp Pokok</th>

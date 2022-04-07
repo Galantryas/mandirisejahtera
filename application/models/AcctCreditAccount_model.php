@@ -492,6 +492,7 @@
 	        $this->db->join('acct_source_fund','acct_credits_account.source_fund_id = acct_source_fund.source_fund_id');
 	        $this->db->where('acct_credits_account.credits_account_date >=', $start_date);
 			$this->db->where('acct_credits_account.credits_account_date <=', $end_date);
+			$this->db->where('acct_credits_account.data_state', 0);
 			//$this->db->where('acct_credits_account.credits_approve_status', 1);
 			if(!empty($credits_id)){
 				$this->db->where('acct_credits_account.credits_id', $credits_id);

@@ -153,13 +153,13 @@
 				function_elements_add('kecamatan_id', 0);
 				function_elements_add('kelurahan_id', 0);
 				$('#city_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kecamatan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -187,10 +187,10 @@
 				function_elements_add('kecamatan_id', 0);
 				function_elements_add('kelurahan_id', 0);
 				$('#kecamatan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -217,7 +217,7 @@
 				function_elements_add('kelurahan_id', 0);
 
 				$('#kelurahan_id').combobox({
-					value: '--Pilih Salah Satu--',
+					value: '',
 				});
 				$.ajax({
 				type : "POST",
@@ -557,7 +557,7 @@
 												} else {
 											?>
 												<select name="city_id" id="city_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php
 												}
@@ -576,7 +576,7 @@
 												} else {
 											?>
 												<select name="kecamatan_id" id="kecamatan_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php
 												}
@@ -595,7 +595,7 @@
 												} else {
 											?>
 												<select name="kelurahan_id" id="kelurahan_id" class="easyui-combobox" style="width: 100%">
-													<option value="">--Pilih Salah Satu--</option>
+													<option value=""></option>
 												</select>
 											<?php
 												}
@@ -648,7 +648,7 @@
 										<td width="60%"><input type="text" class="easyui-textbox" name="member_mother" id="member_mother" autocomplete="off" value="<?php echo set_value('member_mother',$coremember['member_mother']);?>" style="width:100%;"/></td>
 									</tr>
 									<tr>
-										<td width="35%">Simpanan Wajib</td>
+										<td width="35%">Simpanan Pokok</td>
 										<td width="5%">:</td>
 										<!-- <td width="60%">
 											<?php 
@@ -657,8 +657,10 @@
 												
 										</td> -->
 										<td width="60%">
-											<input type="text" class="easyui-textbox" name="member_class_mandatory_savings_view" id="member_class_mandatory_savings_view" autocomplete="off" value="<?php echo set_value('member_class_mandatory_savings_view',nominal($coremember['member_class_mandatory_savings']));?>" style="width:100%;" readonly/>
-											<input type="hidden" class="easyui-textbox" name="member_class_mandatory_savings" id="member_class_mandatory_savings" autocomplete="off" value="<?php echo set_value('member_class_mandatory_savings',$coremember['member_class_mandatory_savings']);?>" style="width:100%;"/>
+											<input type="text" class="easyui-textbox" name="member_principal_savings_view" id="member_principal_savings_view" autocomplete="off" value="<?php echo set_value('member_principal_savings_view',nominal($coremember['member_principal_savings']));?>" style="width:100%;" readonly/>
+											<input type="hidden" class="easyui-textbox" name="member_principal_savings" id="member_principal_savings" autocomplete="off" value="<?php echo set_value('member_principal_savings',$coremember['member_principal_savings']);?>" style="width:100%;"/>
+											<input type="hidden" class="easyui-textbox" name="member_mandatory_savings_view" id="member_mandatory_savings_view" autocomplete="off" value="<?php echo set_value('member_mandatory_savings_view',nominal($coremember['member_mandatory_savings']));?>" style="width:100%;" readonly/>
+											<input type="hidden" class="easyui-textbox" name="member_mandatory_savings" id="member_mandatory_savings" autocomplete="off" value="<?php echo set_value('member_mandatory_savings',$coremember['member_mandatory_savings']);?>" style="width:100%;"/>
 										</td>
 									</tr>
 									<tr>

@@ -275,6 +275,7 @@ $route['credit-account/agunan-add/save']                           = 'AcctCredit
 $route['credit-account/edit-date']                                 = 'AcctCreditAccount/editDateAcctCreditAccount';
 $route['credit-account/edit-date/(:num)']                          = 'AcctCreditAccount/editDateAcctCreditAccount/$1';
 $route['credit-account/process-edit-date']                         = 'AcctCreditAccount/processEditDateAcctCreditAccount';
+$route['credit-account/delete/(:num)']                             = 'AcctCreditAccount/deleteAcctCreditAccount/$1';
 $route['credit-account/rate4']                                     = 'AcctCreditAccount/rate4';
 
 
