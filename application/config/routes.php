@@ -434,6 +434,7 @@ $route['credits-agunan/export']               = 'AcctCreditsAgunan/export';
 $route['credits-agunan/filter']               = 'AcctCreditsAgunan/filter';
 $route['credits-agunan/get-list']             = 'AcctCreditsAgunan/getAcctCreditsAgunanList';
 $route['credits-agunan/update-status/(:num)'] = 'AcctCreditsAgunan/updateAgunanStatus/$1';
+$route['credits-agunan/print-receipt/(:num)'] = 'AcctCreditsAgunan/printAgunanReceipt/$1';
 
 //ACCT CASH PAYMENTS
 $route['cash-payments/ind-cash-payment']             = 'AcctCashPayments/indAcctCashPayment';

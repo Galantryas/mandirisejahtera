@@ -74,11 +74,11 @@ License: You must have a valid license purchased only from themeforest(the above
                         
                       
                          <img src="<?php echo base_url();?>assets/pages/img/logo/logomandirisejahtera.png" height="60%" width = "60%" />
+                         <p>KOPERASI MANDIRI SEJAHTERA</p> <!-- <br> Customized for Keisha Chemicals</p> -->
                          <?php
-                            echo $this->session->userdata('message');
+                            echo '<br><br>'.$this->session->userdata('message');
                             $this->session->unset_userdata('message');
                          ?>
-                         <p>KOPERASI MANDIRI SEJAHTERA</p> <!-- <br> Customized for Keisha Chemicals</p> -->
                         
                         <form action="<?php echo base_url();?>ValidationProcess/loginValidate" class="login-form" method="post">
                             <div class="alert alert-danger display-hide">

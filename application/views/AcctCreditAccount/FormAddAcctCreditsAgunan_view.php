@@ -314,7 +314,7 @@
 				</tbody>
 				<tbody  id="atmjamsostek" style="display:none">
 					<tr>
-						<td>Nomor</td>
+						<td>Nomor ATM</td>
 						<td> : </td>
 						<td>  <input type="text" class="form-control" name="atmjamsostek_nomor" id="atmjamsostek_nomor" autocomplete="off"/>
 						</td>
@@ -332,7 +332,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Keterangan</td>
+						<td>Rek. Tabungan / No. BPJS</td>
 						<td> : </td>
 						<td><input type="text" class="form-control" name="atmjamsostek_keterangan" id="atmjamsostek_keterangan" autocomplete="off" />
 						</td>

@@ -3610,55 +3610,108 @@
 					</tr>
 	 			</table>
 	 			<br><br>
+				 ";
 
-	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-					<tr>
-						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Pasal 2</b></div>
-						</td>			
-	 				</tr>
-	 				<tr>
-						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Jaminan</b></div>
-						</td>			
-	 				</tr>
-	 			</table>
-	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-	 				<tr>	
-						<td style=\"text-align:justify;\" width=\"100%\">
-							<div style=\"font-size:12px;\">
-							Untuk menjamin pembayaran kembali dan sebagaimana mestinya dari hutang Pihak Kedua kepada Pihak Pertama berikut bunganya dan jumlah lainnya yang karena sebab apapun wajib dibayar oleh Pihak Kedua,
-							<br>";
-				$no = 1;
-				foreach ($acctcreditsagunan as $key => $val) {
-					if($val['credits_agunan_type'] == 2){
-						$tblheader .= "<b>".$no.". No. Sertifikat : ".$val['credits_agunan_shm_no_sertifikat']."</b><br>";
-						$no++; 
-					}
-					if($val['credits_agunan_type'] == 7){
-						$tblheader .= "<b>".$no.". No. ATM Asli & Rek Tabungan : ".$val['credits_agunan_atmjamsostek_nomor']."</b><br>";
-						$no++;
-					}
+				if($acctcreditsaccount['credits_id'] != 18){
+					$tblheader .="<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Pasal 2</b></div>
+							</td>			
+						</tr>
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Jaminan</b></div>
+							</td>			
+						</tr>
+					</table>
+					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+						<tr>	
+							<td style=\"text-align:justify;\" width=\"100%\">
+								<div style=\"font-size:12px;\">
+								Untuk menjamin pembayaran kembali dan sebagaimana mestinya dari hutang Pihak Kedua kepada Pihak Pertama berikut bunganya dan jumlah lainnya yang karena sebab apapun wajib dibayar oleh Pihak Kedua,
+								<br>";
+					$no = 1;
+					foreach ($acctcreditsagunan as $key => $val) {
+						if($val['credits_agunan_type'] == 2){
+							$tblheader .= "<b>".$no.". No. Sertifikat : ".$val['credits_agunan_shm_no_sertifikat']."</b><br>";
+							$no++; 
+						}
+						if($val['credits_agunan_type'] == 7){
+							$tblheader .= "
+							<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+								<tr>
+									<td style=\"text-align:left;\" width=\"5%\">
+										<div style=\"font-size:12px;\">".$no.'. '."</div>
+									</td>
+									<td style=\"text-align:left;\" width=\"25%\">
+										<div style=\"font-size:12px;\"><b>No. ATM Asli</b></div>
+									</td>	
+									<td style=\"text-align:left;\" width=\"2%\">
+										<div style=\"font-size:12px;\"><b>: </b></div>
+									</td>	
+									<td style=\"text-align:justify;\" width=\"70%\">
+										<div style=\"font-size:12px;\"><b>".$val['credits_agunan_atmjamsostek_nomor']."</b></div>
+									</td>			
+								</tr>
+								<tr>
+									<td style=\"text-align:left;\" width=\"5%\">
+										<div style=\"font-size:12px;\"></div>
+									</td>
+									<td style=\"text-align:left;\" width=\"25%\">
+										<div style=\"font-size:12px;\"><b>Rek. Tabungan/No. BPJS</b></div>
+									</td>	
+									<td style=\"text-align:left;\" width=\"2%\">
+										<div style=\"font-size:12px;\"><b>: </b></div>
+									</td>	
+									<td style=\"text-align:justify;\" width=\"70%\">
+										<div style=\"font-size:12px;\"><b>".$val['credits_agunan_atmjamsostek_keterangan']."</b></div>
+									</td>			
+								</tr>
+							</table>";
+							$no++;
+						}
 
+					}
 				}
-				$tblheader .= "
-							</div>
-						</td>			
-	 				</tr>
-	 			</table>
-				<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-					<tr>
-						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Pasal 3</b></div>
-						</td>			
-	 				</tr>
-	 				<tr>
-						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Penyelesaian Hutang</b></div>
-						</td>			
-	 				</tr>
-	 			</table>
-	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+				if($acctcreditsaccount['credits_id'] == 18){
+					$tblheader .= "
+								</div>
+							</td>			
+						</tr>
+					</table>
+					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Pasal 2</b></div>
+							</td>			
+						</tr>
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Penyelesaian Hutang</b></div>
+							</td>			
+						</tr>
+					</table>";
+				}else{
+					$tblheader .= "
+								</div>
+							</td>			
+						</tr>
+					</table>
+					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Pasal 3</b></div>
+							</td>			
+						</tr>
+						<tr>
+							<td style=\"text-align:center;\" width=\"100%\">
+								<div style=\"font-size:12px\"><b>Penyelesaian Hutang</b></div>
+							</td>			
+						</tr>
+					</table>";
+				}
+				$tblheader .= "<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 	 				<tr>	
 						<td style=\"text-align:justify;\" width=\"100%\">
 							<div style=\"font-size:12px;\">Bilamana Pihak Kedua lalai dalam melakukan kewajibannya terhadap Koperasi dan telah pula disampaikan kepadanya peringatan - peringatan dan Pihak Kedua tetap melakukan wanprestasi, maka dengan perjanjian ini pula Pihak Kedua memberikan <b>KUASA</b> penuh kepada Koperasi untuk dan atas nama Pihak Kedua guna :</div>
@@ -3949,6 +4002,7 @@
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
 								<div style=\"font-size:12px;\">
+								2.
 								</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"25%\">
@@ -3998,7 +4052,7 @@
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
 								<div style=\"font-size:12px;\">
-								2. 
+								3. 
 								</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
@@ -4038,15 +4092,26 @@
 								<div style=\"font-size:12px;\">".$val['credits_agunan_bpkb_dealer_address']."</div>
 							</td>	
 						</tr>
-						<br>
 						";
 		}
-			$tblheader .= "<tr>
+			$tblheader .= "
+						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">
 								Selanjutnya disebut <b>\"Dealer\"</b>
+								</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							4.
+							</td>
+							<td style=\"text-align:left;\" width=\"95%\">
+								<div style=\"font-size:12px;\">
+								Pihak Kedua Memberikan kuasa kepada Pihak Pertama untuk dapat mengambil BPKB ( Barang Jaminan ) di dealer.
 								</div>
 							</td>		
 						</tr>
@@ -4085,7 +4150,24 @@
 							<td style=\"text-align:justify;\" width=\"68%\">
 								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_amount'])."</div>
 							</td>	
-						</tr>
+						</tr>";
+					if($acctcreditsaccount['payment_type_id'] == 3){
+						$tblheader .= "
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Bunga
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\">".($acctcreditsaccount['credits_account_interest']+0)."% menurun</div>
+							</td>	
+						</tr>";
+					}else{
+						$tblheader .= "
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
@@ -4098,7 +4180,9 @@
 							<td style=\"text-align:justify;\" width=\"68%\">
 								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])."</div>
 							</td>	
-						</tr>
+						</tr>";
+					}
+					$tblheader .= "
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
@@ -4137,7 +4221,25 @@
 							<td style=\"text-align:justify;\" width=\"68%\">
 								<div style=\"font-size:12px;\">".$acctcreditsaccount['credits_account_period']." Kali</div>
 							</td>	
-						</tr>
+						</tr>";
+						
+					if($acctcreditsaccount['payment_type_id'] == 3){
+						$tblheader .="
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Angsuran
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>Pokok + Bunga ".($acctcreditsaccount['credits_account_interest']+0)."% setiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."nya</b></div>
+							</td>	
+						</tr>";
+					}else{
+						$tblheader .="
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
@@ -4150,7 +4252,9 @@
 							<td style=\"text-align:justify;\" width=\"68%\">
 								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_payment_amount'])." per ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
 							</td>	
-						</tr>
+						</tr>";
+					}
+					$tblheader .="
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
@@ -4191,11 +4295,15 @@
 							</td>	
 						</tr>
 					 </table>
-					 <br><br>
+					 <br><br><br><br><br>";
+					 $no_pasal = 2;
+			if($acctcreditsaccount['credits_account_insurance'] > 0){
+				$no_pasal += 1;
+				$tblheader .="
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 3</b></div>
+								<div style=\"font-size:12px\"><b>Pasal ".$no_pasal."</b></div>
 							</td>			
 						 </tr>
 						 <tr>
@@ -4244,7 +4352,9 @@
 							<td style=\"text-align:justify;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Apabila Penggantian asuransi tidak mencukupi untuk pelunasan seluruh / sisa Hutang Pembiayaan, maka Pihak kedua berjanji dan mengikatkan diri untuk melunasinya.</div>
 							</td>			
-						 </tr>
+						 </tr>";
+					if($acctcreditsaccount['payment_type_id'] == 3){
+						$tblheader .="
 						 <tr>
 							<td style=\"text-align:left;\" width=\"5%\">
 								<div style=\"font-size:12px;\">6.</div>
@@ -4253,13 +4363,18 @@
 								<div style=\"font-size:12px;\">Apabila pihak kedua melakukan pelunasan dimuka / sudah lunas, maka perlindungan Asuransi akan berakhir pula.</div>
 							</td>			
 						 </tr>
+						 ";
+					}
+
+				$tblheader .="
 					 </table>
-					 <br><br>
-	
+					 <br><br>";
+			}
+			$tblheader .="
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 4</b></div>
+								<div style=\"font-size:12px\"><b>Pasal ".($no_pasal+1)."</b></div>
 							</td>			
 						 </tr>
 						 <tr>
@@ -4278,7 +4393,7 @@
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 5</b></div>
+								<div style=\"font-size:12px\"><b>Pasal ".($no_pasal+2)."</b></div>
 							</td>			
 						 </tr>
 						 <tr>
@@ -4331,7 +4446,7 @@
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 6</b></div>
+								<div style=\"font-size:12px\"><b>Pasal ".($no_pasal+3)."</b></div>
 							</td>			
 						 </tr>
 						 <tr>
@@ -4348,7 +4463,7 @@
 					 <table>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">1.</div>
+								<div style=\"font-size:12px;\">a.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Pihak Kedua lalai dan kelalaian ini sudah cukup dibuktikan dengan lewatnya waktu 7 (tujuh) hari sejak hari pembayaran tersebut, atau pihak kedua tidak/kurang menepati janjinya menurut perjanjian ini.</div>
@@ -4356,7 +4471,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">2.</div>
+								<div style=\"font-size:12px;\">b.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Pihak Kedua meninggal dunia sebelum melunasi hutangnya,maka semua hutang dan kewajiban Pihak Kedua yang timbul berdasarkan Surat Perjanjian ini  menjadi tanggung jawab ahli waris Pihak Kedua.</div>
@@ -4364,7 +4479,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">3.</div>
+								<div style=\"font-size:12px;\">c.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Harta benda/kekayaan Pihak Kedua baik seluruhnya maupun sebagian secara apapun dikenakan penyitaan.</div>
@@ -4372,7 +4487,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">4.</div>
+								<div style=\"font-size:12px;\">d.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Barang yang masih berstatus barang yang dijaminkan Pihak Kedua, berdasarkan perjanjian ini dipindahtangankan secara apapun kepada pihak lain tanpa persetujuan dari Pihak Pertama.</div>
@@ -4380,19 +4495,34 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">5.</div>
+								<div style=\"font-size:12px;\">e.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Barang yang masih berstatus barang yang dijaminkan Pihak Kedua, dinyatakan hilang dikarenakan tindak kriminal ataupun rusak dikarenakan apapun.</div>
 							</td>			
-						</tr>
+						</tr>";
+						
+					if($acctcreditsaccount['payment_type_id'] == 3){
+						$tblheader .="
+						 <tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+								<div style=\"font-size:12px;\">f.</div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"95%\">
+								<div style=\"font-size:12px;\">f.Biaya penitipan Jaminan sebesar Rp. 1.000,- Perhari akan dikenakan apabila pihak kedua tidak mengambil jaminan lebih dari 30 hari setelah masa kontrak berakhir dan atau lunas.</div>
+							</td>			
+						 </tr>
+						 ";
+					}
+
+					$tblheader .="
 					 </table>
 					 <br><br>
 	
 					 <table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 7</b></div>
+								<div style=\"font-size:12px\"><b>Pasal ".($no_pasal+4)."</b></div>
 							</td>			
 						 </tr>
 						 <tr>
@@ -4583,7 +4713,18 @@
 						<tr>
 							<td style=\"text-align:left;\" width=\"100%\">
 								<div style=\"font-size:12px;\">
-								Dengan ini Pihak Kedua menerima fasilitas kredit dari Pihak Pertama dengan sistem angsuran : Installment : Angsuran Pokok dan Bunga dibayar tiap bulan hingga saat jatuh tempo.
+								Dengan ini Pihak Kedua menerima fasilitas kredit dari Pihak Pertama dengan sistem angsuran : 
+								</div>
+							</td>		
+						</tr>
+						<tr>	
+							<td style=\"text-align:left;\" width=\"5%\">
+								<div style=\"font-size:12px;\">
+								</div>
+							</td>	
+							<td style=\"text-align:left;\" width=\"100%\">
+								<div style=\"font-size:12px;\">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Installment : Angsuran Pokok dan Bunga dibayar tiap bulan hingga saat jatuh tempo.
 								</div>
 							</td>			
 						</tr>
@@ -4613,6 +4754,19 @@
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
+								Administrasi Total
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>Rp. ".nominal($acctcreditsaccount['credits_account_amount']-$acctcreditsaccount['credits_account_amount_received'])."</b></div>
+							</td>	
+						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
 								Pencairan Pinjaman
 								</div>
 							</td>		
@@ -4620,9 +4774,76 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>	
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\"><b>Rp. ".nominal($pencairan)."</b></div>
+								<div style=\"font-size:12px;\"><b>Rp. ".nominal($acctcreditsaccount['credits_account_amount_received'])."</b></div>
+							</td>	
+						</tr>";
+					if($acctcreditsaccount['payment_type_id'] == 3){
+					$tblheader .= "
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">Bunga</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>".($acctcreditsaccount['credits_account_interest']+0)."% menurun per".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</b></div>
 							</td>	
 						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Periode Pembayaran
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>".$day.' '.$monthname[$month].' '.$year." s/d ".$day_due.' '.$monthname[$month_due].' '.$year_due."</b></div>
+							</td>	
+						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Waktu Pembayaran
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>".$acctcreditsaccount['credits_account_period']." Kali Jangka waktu kredit</b></div>
+							</td>	
+						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Angsuran
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>Pokok + Bunga ".($acctcreditsaccount['credits_account_interest']+0)."% setiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."nya</b></div>
+							</td>	
+						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"25%\">
+								<div style=\"font-size:12px;\">
+								Tanggal Jatuh Tempo
+								</div>
+							</td>		
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px;\"><b>: </b></div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"68%\">
+								<div style=\"font-size:12px;\"><b>".$day_due.' '.$monthname[$month_due].' '.$year_due." yang merupakan batas terakhir pembayaran (terlampir)</b></div>
+							</td>	
+						</tr>";
+					}else{
+					$tblheader .="
 						<tr>
 							<td style=\"text-align:left;\" width=\"25%\">
 								<div style=\"font-size:12px;\">
@@ -4674,49 +4895,16 @@
 							<td style=\"text-align:justify;\" width=\"68%\">
 								<div style=\"font-size:12px;\"><b>Tanggal ".$day." setiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."nya</b></div>
 							</td>	
-						</tr>
-					</table>
-					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-						<tr>
-							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 3</b></div>
-							</td>			
-						</tr>
-						<tr>
-							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>BIAYA - BIAYA</b></div>
-							</td>			
-						</tr>
-					</table>
-					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-						<tr>
-							<td style=\"text-align:justify;\" width=\"100%\">
-								<div style=\"font-size:12px;\">Pihak Kedua diwajibkan membayar biaya yang timbul dari pinjaman yang diterima dengan cara dipotongkan pada saat realisasi dengan rincian sebagai berikut :</div>
-							</td>			
-						</tr>
-						<tr>
-							<td style=\"text-align:left;\" width=\"25%\">
-								<div style=\"font-size:12px;\">Total Administrasi</div>
-							</td>
-							<td style=\"text-align:left;\" width=\"2%\">
-								<div style=\"font-size:12px;\">:</div>
-							</td>	
-							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal($total_administration)."</div>
-							</td>			
-						</tr>
-						<tr>
-							<td style=\"text-align:justify;\" width=\"100%\">
-								<div style=\"font-size:12px;\">Serta biaya penagihan yang menurut perjanjian ini antara lain biaya teguran/peringatan akibat kelalaian membayar dari Pihak Kedua termasuk pula biaya-biaya lain yang mungkin timbul sehubungan dengan pengakuan hutang Pihak Kedua menurut perjanjian ini harus dipikul dan dibayar Pihak Kedua.</div>
-							</td>			
-						</tr>
+						</tr>";
+					}
+					$tblheader .="
 					</table>
 					<br><br>
 
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 4</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 3</b></div>
 							</td>			
 						</tr>
 						<tr>
@@ -4726,7 +4914,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:justify;\" width=\"100%\">
-								<div style=\"font-size:12px;\">Pihak Kedua diwajibkan membayar bunga kepada Koperasi sebesar <b>2,5 % ( Dua Koma Lima) persen flat</b>, dan jika hutang dilunasi sebelum jatuh tempo Pihak Kedua wajib Membayar seluruh sisa pokok  dan bunga sampai akhir periode. </div>
+								<div style=\"font-size:12px;\">Pihak Kedua diwajibkan membayar Angsuran tiap bulan sesuai dengan Jadwal yang sudah disepakati bersama, dan jika hutang dilunasi sebelum jatuh tempo Pihak Kedua wajib Membayar seluruh sisa pokok  dan bunga sampai akhir periode. </div>
 							</td>			
 						</tr>
 					</table>
@@ -4735,7 +4923,7 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 5</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 4</b></div>
 							</td>			
 						</tr>
 						<tr>
@@ -4837,22 +5025,33 @@
 							</td>	
 						</tr>
 					</table>
-					<br><br>
+					<br><br><br><br><br>
 
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 6</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 5</b></div>
 							</td>			
 						</tr>
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>DENDA</b></div>
+								<div style=\"font-size:12px\"><b>DENDA DAN BIAYA</b></div>
 							</td>			
 						</tr>
 						<tr>
-							<td style=\"text-align:justify;\" width=\"100%\">
+							<td style=\"text-align:justify;\" width=\"5%\">
+								<div style=\"font-size:12px;\">1.</div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Dalam hal Pihak Kedua lalai terhadap kewajibannya kepada Koperasi, yang cukup dibuktikan dengan lewatnya tanggal pembayaran/pelunasan, sehingga tidak diperlukan pemberitahuan terlebih dahulu kepada Pihak Kedua, dengan ini diwajibkan membayar denda kepada Koperasi sebesar <b>0,5% dari total angsuran untuk tiap hari keterlambatan dan biaya tagih sebesar Rp. 15.000 ( Lima Belas Ribu Rupiah )  Per Kedatangan.</b></div>
+							</td>			
+						</tr>
+						<tr>
+							<td style=\"text-align:justify;\" width=\"5%\">
+								<div style=\"font-size:12px;\">2.</div>
+							</td>	
+							<td style=\"text-align:justify;\" width=\"95%\">
+								<div style=\"font-size:12px;\">Biaya penagihan yang menurut perjanjian antara lain biaya teguran/peringatan akibat kelalaian membayar dari Pihak Kedua termasuk pula biaya-biaya lain yang mungkin timbul sehubungan dengan pengakuan hutang Pihak Kedua menurut perjanjian ini harus dipikul dan dibayar Pihak Kedua. Besaran Biaya Tagih <b>sebesar Rp. 15.000 ( Lima Belas Ribu Rupiah ) Per Kedatangan.</b></div>
 							</td>			
 						</tr>
 					</table>
@@ -4861,7 +5060,7 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 7</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 6</b></div>
 							</td>			
 						</tr>
 						<tr>
@@ -4915,7 +5114,7 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 8</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 7</b></div>
 							</td>			
 						</tr>
 						<tr>
@@ -4933,7 +5132,7 @@
 					<table>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">1.</div>
+								<div style=\"font-size:12px;\">a.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Pihak Kedua lalai dan kelalaian ini sudah cukup dibuktikan dengan lewatnya waktu 7 (tujuh) hari sejak hari pembayaran tersebut, atau pihak kedua tidak/kurang menepati janjinya menurut perjanjian ini.</div>
@@ -4941,7 +5140,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">2.</div>
+								<div style=\"font-size:12px;\">b.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Pihak Kedua meninggal dunia sebelum melunasi hutangnya,maka semua hutang dan kewajiban Pihak Kedua yang timbul berdasarkan Surat Perjanjian Hutang Piutang ini berikut semua perubahan/perpanjangan merupakan satu kesatuan hutang dan penyelesaiannya menjadi tanggung jawab ahli waris Pihak Kedua.</div>
@@ -4949,7 +5148,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">3.</div>
+								<div style=\"font-size:12px;\">c.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Pihak Kedua ditaruh di bawah pengampuan (curatele) atau karena/dengan cara apapun kehilangan hak untuk mengurus harta benda/kekayaannya.</div>
@@ -4957,7 +5156,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">4.</div>
+								<div style=\"font-size:12px;\">d.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Menurut pertimbangan Pihak Pertama, bahwa harta kekayaan Pihak Kedua menyusut atau berkurang.</div>
@@ -4965,7 +5164,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">5.</div>
+								<div style=\"font-size:12px;\">e.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Harta benda/kekayaan Pihak Kedua baik seluruhnya maupun sebagian secara apapun dikenakan penyitaan.</div>
@@ -4973,7 +5172,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">6.</div>
+								<div style=\"font-size:12px;\">f.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Barang yang masih berstatus barang yang dijaminkan Pihak Kedua, berdasarkan perjanjian ini akan dipindahtangankan secara apapun kepada pihak lain tanpa persetujuan dari Pihak Pertama.</div>
@@ -4981,7 +5180,7 @@
 						</tr>
 						<tr>
 							<td style=\"text-align:left;\" width=\"5%\">
-								<div style=\"font-size:12px;\">7.</div>
+								<div style=\"font-size:12px;\">g.</div>
 							</td>
 							<td style=\"text-align:left;\" width=\"95%\">
 								<div style=\"font-size:12px;\">Barang yang masih berstatus barang yang dijaminkan Pihak Kedua, dinyatakan hilang dikarenakan tindak kriminal ataupun rusak dikarenakan apapun.</div>
@@ -4993,7 +5192,7 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 9</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 8</b></div>
 							</td>			
 						</tr>
 						<tr>
@@ -5013,7 +5212,7 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 10</b></div>
+								<div style=\"font-size:12px\"><b>Pasal 9</b></div>
 							</td>			
 						</tr>
 						<tr>

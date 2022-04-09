@@ -64,6 +64,18 @@
 	 		$this->db->order_by('acct_credits_account.credits_account_serial', 'ASC');
 	 		return $this->db->get();
 		}
+
+		public function getAcctCreditAgunanDetail($credits_agunan_id){
+			$this->db->select('acct_credits_agunan.*, acct_credits_account.credits_id, acct_credits_account.credits_account_date, acct_credits_account.credits_account_serial, acct_credits_account.member_id, core_member.member_name, core_member.member_identity_no, core_member_working.member_company_job_title, core_member.member_address, core_member.member_phone');
+	        $this->db->from('acct_credits_agunan');
+	        $this->db->join('acct_credits_account','acct_credits_agunan.credits_account_id = acct_credits_account.credits_account_id');
+	        $this->db->join('core_member','acct_credits_account.member_id = core_member.member_id');
+	        $this->db->join('core_member_working','core_member_working.member_id = core_member.member_id');
+	 		$this->db->where('acct_credits_agunan.data_state', 0);
+	 		$this->db->where('acct_credits_agunan.credits_agunan_id', $credits_agunan_id);
+            $result = $this->db->get()->row_array();
+	 		return $result;
+		}
 		
 
 		private function _get_datatables_query($branch_id)
