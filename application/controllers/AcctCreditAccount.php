@@ -73,8 +73,9 @@
 				/*print_r(" Sesi");*/
 			}
 
-			$creditsapprovestatus = $this->configuration->CreditsApproveStatus();
-			$creditsaccountstatus = $this->configuration->CreditsAccountStatus();
+			$creditsapprovestatus 	= $this->configuration->CreditsApproveStatus();
+			$creditsaccountstatus 	= $this->configuration->CreditsAccountStatus();
+			$creditsaccountpayment	= $this->configuration->PaymentType();
 
 			$list = $this->AcctCreditAccount_model->get_datatables_master($sesi['start_date'] , $sesi['end_date'], $sesi['credits_id'], $sesi['branch_id']);
 	        $data = array();
@@ -86,6 +87,7 @@
 	            $row[] = $creditsaccount->credits_account_serial;
 	            $row[] = $creditsaccount->member_name;
 	            $row[] = $creditsaccount->credits_name;
+	            $row[] = $creditsaccountpayment[$creditsaccount->payment_type_id];
 	            $row[] = $creditsaccount->source_fund_name;
 	            $row[] = tgltoview($creditsaccount->credits_account_date);
 	            $row[] = number_format($creditsaccount->credits_account_amount, 2);
@@ -324,6 +326,7 @@
 					'credits_agunan_shm_keterangan'				=> $this->input->post('shm_keterangan', true),
 					'credits_agunan_atmjamsostek_nomor'			=> $this->input->post('atmjamsostek_nomor', true),
 					'credits_agunan_atmjamsostek_nama'			=> $this->input->post('atmjamsostek_nama', true),
+					'credits_agunan_atmjamsostek_bank'			=> $this->input->post('atmjamsostek_bank', true),
 					'credits_agunan_atmjamsostek_taksiran'		=> $this->input->post('atmjamsostek_taksiran', true),
 					'credits_agunan_atmjamsostek_keterangan'	=> $this->input->post('atmjamsostek_keterangan', true),
 					'credits_agunan_other_keterangan'			=> $this->input->post('other_keterangan', true)
@@ -364,6 +367,7 @@
 			$data_agunan['credits_agunan_shm_keterangan'] 			= '';
 			$data_agunan['credits_agunan_atmjamsostek_nomor'] 		= '';
 			$data_agunan['credits_agunan_atmjamsostek_nama'] 		= '';
+			$data_agunan['credits_agunan_atmjamsostek_bank'] 		= '';
 			$data_agunan['credits_agunan_atmjamsostek_taksiran'] 	= '';
 			$data_agunan['credits_agunan_atmjamsostek_keterangan'] 	= '';
 			$data_agunan['credits_agunan_other_keterangan'] 		= '';
@@ -409,6 +413,7 @@
 				"credits_account_materai"					=> $this->input->post('credit_account_materai',true),
 				"credits_account_risk_reserve"				=> $this->input->post('credit_account_risk_reserve',true),
 				"credits_account_stash"						=> $this->input->post('credit_account_stash',true),
+				"credits_account_principal"					=> $this->input->post('credit_account_principal',true),
 				"credits_account_amount_received"			=> $this->input->post('credit_account_amount_received',true),
 				"credits_account_principal_amount"			=> $this->input->post('credits_account_principal_amount',true),
 				"credits_account_interest_amount"			=> $this->input->post('credits_account_interest_amount',true),
@@ -483,6 +488,7 @@
 									'credits_agunan_bpkb_keterangan'			=> $val['credits_agunan_bpkb_keterangan'],
 									'credits_agunan_atmjamsostek_nomor'			=> $val['credits_agunan_atmjamsostek_nomor'],
 									'credits_agunan_atmjamsostek_nama'			=> $val['credits_agunan_atmjamsostek_nama'],
+									'credits_agunan_atmjamsostek_bank'			=> $val['credits_agunan_atmjamsostek_bank'],
 									'credits_agunan_atmjamsostek_taksiran'		=> $val['credits_agunan_atmjamsostek_taksiran'],
 									'credits_agunan_atmjamsostek_keterangan'	=> $val['credits_agunan_atmjamsostek_keterangan'],
 									'credits_agunan_other_keterangan'			=> $val['credits_agunan_other_keterangan'],
@@ -574,6 +580,7 @@
 				'credits_account_materai'			=> $this->input->post('credits_account_materai', true),
 				'credits_account_risk_reserve'		=> $this->input->post('credits_account_risk_reserve', true),
 				'credits_account_stash'				=> $this->input->post('credits_account_stash', true),
+				'credits_account_principal'			=> $this->input->post('credits_account_principal', true),
 				'credits_account_amount_received'	=> $this->input->post('credits_account_amount_received', true),
 				'credits_account_date'				=> $this->input->post('credits_account_date', true),
 				'credits_account_notaris'			=> $this->input->post('credits_account_notaris', true),
@@ -890,6 +897,85 @@
 							);
 
 							$this->AcctCreditAccount_model->insertAcctJournalVoucherItem($data_credit);
+							
+							$data_detail = array (
+								'branch_id'						=> $auth['branch_id'],
+								'member_id'						=> $this->input->post('member_id', true),
+								'mutation_id'					=> $preferencecompany['cash_deposit_id'],
+								'transaction_date'				=> date('Y-m-d'),
+								'principal_savings_amount'		=> 0,
+								'special_savings_amount'		=> 0,
+								'mandatory_savings_amount'		=> $data['credits_account_stash'],
+								'operated_name'					=> $auth['username'],
+								'savings_member_detail_token'	=> $dataApprove['credits_account_token'].'ST',
+							);
+
+							$this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail);
+
+							$data_member = array (
+								'member_id'								=> $this->input->post('member_id', true),
+								'member_mandatory_savings_last_balance'	=> $this->input->post('member_mandatory_savings_last_balance', true) + $data['credits_account_stash'],
+							);
+
+							$this->CoreMember_model->updateCoreMember($data_member);
+							
+						}
+
+						if($data['credits_account_principal'] != '' && $data['credits_account_principal'] > 0){
+							$preferencecompany 					= $this->AcctCreditAccount_model->getPreferenceCompany();
+							$preferenceinventory 				= $this->AcctCreditAccount_model->getPreferenceInventory();	
+							$account_id_default_status 			= $this->AcctCreditAccount_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
+
+							$data_debet = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $preferencecompany['account_cash_id'],
+								'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+								'journal_voucher_amount'		=> $data['credits_account_principal'],
+								'journal_voucher_debit_amount'	=> $data['credits_account_principal'],
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'journal_voucher_item_token' 	=> $dataApprove['credits_account_token'].'ST'.$preferencecompany['account_cash_id'],
+								'created_id' 					=> $auth['user_id'],
+							);
+
+							$this->AcctCreditAccount_model->insertAcctJournalVoucherItem($data_debet);
+
+							$account_id_default_status 			= $this->AcctCreditAccount_model->getAccountIDDefaultStatus($preferencecompany['account_principal_id']);
+
+							$data_credit = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $preferencecompany['account_principal_id'],
+								'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+								'journal_voucher_amount'		=> $data['credits_account_principal'],
+								'journal_voucher_credit_amount'	=> $data['credits_account_principal'],
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 1,
+								'journal_voucher_item_token'	=> $dataApprove['credits_account_token'].'ST'.$preferencecompany['account_principal_id'],
+								'created_id' 					=> $auth['user_id'],
+							);
+
+							$this->AcctCreditAccount_model->insertAcctJournalVoucherItem($data_credit);
+							
+							$data_detail = array (
+								'branch_id'						=> $auth['branch_id'],
+								'member_id'						=> $this->input->post('member_id', true),
+								'mutation_id'					=> $preferencecompany['cash_deposit_id'],
+								'transaction_date'				=> date('Y-m-d'),
+								'principal_savings_amount'		=> 0,
+								'special_savings_amount'		=> 0,
+								'principal_savings_amount'		=> $data['credits_account_principal'],
+								'operated_name'					=> $auth['username'],
+								'savings_member_detail_token'	=> $dataApprove['credits_account_token'].'ST',
+							);
+
+							$this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail);
+
+							$data_member = array (
+								'member_id'								=> $this->input->post('member_id', true),
+								'member_principal_savings_last_balance'	=> $this->input->post('member_principal_savings_last_balance', true) + $data['credits_account_principal'],
+							);
+
+							$this->CoreMember_model->updateCoreMember($data_member);
 							
 						}
 
@@ -3312,6 +3398,7 @@
 					$agunanatmjamsostek[] = array (
 						'credits_agunan_atmjamsostek_nomor'			=> $val['credits_agunan_atmjamsostek_nomor'],
 						'credits_agunan_atmjamsostek_nama'			=> $val['credits_agunan_atmjamsostek_nama'],
+						'credits_agunan_atmjamsostek_bank'			=> $val['credits_agunan_atmjamsostek_bank'],
 						'credits_agunan_atmjamsostek_keterangan'	=> $val['credits_agunan_atmjamsostek_keterangan'],
 					);
 				}

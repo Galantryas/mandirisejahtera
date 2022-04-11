@@ -137,8 +137,9 @@
 							<th width="10%">Alamat Dealer</th>
 							<th width="10%">Taksiran</th>
 							<th width="10%">Uang Muka Gross</th>
-							<th width="10%">Atas Nama</th>
 							<th width="10%">Nomor ATM/Jamsostek</th>
+							<th width="10%">Atas Nama</th>
+							<th width="10%">Nama Bank</th>
 							<th width="10%">Taksiran</th>
 							<th width="10%">Keterangan</th>
 							<th width="10%">Aksi</th>

@@ -110,6 +110,12 @@ class Configuration {
 		return $member_character;
 	}
 
+	public function debetsource(){
+		$source = array (9 => ' ', 1 => 'Simpanan Pokok', 2 => 'Tabungan');
+
+		return $source;
+	}
+
 	public function MemberIdentity(){
 		$member_identity = array (9 => ' ', 0 => 'KTP', 1 => 'KK', 2 => 'SIM', 3 => 'AKTA');
 

@@ -294,6 +294,7 @@ input:read-only {
 		var by_insurance 		= document.getElementById("credit_account_insurance").value;
 		var by_risk_reserve 	= document.getElementById("credit_account_risk_reserve").value;
 		var by_stash 			= document.getElementById("credit_account_stash").value;
+		var by_principal 		= document.getElementById("credit_account_principal").value;
 
 		if(by_admin == ''){
 			by_admin = 0;
@@ -323,7 +324,11 @@ input:read-only {
 			by_stash = 0;
 		}
 
-		var terima_bersih 	= parseFloat(pinjaman) - (parseFloat(by_admin) + parseFloat(by_provisi) + parseFloat(by_komisi) + parseFloat(by_materai) + parseFloat(by_insurance) + parseFloat(by_risk_reserve) + parseFloat(by_stash));
+		if(by_principal == ''){
+			by_principal = 0;
+		}
+
+		var terima_bersih 	= parseFloat(pinjaman) - (parseFloat(by_admin) + parseFloat(by_provisi) + parseFloat(by_komisi) + parseFloat(by_materai) + parseFloat(by_insurance) + parseFloat(by_risk_reserve) + parseFloat(by_stash) + parseFloat(by_principal));
 
 		$('#credit_account_amount_received').textbox('setValue',terima_bersih);
 		$('#credit_account_amount_received_view').textbox('setValue',toRp(terima_bersih));
@@ -543,10 +548,10 @@ input:read-only {
 
 		$('#credit_account_payment_amount_view').textbox({
 			onChange: function(value){
-				var name   	= 'credit_account_payment_amount';
-				var name2   = 'credit_account_payment_amount_view';
+				var name   			= 'credit_account_payment_amount';
+				var name2   		= 'credit_account_payment_amount_view';
 				var payment_type_id = +document.getElementById("payment_type_id").value;
-				var interest 	= +document.getElementById("credits_account_interest_amount").value;
+				var interest 		= +document.getElementById("credits_account_interest_amount").value;
 
 				if(loop_payment == 0){
 					loop_payment= 1;
@@ -808,6 +813,33 @@ input:read-only {
 			}
 		});
 
+
+		$('#credit_account_principal_view').textbox({
+			onChange: function(value){
+				var name   	= 'credit_account_principal';
+				var name2   = 'credit_account_principal_view';
+
+				if(loopins == 0){
+					loopins= 1;
+					return;
+				}
+				if(loopins ==1){
+					loopins =0;
+					var tampil = toRp(value);
+				$('#credit_account_principal').textbox('setValue', value);
+				$('#credit_account_principal_view').textbox('setValue', tampil);
+
+				function_elements_add(name, value);
+				function_elements_add(name2, tampil);
+				receivedamount();
+				
+				}else{
+					loopins=1;
+					return;
+				}
+			}
+		});
+
 		$('#payment_period').combobox({
 			onChange: function(value){
 				var name   	= 'payment_period';
@@ -896,9 +928,17 @@ input:read-only {
 	if(empty($data['credit_account_stash'])){
 		$data['credit_account_stash'] = '';
 	}
+
+	if(empty($data['credit_account_principal'])){
+		$data['credit_account_principal'] = '';
+	}
 	
 	if(empty($data['credit_account_stash_view'])){
 		$data['credit_account_stash_view'] = '';
+	}
+	
+	if(empty($data['credit_account_principal_view'])){
+		$data['credit_account_principal_view'] = '';
 	}
 
 	if(empty($data['credit_account_serial'])){
@@ -1276,6 +1316,12 @@ input:read-only {
 									<td>
 										<input type="text" class="easyui-textbox" name="credit_account_stash_view" id="credit_account_stash_view" autocomplete="off" value="<?php echo $data['credit_account_stash_view']; ?>"/>
 										<input type="hidden" class="easyui-textbox" name="credit_account_stash" id="credit_account_stash" autocomplete="off" value="<?php echo $data['credit_account_stash']; ?>"/>
+									</td>
+									<td>Biaya Simpanan Pokok</td>
+									<td>:</td>
+									<td>
+										<input type="text" class="easyui-textbox" name="credit_account_principal_view" id="credit_account_principal_view" autocomplete="off" value="<?php echo $data['credit_account_principal_view']; ?>"/>
+										<input type="hidden" class="easyui-textbox" name="credit_account_principal" id="credit_account_principal" autocomplete="off" value="<?php echo $data['credit_account_principal']; ?>"/>
 									</td>
 								</tr>
 								<tr>

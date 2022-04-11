@@ -100,6 +100,7 @@
 	            $row[] = number_format($agunan->credits_agunan_bpkb_gross, 2);
 	            $row[] = $agunan->credits_agunan_atmjamsostek_nomor;
 	            $row[] = $agunan->credits_agunan_atmjamsostek_nama;
+	            $row[] = $agunan->credits_agunan_atmjamsostek_bank;
 	            $row[] = number_format($agunan->credits_agunan_atmjamsostek_taksiran, 2);
 	            $row[] = $credits_agunan_ket;
 	            if($agunan->credits_agunan_status == 0){
@@ -228,15 +229,16 @@
 				$this->excel->getActiveSheet()->setCellValue('R3',"Alamat Dealer");
 				$this->excel->getActiveSheet()->setCellValue('S3',"Taksiran");
 				$this->excel->getActiveSheet()->setCellValue('T3',"Uang Muka Gross");
-				$this->excel->getActiveSheet()->setCellValue('U3',"Atas Nama (ATM / Jamsostek)");
-				$this->excel->getActiveSheet()->setCellValue('V3',"Nomor (ATM / Jamsostek)");
-				$this->excel->getActiveSheet()->setCellValue('W3',"Taksiran (ATM / Jamsostek)");
-				$this->excel->getActiveSheet()->setCellValue('X3',"Keterangan (ATM / Jamsostek)");
-				$this->excel->getActiveSheet()->setCellValue('Y3',"Deskripsi Bilyet Simpanan Berjangka");
-				$this->excel->getActiveSheet()->setCellValue('Z3',"Deskripsi Elektro");
-				$this->excel->getActiveSheet()->setCellValue('AA3',"Deskripsi Dana Keanggotaan");
-				$this->excel->getActiveSheet()->setCellValue('AB3',"Deskripsi Tabungan");
-				$this->excel->getActiveSheet()->setCellValue('AC3',"Status");
+				$this->excel->getActiveSheet()->setCellValue('U3',"Nomor (ATM / Jamsostek)");
+				$this->excel->getActiveSheet()->setCellValue('V3',"Atas Nama (ATM / Jamsostek)");
+				$this->excel->getActiveSheet()->setCellValue('W3',"Nama Bank (ATM / Jamsostek)");
+				$this->excel->getActiveSheet()->setCellValue('X3',"Taksiran (ATM / Jamsostek)");
+				$this->excel->getActiveSheet()->setCellValue('Y3',"Keterangan (ATM / Jamsostek)");
+				$this->excel->getActiveSheet()->setCellValue('Z3',"Deskripsi Bilyet Simpanan Berjangka");
+				$this->excel->getActiveSheet()->setCellValue('AA3',"Deskripsi Elektro");
+				$this->excel->getActiveSheet()->setCellValue('AB3',"Deskripsi Dana Keanggotaan");
+				$this->excel->getActiveSheet()->setCellValue('AC3',"Deskripsi Tabungan");
+				$this->excel->getActiveSheet()->setCellValue('AD3',"Status");
 				
 				$j=4;
 				$no=0;
@@ -245,7 +247,7 @@
 					if(is_numeric($key)){
 						$no++;
 						$this->excel->setActiveSheetIndex(0);
-						$this->excel->getActiveSheet()->getStyle('B'.$j.':AC'.$j)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+						$this->excel->getActiveSheet()->getStyle('B'.$j.':AD'.$j)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 						$this->excel->getActiveSheet()->getStyle('B'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 						$this->excel->getActiveSheet()->getStyle('C'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('D'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
@@ -268,11 +270,13 @@
 						$this->excel->getActiveSheet()->getStyle('U'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('V'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('W'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						$this->excel->getActiveSheet()->getStyle('X'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+						$this->excel->getActiveSheet()->getStyle('X'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 						$this->excel->getActiveSheet()->getStyle('Y'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('Z'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+						$this->excel->getActiveSheet()->getStyle('AA'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('AB'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						$this->excel->getActiveSheet()->getStyle('AC'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+						$this->excel->getActiveSheet()->getStyle('AD'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 
 						$this->excel->getActiveSheet()->setCellValue('B'.$j, $no);
@@ -296,21 +300,22 @@
 						$this->excel->getActiveSheet()->setCellValue('T'.$j, number_format($val['credits_agunan_bpkb_gross'], 2));
 						$this->excel->getActiveSheet()->setCellValue('U'.$j, $val['credits_agunan_atmjamsostek_nomor']);
 						$this->excel->getActiveSheet()->setCellValue('V'.$j, $val['credits_agunan_atmjamsostek_nama']);
-						$this->excel->getActiveSheet()->setCellValue('W'.$j, number_format($val['credits_agunan_atmjamsostek_taksiran'], 2));
-						$this->excel->getActiveSheet()->setCellValue('X'.$j, $val['credits_agunan_atmjamsostek_keterangan']);
+						$this->excel->getActiveSheet()->setCellValue('W'.$j, $val['credits_agunan_atmjamsostek_bank']);
+						$this->excel->getActiveSheet()->setCellValue('X'.$j, number_format($val['credits_agunan_atmjamsostek_taksiran'], 2));
+						$this->excel->getActiveSheet()->setCellValue('Y'.$j, $val['credits_agunan_atmjamsostek_keterangan']);
 						if($val['credits_agunan_type'] == 3){
-							$this->excel->getActiveSheet()->setCellValue('Y'.$j, $val['credits_agunan_other_keterangan']);	
-						}	
-						if($val['credits_agunan_type'] == 4){
 							$this->excel->getActiveSheet()->setCellValue('Z'.$j, $val['credits_agunan_other_keterangan']);	
 						}	
-						if($val['credits_agunan_type'] == 5){
+						if($val['credits_agunan_type'] == 4){
 							$this->excel->getActiveSheet()->setCellValue('AA'.$j, $val['credits_agunan_other_keterangan']);	
 						}	
-						if($val['credits_agunan_type'] == 6){
+						if($val['credits_agunan_type'] == 5){
 							$this->excel->getActiveSheet()->setCellValue('AB'.$j, $val['credits_agunan_other_keterangan']);	
 						}	
-						$this->excel->getActiveSheet()->setCellValue('AC'.$j, $agunanstatus[$val['credits_agunan_status']]);	
+						if($val['credits_agunan_type'] == 6){
+							$this->excel->getActiveSheet()->setCellValue('AC'.$j, $val['credits_agunan_other_keterangan']);	
+						}	
+						$this->excel->getActiveSheet()->setCellValue('AD'.$j, $agunanstatus[$val['credits_agunan_status']]);	
 					}else{
 						continue;
 					}
@@ -478,7 +483,7 @@
 						<div style=\"font-size:12px;\">:</div>
 					</td>
 					<td style=\"text-align:left;\" width=\"80%\">
-						<div style=\"font-size:12px;\"></div>
+						<div style=\"font-size:12px;\">".$agunandetail['credits_agunan_atmjamsostek_bank']."</div>
 					</td>	
 			    </tr>	
 			    <tr>

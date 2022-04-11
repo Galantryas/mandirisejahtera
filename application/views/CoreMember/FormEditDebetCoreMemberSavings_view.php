@@ -90,32 +90,12 @@
 			})
 	});
 
-	function calPrincipalSavings(){
-		var member_principal_savings_last_balance	= $('#member_principal_savings_last_balance').val();
-		var member_principal_savings				= $('#member_principal_savings').val();
-		var mutation_function 						= $('#mutation_function').val();
-
-		var member_principal_savings_last_balance_new;
-
-		if(mutation_function == '+'){
-			member_principal_savings_last_balance_new = parseFloat(member_principal_savings_last_balance) + parseFloat(member_principal_savings);
-		} else if(mutation_function == '-'){
-			member_principal_savings_last_balance_new = parseFloat(member_principal_savings_last_balance) - parseFloat(member_principal_savings);
-		} else {
-			alert("Sandi masih kosong");
-				return false;
-		}
-		
-
-		$('#member_principal_savings_last_balance_view').textbox('setValue', toRp(member_principal_savings_last_balance_new));
-		$('#member_principal_savings_last_balance').textbox('setValue', member_principal_savings_last_balance_new);
-
-	}
-
 	function calSpecialSavings(){
 		var member_special_savings_last_balance		= $('#member_special_savings_last_balance').val();
+		var member_principal_savings_last_balance	= $('#member_principal_savings_last_balance').val();
 		var member_special_savings					= $('#member_special_savings').val();
 		var mutation_function 						= $('#mutation_function').val();	
+		var source 									= $('#source').val();	
 
 		if(member_special_savings_last_balance == ''){
 			member_special_savings_last_balance = 0;
@@ -123,12 +103,13 @@
 
 		var member_special_savings_last_balance_new;
 
-		if(mutation_function == '+'){
+		if(source == 1){
+			member_special_savings_last_balance_new 	= parseFloat(member_special_savings_last_balance) + parseFloat(member_special_savings);
+			member_principal_savings_last_balance_new 	= parseFloat(member_principal_savings_last_balance) - parseFloat(member_special_savings);
+		} else if(source == 2){
 			member_special_savings_last_balance_new = parseFloat(member_special_savings_last_balance) + parseFloat(member_special_savings);
-		} else if(mutation_function == '-'){
-			member_special_savings_last_balance_new = parseFloat(member_special_savings_last_balance) - parseFloat(member_special_savings);
 		} else {
-			alert("Sandi masih kosong");
+			alert("Sumber masih kosong");
 				return false;
 		}
 
@@ -137,21 +118,26 @@
 		
 		$('#member_special_savings_last_balance_view').textbox('setValue', toRp(member_special_savings_last_balance_new));
 		$('#member_special_savings_last_balance').textbox('setValue', member_special_savings_last_balance_new);
+		$('#member_principal_savings_last_balance_view').textbox('setValue', toRp(member_principal_savings_last_balance_new));
+		$('#member_principal_savings_last_balance').textbox('setValue', member_principal_savings_last_balance_new);
 	}
 
 	function calMandatorySavings(){
 		var member_mandatory_savings_last_balance	= $('#member_mandatory_savings_last_balance').val();
+		var member_principal_savings_last_balance	= $('#member_principal_savings_last_balance').val();
 		var member_mandatory_savings				= $('#member_mandatory_savings').val();
 		var mutation_function 						= $('#mutation_function').val();
+		var source 									= $('#source').val();
 
 		var member_mandatory_savings_last_balance_new;
 
-		if(mutation_function == '+'){
+		if(source == '1'){
 			member_mandatory_savings_last_balance_new = parseFloat(member_mandatory_savings_last_balance) + parseFloat(member_mandatory_savings);
-		} else if(mutation_function == '-'){
-			member_mandatory_savings_last_balance_new = parseFloat(member_mandatory_savings_last_balance) - parseFloat(member_mandatory_savings);
+			member_principal_savings_last_balance_new = parseFloat(member_principal_savings_last_balance) - parseFloat(member_mandatory_savings);
+		} else if(source == '2'){
+			member_mandatory_savings_last_balance_new = parseFloat(member_mandatory_savings_last_balance) + parseFloat(member_mandatory_savings);
 		} else {
-			alert("Sandi masih kosong");
+			alert("Sumber masih kosong");
 				return false;
 		}
 
@@ -159,6 +145,8 @@
 
 		$('#member_mandatory_savings_last_balance_view').textbox('setValue', toRp(member_mandatory_savings_last_balance_new));
 		$('#member_mandatory_savings_last_balance').textbox('setValue', member_mandatory_savings_last_balance_new);
+		$('#member_principal_savings_last_balance_view').textbox('setValue', toRp(member_principal_savings_last_balance_new));
+		$('#member_principal_savings_last_balance').textbox('setValue', member_principal_savings_last_balance_new);
 	}
 
 	$(document).ready(function(){
@@ -234,33 +222,9 @@
 			
 			}
 		});
-
-		$('#member_principal_savings_view').textbox({
-			onChange: function(value){
-				console.log(value);
-				console.log(loop);
-				if(loop == 0){
-					loop= 1;
-					return;
-				}
-				if(loop ==1){
-					loop =0;
-					var tampil = toRp(value);
-				$('#member_principal_savings').textbox('setValue', value);
-				$('#member_principal_savings_view').textbox('setValue', tampil);
-
-				calPrincipalSavings();
-				
-				}else{
-					loop=1;
-					return;
-				}
-			
-			}
-		});
 	});
 </script>
-<?php echo form_open('member/process-edit-member-savings',array('id' => 'myform', 'class' => 'horizontal-form')); 
+<?php echo form_open('member/process-edit-debet-member-savings',array('id' => 'myform', 'class' => 'horizontal-form')); 
 
 $unique = $this->session->userdata('unique');
 $token 	= $this->session->userdata('coremembertokenedit-'.$unique['unique']);
@@ -283,8 +247,8 @@ $token 	= $this->session->userdata('coremembertokenedit-'.$unique['unique']);
 			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
-			<a href="<?php echo base_url();?>member/edit-member-savings/"<?php echo $coremember['member_id'] ?>>
-				Edit Anggota 
+			<a href="<?php echo base_url();?>member/edit-debet-member-savings/"<?php echo $coremember['member_id'] ?>>
+				Debet Simpanan Pokok
 			</a>
 		</li>
 	</ul>
@@ -508,24 +472,15 @@ $token 	= $this->session->userdata('coremembertokenedit-'.$unique['unique']);
 								<h3>Input Simpanan</h3>
 								<table>
 									<tr>
-										<td width="35%">Sandi<span class="required">*</span></td>
+										<td width="35%">Sumber<span class="required">*</span></td>
 										<td width="5%"></td>
 										<td width="60%">
-											<?php echo form_dropdown('mutation_id', $acctmutation, set_value('mutation_id'),'id="mutation_id" class="easyui-combobox" style="width:70%" ');?>
+											<?php echo form_dropdown('source', $debetsource, set_value('source', 1),'id="source" class="easyui-combobox" style="width:70%" readonly' );?>
 											
 										</td>
 									</tr>
 										<input type="hidden" class="easyui-textbox" name="mutation_function" id="mutation_function" autocomplete="off" readonly/>
 
-									
-									<tr>
-										<td width="35%">Simpanan Pokok<span class="required">*</span></td>
-										<td width="5%"></td>
-										<td width="60%">
-											<input type="text" class="easyui-textbox" name="member_principal_savings_view" id="member_principal_savings_view" autocomplete="off" style="width: 100%" />
-											<input type="hidden" class="easyui-textbox" name="member_principal_savings" id="member_principal_savings" autocomplete="off" />
-										</td>
-									</tr>
 									<tr>
 										<td width="35%">Simpanan Khusus<span class="required">*</span></td>
 										<td width="5%"></td>
@@ -611,7 +566,7 @@ $(document).ready(function() {
         "pageLength": 5,
         "order": [], //Initial no order.
         "ajax": {
-            "url": "<?php echo site_url('member/get-list-edit')?>",
+            "url": "<?php echo site_url('member/get-list-edit-debet')?>",
             "type": "POST"
         },
         "columnDefs": [

@@ -487,7 +487,8 @@
 				'created_id'									=> $auth['user_id'],
 				'created_on'									=> date('Y-m-d H:i:s'),
 				'member_principal_savings'						=> $member_principal_savings,
-				'member_principal_savings_last_balance'			=> $member_principal_savings,
+				//!komen dibawah untuk yg tambah anggota lgsg bayar simp pokok
+				// 'member_principal_savings_last_balance'		=> $member_principal_savings,
 			);
 
 			if($member_mandatory_savings <= 0){
@@ -558,84 +559,86 @@
 						$this->CoreMember_model->insertCoreMemberWorking($dataworking);
 						$preferencecompany 			= $this->CoreMember_model->getPreferenceCompany();
 
-						$data_detail = array (
-							'branch_id'						=> $auth['branch_id'],
-							'member_id'						=> $data['member_id'],
-							'mutation_id'					=> $preferencecompany['cash_deposit_id'],
-							'transaction_date'				=> date('Y-m-d'),
-							'principal_savings_amount'		=> $data['member_principal_savings'],
-							'operated_name'					=> $auth['username'],
-							'savings_member_detail_token'	=> $data['member_token'].'ADDMEMBER'.$auth['branch_id'],
-						);
+						//!komen dibawah untuk yg tambah anggota lgsg bayar simp pokok
+						// $data_detail = array (
+						// 	'branch_id'						=> $auth['branch_id'],
+						// 	'member_id'						=> $data['member_id'],
+						// 	'mutation_id'					=> $preferencecompany['cash_deposit_id'],
+						// 	'transaction_date'				=> date('Y-m-d'),
+						// 	'principal_savings_amount'		=> $data['member_principal_savings'],
+						// 	'operated_name'					=> $auth['username'],
+						// 	'savings_member_detail_token'	=> $data['member_token'].'ADDMEMBER'.$auth['branch_id'],
+						// );
 
-						if($this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail)){
-							if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+						// if($this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail)){
+						// 	if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
 
-								$transaction_module_code 	= "AGT";
+						// 		$transaction_module_code 	= "AGT";
 
-								$transaction_module_id 		= $this->CoreMember_model->getTransactionModuleID($transaction_module_code);
-								$coremember 				= $this->CoreMember_model->getCoreMember_Detail($dataworking['member_id']);
-								$journal_voucher_period 	= date("Ym", strtotime($coremember['member_register_date']));
+						// 		$transaction_module_id 		= $this->CoreMember_model->getTransactionModuleID($transaction_module_code);
+						// 		$coremember 				= $this->CoreMember_model->getCoreMember_Detail($dataworking['member_id']);
+						// 		$journal_voucher_period 	= date("Ym", strtotime($coremember['member_register_date']));
 
-								//-------------------------Jurnal Cabang----------------------------------------------------
+						// 		//-------------------------Jurnal Cabang----------------------------------------------------
 								
-								$data_journal_cabang = array(
-									'branch_id'						=> $auth['branch_id'],
-									'journal_voucher_period' 		=> $journal_voucher_period,
-									'journal_voucher_date'			=> date('Y-m-d'),
-									'journal_voucher_title'			=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
-									'journal_voucher_description'	=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
-									'journal_voucher_token'			=> $data['member_token'].$auth['branch_id'],
-									'transaction_module_id'			=> $transaction_module_id,
-									'transaction_module_code'		=> $transaction_module_code,
-									'transaction_journal_id' 		=> $coremember['member_id'],
-									'transaction_journal_no' 		=> $coremember['member_no'],
-									'created_id' 					=> $auth['user_id'],
-									'created_on' 					=> date('Y-m-d H:i:s'),
-								);
+						// 		$data_journal_cabang = array(
+						// 			'branch_id'						=> $auth['branch_id'],
+						// 			'journal_voucher_period' 		=> $journal_voucher_period,
+						// 			'journal_voucher_date'			=> date('Y-m-d'),
+						// 			'journal_voucher_title'			=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
+						// 			'journal_voucher_description'	=> 'SIMPANAN POKOK MEMBER BARU TUNAI '.$coremember['member_name'],
+						// 			'journal_voucher_token'			=> $data['member_token'].$auth['branch_id'],
+						// 			'transaction_module_id'			=> $transaction_module_id,
+						// 			'transaction_module_code'		=> $transaction_module_code,
+						// 			'transaction_journal_id' 		=> $coremember['member_id'],
+						// 			'transaction_journal_no' 		=> $coremember['member_no'],
+						// 			'created_id' 					=> $auth['user_id'],
+						// 			'created_on' 					=> date('Y-m-d H:i:s'),
+						// 		);
 								
-								$this->CoreMember_model->insertAcctJournalVoucher($data_journal_cabang);
+						// 		$this->CoreMember_model->insertAcctJournalVoucher($data_journal_cabang);
 
-								$journal_voucher_id 			= $this->CoreMember_model->getJournalVoucherID($auth['user_id']);
+						// 		$journal_voucher_id 			= $this->CoreMember_model->getJournalVoucherID($auth['user_id']);
 
-								$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
+						// 		$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
 
 
-								$account_id_default_status 	= $this->CoreMember_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
+						// 		$account_id_default_status 	= $this->CoreMember_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
 
-								$data_debet = array (
-									'journal_voucher_id'			=> $journal_voucher_id,
-									'account_id'					=> $preferencecompany['account_cash_id'],
-									'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
-									'journal_voucher_amount'		=> $data['member_principal_savings'],
-									'journal_voucher_debit_amount'	=> $data['member_principal_savings'],
-									'account_id_default_status'		=> $account_id_default_status,
-									'account_id_status'				=> 0,
-									'created_id' 					=> $auth['user_id'],
-									'journal_voucher_item_token'	=> $data['member_token_edit'].$preferencecompany['account_cash_id'],
-								);
+						// 		$data_debet = array (
+						// 			'journal_voucher_id'			=> $journal_voucher_id,
+						// 			'account_id'					=> $preferencecompany['account_cash_id'],
+						// 			'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
+						// 			'journal_voucher_amount'		=> $data['member_principal_savings'],
+						// 			'journal_voucher_debit_amount'	=> $data['member_principal_savings'],
+						// 			'account_id_default_status'		=> $account_id_default_status,
+						// 			'account_id_status'				=> 0,
+						// 			'created_id' 					=> $auth['user_id'],
+						// 			'journal_voucher_item_token'	=> $data['member_token_edit'].$preferencecompany['account_cash_id'],
+						// 		);
 
-								$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);
+						// 		$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);
 
-								$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
+						// 		$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
 
-								$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+						// 		$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
 
-								$data_credit =array(
-									'journal_voucher_id'			=> $journal_voucher_id,
-									'account_id'					=> $account_id,
-									'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
-									'journal_voucher_amount'		=> $data['member_principal_savings'],
-									'journal_voucher_credit_amount'	=> $data['member_principal_savings'],
-									'account_id_default_status'		=> $account_id_default_status,
-									'account_id_status'				=> 1,
-									'created_id' 					=> $auth['user_id'],
-									'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
-								);
+						// 		$data_credit =array(
+						// 			'journal_voucher_id'			=> $journal_voucher_id,
+						// 			'account_id'					=> $account_id,
+						// 			'journal_voucher_description'	=> 'SETORAN TUNAI SIMP POKOK '.$coremember['member_name'],
+						// 			'journal_voucher_amount'		=> $data['member_principal_savings'],
+						// 			'journal_voucher_credit_amount'	=> $data['member_principal_savings'],
+						// 			'account_id_default_status'		=> $account_id_default_status,
+						// 			'account_id_status'				=> 1,
+						// 			'created_id' 					=> $auth['user_id'],
+						// 			'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+						// 		);
 
-								$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
-							}
-						}
+						// 		$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
+						// 	}
+						// }
+
 						$auth = $this->session->userdata('auth');
 						$this->fungsi->set_log($auth['user_id'], $auth['username'],'1003','Application.CoreMember.processAddCoreMember',$auth['user_id'],'Add New Member');
 						$msg = "<div class='alert alert-success alert-dismissable'>  
@@ -927,6 +930,36 @@
 			$this->load->view('MainPage_view',$data);
 		}
 
+		public function editDebetCoreMemberSavings(){
+			$member_id 	= $this->uri->segment(3);
+			$unique 	= $this->session->userdata('unique');
+			$token 		= $this->session->userdata('coremembertokenedit-'.$unique['unique']);
+
+			if(empty($token)){
+				$token = md5(date('Y-m-d H:i:s'));
+				$this->session->set_userdata('coremembertokenedit-'.$unique['unique'],
+					$token);
+			}
+
+			$data['main_view']['coreprovince']		= create_double($this->CoreMember_model->getCoreProvince(),'province_id', 'province_name');
+
+			$data['main_view']['acctmutation']		= create_double($this->CoreMember_model->getAcctMutation(),'mutation_id', 'mutation_name');
+
+			$data['main_view']['memberidentity']	= $this->configuration->MemberIdentity();	
+
+			$data['main_view']['membergender']		= $this->configuration->MemberGender();	
+
+			$data['main_view']['membercharacter']	= $this->configuration->MemberCharacter();	
+
+			$data['main_view']['debetsource']		= $this->configuration->DebetSource();	
+
+			$data['main_view']['coremember']		= $this->CoreMember_model->getCoreMember_Detail($member_id);
+
+			$data['main_view']['content']			= 'CoreMember/FormEditDebetCoreMemberSavings_view';
+
+			$this->load->view('MainPage_view',$data);
+		}
+
 		public function getListCoreMemberEdit(){
 			$auth = $this->session->userdata('auth');
 
@@ -941,6 +974,33 @@
 				$row[] = $customers->member_name;
 				$row[] = $customers->member_address;
 				$row[] = '<a href="'.base_url().'member/edit-member-savings/'.$customers->member_id.'" class="btn btn-info" role="button"><span class="glyphicon glyphicon-ok"></span> Select</a>';
+				$data[] = $row;
+			}
+	
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->CoreMember_model->count_all($auth['branch_id']),
+							"recordsFiltered" => $this->CoreMember_model->count_filtered($auth['branch_id']),
+							"data" => $data,
+					);
+			//output to json format
+			echo json_encode($output);
+		}	
+
+		public function getListCoreMemberEditDebet(){
+			$auth = $this->session->userdata('auth');
+
+			$list = $this->CoreMember_model->get_datatables($auth['branch_id']);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $customers) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $customers->member_no;
+				$row[] = $customers->member_name;
+				$row[] = $customers->member_address;
+				$row[] = '<a href="'.base_url().'member/edit-debet-member-savings/'.$customers->member_id.'" class="btn btn-info" role="button"><span class="glyphicon glyphicon-ok"></span> Select</a>';
 				$data[] = $row;
 			}
 	
@@ -1511,6 +1571,295 @@
 				$this->session->set_userdata('message',$msg);
 				redirect('member/edit-member-savings/'.$data['member_id']);
 			}				
+		}
+
+		public function processEditDebetCoreMemberSavings(){
+			$auth 	= $this->session->userdata('auth');
+			$unique = $this->session->userdata('unique');
+
+			$data = array(
+				'member_id'								=> $this->input->post('member_id', true),
+				'member_principal_savings_last_balance'	=> $this->input->post('member_principal_savings_last_balance', true),
+				'member_special_savings_last_balance'	=> $this->input->post('member_special_savings_last_balance', true),
+				'member_mandatory_savings_last_balance'	=> $this->input->post('member_mandatory_savings_last_balance', true),
+				'member_token_edit'						=> $this->input->post('member_token_edit', true),
+			);
+
+			$mandatory_amount 		= $this->input->post('member_mandatory_savings', true);
+			$special_amount			= $this->input->post('member_special_savings', true);
+			$principal_amount		=($mandatory_amount+$special_amount)*-1;
+
+			if($data['member_principal_savings_last_balance'] < 0){
+				$msg = "<div class='alert alert-danger alert-dismissable'> 
+				<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+					Saldo Simpanan Pokok Tidak Mencukupi
+				</div> ";
+				$this->session->set_userdata('message',$msg);
+				redirect('member/edit-debet-member-savings/'.$data['member_id']);
+			}
+			
+			$member_token_edit = $this->CoreMember_model->getMemberTokenEdit($data['member_token_edit']);
+
+			if($member_token_edit->num_rows() == 0){
+				if($this->CoreMember_model->updateCoreMember($data)){
+					$data_detail = array (
+						'branch_id'						=> $auth['branch_id'],
+						'member_id'						=> $data['member_id'],
+						'mutation_id'					=> $this->input->post('mutation_id', true),
+						'transaction_date'				=> date('Y-m-d'),
+						'principal_savings_amount'		=> $principal_amount,
+						'special_savings_amount'		=> $mandatory_amount,
+						'mandatory_savings_amount'		=> $special_amount,
+						'operated_name'					=> $auth['username'],
+						'savings_member_detail_token'	=> $data['member_token_edit'],
+					);
+
+					if($this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail)){
+						$transaction_module_code 	= "AGT";
+
+						$transaction_module_id 		= $this->CoreMember_model->getTransactionModuleID($transaction_module_code);
+						$preferencecompany 			= $this->CoreMember_model->getPreferenceCompany();
+						$coremember 				= $this->CoreMember_model->getCoreMember_Detail($data['member_id']);
+							
+						$journal_voucher_period 	= date("Ym", strtotime($coremember['member_register_date']));
+
+						//-------------------------Jurnal Cabang----------------------------------------------------
+						
+						$data_journal = array(
+							'branch_id'						=> $auth['branch_id'],
+							'journal_voucher_period' 		=> $journal_voucher_period,
+							'journal_voucher_date'			=> date('Y-m-d'),
+							'journal_voucher_title'			=> 'MUTASI ANGGOTA DEBET '.$coremember['member_name'],
+							'journal_voucher_description'	=> 'MUTASI ANGGOTA DEBET '.$coremember['member_name'],
+							'journal_voucher_token'			=> $data['member_token_edit'].$auth['branch_id'],
+							'transaction_module_id'			=> $transaction_module_id,
+							'transaction_module_code'		=> $transaction_module_code,
+							'transaction_journal_id' 		=> $coremember['member_id'],
+							'transaction_journal_no' 		=> $coremember['member_no'],
+							'created_id' 					=> $auth['user_id'],
+							'created_on' 					=> date('Y-m-d H:i:s'),
+						);
+						
+						$this->CoreMember_model->insertAcctJournalVoucher($data_journal);
+
+						$journal_voucher_id 			= $this->CoreMember_model->getJournalVoucherID($auth['user_id']);
+
+						$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
+
+						if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_debet =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $principal_amount*-1,
+								'journal_voucher_debet_amount'	=> $principal_amount*-1,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);	
+						}
+
+						if($data['member_mandatory_savings'] <> 0 || $data['member_mandatory_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['mandatory_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_credit =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $mandatory_amount,
+								'journal_voucher_credit_amount'	=> $mandatory_amount,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 1,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
+						}
+						
+
+						if($data['member_special_savings'] <> 0 || $data['member_special_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['special_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_credit =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $special_amount,
+								'journal_voucher_credit_amount'	=> $special_amount,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 1,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
+						}
+					}
+					$msg = "<div class='alert alert-success alert-dismissable'> 
+					<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+						Debit Simpanan Pokok Berhasil
+					</div> ";
+					$this->session->unset_userdata('coremembertokenedit-'.$unique['unique']);
+					$this->session->set_userdata('message',$msg);
+					redirect('member');
+				}else{
+					$msg = "<div class='alert alert-danger alert-dismissable'> 
+					<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+						Debit Simpanan Pokok Tidak Berhasil
+					</div> ";
+					$this->session->set_userdata('message',$msg);
+					redirect('member/edit-debet-member-savings/'.$data['member_id']);
+				}
+			}else{
+				$data_detail = array (
+					'branch_id'						=> $auth['branch_id'],
+					'member_id'						=> $data['member_id'],
+					'mutation_id'					=> $this->input->post('mutation_id', true),
+					'transaction_date'				=> date('Y-m-d'),
+					'principal_savings_amount'		=> $principal_amount,
+					'special_savings_amount'		=> $mandatory_amount,
+					'mandatory_savings_amount'		=> $special_amount,
+					'operated_name'					=> $auth['username'],
+					'savings_member_detail_token'	=> $data['member_token_edit'],
+				);
+
+				$savings_member_detail_token = $this->CoreMember_model->getSavingsMemberDetailToken($data['member_token_edit']);
+
+				if($savings_member_detail_token->num_rows() == 0){
+					if($this->CoreMember_model->insertAcctSavingsMemberDetail($data_detail)){
+						$transaction_module_code 	= "AGT";
+
+						$transaction_module_id 		= $this->CoreMember_model->getTransactionModuleID($transaction_module_code);
+						$preferencecompany 			= $this->CoreMember_model->getPreferenceCompany();
+						$coremember 				= $this->CoreMember_model->getCoreMember_Detail($data['member_id']);
+							
+						$journal_voucher_period 	= date("Ym", strtotime($coremember['member_register_date']));
+
+						//-------------------------Jurnal Cabang----------------------------------------------------
+						
+						$data_journal = array(
+							'branch_id'						=> $auth['branch_id'],
+							'journal_voucher_period' 		=> $journal_voucher_period,
+							'journal_voucher_date'			=> date('Y-m-d'),
+							'journal_voucher_title'			=> 'MUTASI ANGGOTA DEBET '.$coremember['member_name'],
+							'journal_voucher_description'	=> 'MUTASI ANGGOTA DEBET '.$coremember['member_name'],
+							'journal_voucher_token'			=> $data['member_token_edit'].$auth['branch_id'],
+							'transaction_module_id'			=> $transaction_module_id,
+							'transaction_module_code'		=> $transaction_module_code,
+							'transaction_journal_id' 		=> $coremember['member_id'],
+							'transaction_journal_no' 		=> $coremember['member_no'],
+							'created_id' 					=> $auth['user_id'],
+							'created_on' 					=> date('Y-m-d H:i:s'),
+						);
+						
+						$this->CoreMember_model->insertAcctJournalVoucher($data_journal);
+
+						$journal_voucher_id 			= $this->CoreMember_model->getJournalVoucherID($auth['user_id']);
+
+						$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
+
+						if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_debet =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $principal_amount*-1,
+								'journal_voucher_debet_amount'	=> $principal_amount*-1,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$journal_voucher_item_token = $this->CoreMember_model->getJournalVoucherItemToken($data_debet['journal_voucher_item_token']);
+
+							if($journal_voucher_item_token->num_rows() == 0){
+								$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);	
+							}
+						}
+
+						if($data['member_mandatory_savings'] <> 0 || $data['member_mandatory_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['mandatory_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_credit =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $mandatory_amount,
+								'journal_voucher_credit_amount'	=> $mandatory_amount,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 1,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$journal_voucher_item_token = $this->CoreMember_model->getJournalVoucherItemToken($data_credit['journal_voucher_item_token']);
+
+							if($journal_voucher_item_token->num_rows() == 0){
+								$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);
+							}	
+						}
+						
+
+						if($data['member_special_savings'] <> 0 || $data['member_special_savings'] <> ''){
+							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['special_savings_id']);
+
+							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
+
+							$data_credit =array(
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $account_id,
+								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
+								'journal_voucher_amount'		=> $special_amount,
+								'journal_voucher_credit_amount'	=> $special_amount,
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 1,
+								'created_id' 					=> $auth['user_id'],
+								'journal_voucher_item_token'	=> $data['member_token_edit'].$account_id,
+							);
+
+							$journal_voucher_item_token = $this->CoreMember_model->getJournalVoucherItemToken($data_credit['journal_voucher_item_token']);
+
+							if($journal_voucher_item_token->num_rows() == 0){
+								$this->CoreMember_model->insertAcctJournalVoucherItem($data_credit);	
+							}
+						}
+					}
+					$msg = "<div class='alert alert-success alert-dismissable'> 
+					<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+						Debit Simpanan Pokok Berhasil
+					</div> ";
+					$this->session->unset_userdata('coremembertokenedit-'.$unique['unique']);
+					$this->session->set_userdata('message',$msg);
+					redirect('member');
+				}else{
+					$msg = "<div class='alert alert-success alert-dismissable'> 
+					<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+						Debit Simpanan Pokok Berhasil
+					</div> ";
+					$this->session->unset_userdata('coremembertokenedit-'.$unique['unique']);
+					$this->session->set_userdata('message',$msg);
+					redirect('member');
+				}
+			}
 		}
 
 		

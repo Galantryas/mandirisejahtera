@@ -116,6 +116,7 @@
 		var shm_keterangan 			= document.getElementById("shm_keterangan").value;
 		var atmjamsostek_nomor 		= document.getElementById("atmjamsostek_nomor").value;
 		var atmjamsostek_nama 		= document.getElementById("atmjamsostek_nama").value;
+		var atmjamsostek_bank 		= document.getElementById("atmjamsostek_bank").value;
 		var atmjamsostek_taksiran 	= document.getElementById("atmjamsostek_taksiran").value;
 		var atmjamsostek_keterangan = document.getElementById("atmjamsostek_keterangan").value;
 		var other_keterangan 		= document.getElementById("other_keterangan").value;
@@ -150,6 +151,7 @@
 					'shm_taksiran'				: shm_taksiran,
 					'shm_keterangan'			: shm_keterangan,
 					'atmjamsostek_nama'			: atmjamsostek_nama,
+					'atmjamsostek_bank'			: atmjamsostek_bank,
 					'atmjamsostek_nomor'		: atmjamsostek_nomor,
 					'atmjamsostek_taksiran'		: atmjamsostek_taksiran,
 					'atmjamsostek_keterangan'	: atmjamsostek_keterangan,
@@ -320,9 +322,15 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Nama</td>
+						<td>Atas Nama</td>
 						<td> : </td>
 						<td> <input type="text" class="form-control" name="atmjamsostek_nama" id="atmjamsostek_nama" autocomplete="off"/>
+						</td>
+					</tr>
+					<tr>
+						<td>Nama Bank</td>
+						<td> : </td>
+						<td> <input type="text" class="form-control" name="atmjamsostek_bank" id="atmjamsostek_bank" autocomplete="off"/>
 						</td>
 					</tr>
 					<tr>
@@ -393,7 +401,7 @@
 								<tr>
 									<td>$no</td>
 									<td>".$val['credits_agunan_type']."</td>
-									<td>Nomor : ".$val['credits_agunan_atmjamsostek_nomor'].", Nama : ".$val['credits_agunan_atmjamsostek_nama'].", Taksiran : Rp. ".$val['credits_agunan_atmjamsostek_taksiran'].", Ket : ".$val['credits_agunan_atmjamsostek_keterangan']."</td>
+									<td>Nomor : ".$val['credits_agunan_atmjamsostek_nomor'].", Atas Nama : ".$val['credits_agunan_atmjamsostek_nama'].", Nama Bank : ".$val['credits_agunan_atmjamsostek_bank'].", Taksiran : Rp. ".$val['credits_agunan_atmjamsostek_taksiran'].", Ket : ".$val['credits_agunan_atmjamsostek_keterangan']."</td>
 								</tr>
 							";
 						}else{

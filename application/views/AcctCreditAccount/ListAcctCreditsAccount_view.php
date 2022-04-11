@@ -159,6 +159,7 @@
 							<th width="12%">Nomor Perjanjian Pinjaman</th>
 							<th width="15%">Nama Anggota</th>
 							<th width="15%">Jenis Pinjaman</th>
+							<th width="15%">Jenis Angsuran</th>
 							<th width="12%">Jenis Sumber Dana</th>
 							<th width="10%">Tanggal Pinjaman</th>
 							<th width="10%">Jumlah Pinjaman</th>

@@ -131,6 +131,9 @@ input:read-only {
 									<td width="5%"> : </td>
 									<td width="60%">
 										<input class="easyui-textbox" type="text" name="member_identity_no" readonly id="member_identity_no" value="<?php echo $acctcreditsaccount['member_identity_no']; ?>" style="width: 100%"/>
+										<input class="easyui-textbox" type="hidden" name="member_id" readonly id="member_id" value="<?php echo $acctcreditsaccount['member_id']; ?>" style="width: 100%"/>
+										<input class="easyui-textbox" type="hidden" name="member_mandatory_savings_last_balance" readonly id="member_mandatory_savings_last_balance" value="<?php echo $acctcreditsaccount['member_mandatory_savings_last_balance']; ?>" style="width: 100%"/>
+										<input class="easyui-textbox" type="hidden" name="member_principal_savings_last_balance" readonly id="member_principal_savings_last_balance" value="<?php echo $acctcreditsaccount['member_principal_savings_last_balance']; ?>" style="width: 100%"/>
 
 									</td>
 								</tr>
@@ -235,6 +238,8 @@ input:read-only {
 										<input type="hidden" class="easyui-textbox" name="credits_account_risk_reserve" id="credits_account_risk_reserve" autocomplete="off" value="<?php echo set_value('credits_account_risk_reserve',$acctcreditsaccount['credits_account_risk_reserve']);?>"/>
 
 										<input type="hidden" class="easyui-textbox" name="credits_account_stash" id="credits_account_stash" autocomplete="off" value="<?php echo set_value('credits_account_stash',$acctcreditsaccount['credits_account_stash']);?>"/>
+
+										<input type="hidden" class="easyui-textbox" name="credits_account_principal" id="credits_account_principal" autocomplete="off" value="<?php echo set_value('credits_account_principal',$acctcreditsaccount['credits_account_principal']);?>"/>
 									</td>
 								</tr>
 								<tr>
