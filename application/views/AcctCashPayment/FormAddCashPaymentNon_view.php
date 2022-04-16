@@ -537,7 +537,7 @@ input:-moz-read-only { /* For Firefox */
 										<td width="35%">Bunga Pinjaman (Rp)<span class="required">*</span></td>
 										<td width="5%"></td>
 										<td width="60%">
-											<input type="text" class="easyui-textbox" name="credits_payment_interest_view" id="credits_payment_interest_view" autocomplete="off" value="<?php echo number_format($angsuranbunga, 2);?>" style="width: 70%" readonly/>
+											<input type="text" class="easyui-textbox" name="credits_payment_interest_view" id="credits_payment_interest_view" autocomplete="off" value="<?php echo number_format($angsuranbunga, 2);?>" style="width: 70%"/>
 											<input type="hidden" class="easyui-textbox" name="credits_payment_interest" id="credits_payment_interest" autocomplete="off" value="<?php echo $angsuranbunga;?>" />
 										</td>
 									</tr>

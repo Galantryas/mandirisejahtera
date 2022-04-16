@@ -30,7 +30,7 @@
 			return $result;
 		}
 		public function getSystemEndOfDaysDate(){
-			$this->db->select('system_end_of_days.created_at, system_end_of_days.end_of_days_id, system_end_of_days.end_of_days_status, system_end_of_days.debit_amount, system_end_of_days.credit_amount');
+			$this->db->select('system_end_of_days.*');
 			$this->db->from('system_end_of_days');
 			$this->db->order_by('system_end_of_days.created_at','desc');
 			$result = $this->db->get()->row_array();

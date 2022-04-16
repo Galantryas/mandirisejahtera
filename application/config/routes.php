@@ -882,6 +882,10 @@ $route['deposito-account-closed-report/viewreport']             = 'AcctDepositoA
 $route['credits-payment-report']      			                = 'AcctCreditsPaymentReport';
 $route['credits-payment-report/viewreport']                     = 'AcctCreditsPaymentReport/viewreport';
 
+//AcctCreditsPaymentDailyReport
+$route['credits-payment-daily-report']      			        = 'AcctCreditsPaymentDailyReport';
+$route['credits-payment-daily-report/viewreport']               = 'AcctCreditsPaymentDailyReport/viewreport';
+
 //AcctCreditsHasntPaidReport 
 $route['credits-hasnt-paid-report']      			               = 'AcctCreditsHasntPaidReport';
 $route['credits-hasnt-paid-report/viewreport']                     = 'AcctCreditsHasntPaidReport/viewreport';

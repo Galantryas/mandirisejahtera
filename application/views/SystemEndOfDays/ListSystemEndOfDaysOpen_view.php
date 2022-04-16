@@ -56,7 +56,18 @@
 			<div class="portlet-body">
 				<div class="form-body">
 					<table class="table table-bordered table-hover table-full-width" >
-					
+						
+					<?php if($endofdays['end_of_days_status'] == '0'){?>
+						<tr>
+							<td><b>Total Debit</b></td>
+							<td><b><?php echo nominal($endofdays['debit_amount']) ?></b></td>
+						</tr>
+						<tr>
+							<td><b>Total Kredit</b></td>
+							<td><b><?php echo nominal($endofdays['credit_amount']) ?></b></td>
+						</tr>
+					<?php } ?>
+					<tr>
 						<td>
 						<?php if($endofdays['end_of_days_status'] == '1'){?>
 							<div class="alert alert-danger alert-dismissable">                 
@@ -69,7 +80,8 @@
 						
 						<div class="row">
 							<div class="col-md-12 " style="text-align  : right !important;">
-							<?php	echo form_open('end-of-days/process-open-branch',array('id' => 'myform', 'class' => '')); ?>
+							<?php	
+							echo form_open('end-of-days/process-open-branch',array('id' => 'myform', 'class' => '')); ?>
 								<button type="submit" name="process_open_branch" id="process_open_branch" onClick='javascript:return confirm(\"apakah yakin buka cabang sekarang ?\")' value="<?= $endofdays['end_of_days_id']?>" class="btn blue">Buka Cabang</button>	
 							<?php echo form_close(); ?>
 							</div>

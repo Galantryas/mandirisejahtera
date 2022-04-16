@@ -43,6 +43,7 @@
 					</div> ";
 			$this->session->set_userdata('message',$msg);
 			}
+			// print_r($history_date);exit;
 			$data['main_view']['endofdays']				= $history_date;	
 			$data['main_view']['content']				= 'SystemEndOfDays/ListSystemEndOfDaysOpen_view';
 			$this->load->view('MainPage_view',$data);

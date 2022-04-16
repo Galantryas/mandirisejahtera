@@ -1462,7 +1462,7 @@
 								$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
 
 								$data_debit =array(
-									'journal_voucher_id'			=> $journal_voucher_pusat_id,
+									'journal_voucher_id'			=> $journal_voucher_id,
 									'account_id'					=> $account_id,
 									'journal_voucher_description'	=> 'PENARIKAN TUNAI '.$coremember['member_name'],
 									'journal_voucher_amount'		=> $data['member_principal_savings'],
@@ -1486,7 +1486,7 @@
 								$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
 
 								$data_debit =array(
-									'journal_voucher_id'			=> $journal_voucher_pusat_id,
+									'journal_voucher_id'			=> $journal_voucher_id,
 									'account_id'					=> $account_id,
 									'journal_voucher_description'	=> 'PENARIKAN TUNAI '.$coremember['member_name'],
 									'journal_voucher_amount'		=> $data['member_mandatory_savings'],
@@ -1510,7 +1510,7 @@
 								$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
 
 								$data_debit =array(
-									'journal_voucher_id'			=> $journal_voucher_pusat_id,
+									'journal_voucher_id'			=> $journal_voucher_id,
 									'account_id'					=> $account_id,
 									'journal_voucher_description'	=> 'PENARIKAN TUNAI '.$coremember['member_name'],
 									'journal_voucher_amount'		=> $data['member_special_savings'],

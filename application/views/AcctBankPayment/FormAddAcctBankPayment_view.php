@@ -521,7 +521,7 @@ $saldobunga = $accountcredit['credits_account_interest_last_balance'] + $account
 										<td>Bunga Pinjaman</td>
 										<td>:</td> 
 										<td>
-											<input type="text" class="easyui-textbox" name="angsuran_interest_view" id="angsuran_interest_view"  value="<?php echo number_format($angsuranbunga, 2); ?>" readonly/>
+											<input type="text" class="easyui-textbox" name="angsuran_interest_view" id="angsuran_interest_view"  value="<?php echo number_format($angsuranbunga, 2); ?>"/>
 											<input type="hidden" class="easyui-textbox" name="angsuran_interest" id="angsuran_interest" value="<?php echo $angsuranbunga; ?>" />
 											
 											<input type="hidden" class="easyui-textbox" name="saldo_bunga" id="saldo_bunga" value="<?php echo $saldobunga; ?>" />
