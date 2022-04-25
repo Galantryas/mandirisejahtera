@@ -107,17 +107,20 @@
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/edit-date/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green-jungle" role="button"><i class="fa fa-print"></i> Edit Tanggal</a>
-						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>';
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>';
 				}else if($creditsaccount->credits_approve_status == 0 || $creditsaccount->credits_approve_status == 1){
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
-						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>';
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>';
 				}else{
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>
 						<a href="'.base_url().'credit-account/delete/'.$creditsaccount->credits_account_id.'" class="btn btn-xs red" role="button"><i class="fa fa-trash"></i> Hapus</a>';
 				}
 			    // }
@@ -3139,6 +3142,183 @@
 					<td><div style=\"text-align: right;font-weight:bold\">".number_format($totalmargin, 2)."</div></td>
 					<td><div style=\"text-align: right;font-weight:bold\">".number_format($total, 2)."</div></td>
 				</tr>							
+			</table>";
+			
+
+
+			
+
+			$pdf->writeHTML($tbl1.$tbl2.$tbl3.$tbl4, true, false, false, false, '');
+
+			
+
+			ob_clean();
+
+			$filename = 'Jadwal_Angsuran_'.$acctcreditsaccount['credits_account_serial'].'.pdf';
+			$pdf->Output($filename, 'I');
+
+			// exit;
+			// -----------------------------------------------------------------------------
+			
+			//Close and output PDF document
+			// $filename = 'IST Test '.$testingParticipantData['participant_name'].'.pdf';
+			// $pdf->Output($filename, 'I');
+
+			//============================================================+
+			// END OF FILE
+			//============================================================+
+		}
+
+		public function printScheduleCreditsPaymentMember(){
+			$credits_account_id 	= $this->uri->segment(3);
+
+			$acctcreditsaccount		= $this->AcctCreditAccount_model->getAcctCreditsAccount_Detail($credits_account_id);
+			$paymenttype 			= $this->configuration->PaymentType();
+			$paymentperiod 			= $this->configuration->CreditsPaymentPeriod();
+			$preferencecompany 		= $this->AcctCreditAccount_model->getPreferenceCompany();			
+
+			if($acctcreditsaccount['payment_type_id'] == '' || $acctcreditsaccount['payment_type_id'] == 1){
+				$datapola=$this->flat($credits_account_id);
+			}else if ($acctcreditsaccount['payment_type_id'] == 2){
+				$datapola=$this->anuitas($credits_account_id);
+			}else if($acctcreditsaccount['payment_type_id'] == 3){
+				$datapola=$this->slidingrate($credits_account_id);
+			}else if($acctcreditsaccount['payment_type_id'] == 4){
+				$datapola=$this->menurunharian($credits_account_id);
+			}
+			
+			require_once('tcpdf/config/tcpdf_config.php');
+			require_once('tcpdf/tcpdf.php');
+			
+			$pdf = new TCPDF('P', PDF_UNIT, 'A4', true, 'UTF-8', false);
+
+			$pdf->SetPrintHeader(false);
+			$pdf->SetPrintFooter(false);
+
+			$pdf->SetMargins(10, 10, 10, 10); 
+			
+			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			    require_once(dirname(__FILE__).'/lang/eng.php');
+			    $pdf->setLanguageArray($l);
+			}
+
+			// ---------------------------------------------------------
+
+			// set font
+			$pdf->SetFont('helvetica', 'B', 20);
+
+			// add a page
+			$pdf->AddPage();
+
+			/*$pdf->Write(0, 'Example of HTML tables', '', 0, 'L', true, 0, false, false, 0);*/
+
+			$pdf->SetFont('helvetica', '', 9);
+
+			
+			$base_url = base_url();
+			$img = "<img src=\"".$base_url."assets/layouts/layout/img/".$preferencecompany['logo_koperasi']."\" alt=\"\" width=\"700%\" height=\"300%\"/>";
+
+			$tblheader = "
+				<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+					<tr>
+						<td rowspan=\"2\" width=\"10%\">" .$img."</td>
+					</tr>
+					<tr>
+					</tr>
+				</table>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+					<tr>
+						<td style=\"text-align:center;\" width=\"100%\">
+							<div style=\"font-size:14px\";><b>Jadwal Angsuran</b></div>
+						</td>			
+	 				</tr>
+	 				<tr>
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>No. Pinjaman</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"45%\">
+							<div style=\"font-size:12px\";><b>: ".$acctcreditsaccount['credits_account_serial']."</b></div>
+						</td>
+
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>Jenis Pinjaman</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"50%\">
+							<div style=\"font-size:12px\";><b>: ".$this->AcctCreditAccount_model->getAcctCreditsName($acctcreditsaccount['credits_id'])."</b></div>
+						</td>		
+	 				</tr>
+	 				<tr>
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>Nama</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"45%\">
+							<div style=\"font-size:12px\";><b>: ".$acctcreditsaccount['member_name']."</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>Jangka Waktu</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"50%\">
+							<div style=\"font-size:12px\";><b>: ".$acctcreditsaccount['credits_account_period']." ".$paymentperiod[$acctcreditsaccount['credits_payment_period']]."</b></div>
+						</td>			
+	 				</tr>
+	 				<tr>
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>Tipe Angsuran</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"45%\">
+							<div style=\"font-size:12px\";><b>: ".$paymenttype[$acctcreditsaccount['payment_type_id']]."</b></div>
+						</td>	
+						<td style=\"text-align:left;\" width=\"20%\">
+							<div style=\"font-size:12px\";><b>Plafon</b></div>
+						</td>
+						<td style=\"text-align:left;\" width=\"50%\">
+							<div style=\"font-size:12px\";><b>: Rp.".number_format($acctcreditsaccount['credits_account_amount'])."</b></div>
+						</td>			
+	 				</tr>
+	 			</table>
+	 			<br><br>
+			";
+			
+			$pdf->writeHTML($tblheader, true, false, false, false, '');
+
+			$tbl1 = "
+			<br>
+			<table cellspacing=\"0\" cellpadding=\"1\" border=\"1\" width=\"100%\">
+			    <tr>
+			        <td width=\"5%\"><div style=\"text-align: center;font-size:10;font-weight:bold\">Ke</div></td>
+			        <td width=\"12%\"><div style=\"text-align: center;font-size:10;font-weight:bold\">Tanggal Angsuran</div></td>
+			        <td width=\"18%\"><div style=\"text-align: center;font-size:10;font-weight:bold\">Saldo Pokok</div></td>
+			    </tr>				
+			</table>";
+
+			$no = 1;
+
+			$tbl2 = "<table cellspacing=\"0\" cellpadding=\"1\" border=\"1\" width=\"100%\">";
+		
+			foreach ($datapola as $key => $val) {
+				// print_r($acctcreditspayment);exit;
+
+				$tbl3 .= "
+					<tr>
+				    	<td width=\"5%\"><div style=\"text-align: left;\">&nbsp; ".$val['ke']."</div></td>
+				    	<td width=\"12%\"><div style=\"text-align: right;\">".tgltoview($val['tanggal_angsuran'])." &nbsp; </div></td>
+				        <td width=\"18%\"><div style=\"text-align: right;\">".number_format($val['opening_balance'], 2)." &nbsp; </div></td>
+				    </tr>
+				";
+
+				$no++;
+				$totalpokok += $val['angsuran_pokok'];
+				$totalmargin += $val['angsuran_bunga'];
+				$total += $val['angsuran'];
+			}
+
+			$tbl4 = "						
 			</table>";
 			
 
