@@ -99,7 +99,7 @@
 
 
 					$date_now = date('Y-m-d');
-					if($verify['user_group_id'] == 5){
+					if($verify['user_group_id'] == 5 || $verify['user_group_id'] == 24){
 						$this->fungsi->set_log($verify['user_id'], $verify['username'],'1001','Application.validationprocess.verifikasi',$verify['username'],'Login System');
 						$this->session->set_userdata('auth', array(
 										'user_id'			=> $verify['user_id'],

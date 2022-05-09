@@ -109,7 +109,7 @@
 						<a href="'.base_url().'credit-account/edit-date/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green-jungle" role="button"><i class="fa fa-print"></i> Edit Tanggal</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>';
-				}else if($creditsaccount->credits_approve_status == 0 || $creditsaccount->credits_approve_status == 1){
+				}else if($creditsaccount->credits_approve_status == 1){
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>

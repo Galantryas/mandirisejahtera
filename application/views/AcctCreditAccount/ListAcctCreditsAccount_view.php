@@ -164,9 +164,7 @@
 							<th width="10%">Tanggal Pinjaman</th>
 							<th width="10%">Jumlah Pinjaman</th>
 							<th width="10%">Status Pinjaman</th>
-							<?php if($auth['user_group_level'] == 5) {?>
 							<th width="10%">Tindak Lanjut</th>
-							<?php }?>
 							<th width="10%">Action</th>
 						</tr>
 					</thead>
