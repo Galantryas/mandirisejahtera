@@ -384,21 +384,22 @@
 
 						$account_id_default_status = $this->AcctSavingsAccount_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
 
-						$amount = 
+						// $amount = 
+						if($data['savings_account_first_deposit_amount'] > 0){
+							$data_debet = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $preferencecompany['account_cash_id'],
+								'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+								'journal_voucher_amount'		=> $data['savings_account_first_deposit_amount'],
+								'journal_voucher_debit_amount'	=> $data['savings_account_first_deposit_amount'],
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'journal_voucher_item_token'	=> $data['savings_account_token'].$preferencecompany['account_cash_id'],
+								'created_id' 					=> $auth['user_id'],
+							);
 
-						$data_debet = array (
-							'journal_voucher_id'			=> $journal_voucher_id,
-							'account_id'					=> $preferencecompany['account_cash_id'],
-							'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-							'journal_voucher_amount'		=> $data['savings_account_first_deposit_amount'],
-							'journal_voucher_debit_amount'	=> $data['savings_account_first_deposit_amount'],
-							'account_id_default_status'		=> $account_id_default_status,
-							'account_id_status'				=> 0,
-							'journal_voucher_item_token'	=> $data['savings_account_token'].$preferencecompany['account_cash_id'],
-							'created_id' 					=> $auth['user_id'],
-						);
-
-						$this->AcctSavingsAccount_model->insertAcctJournalVoucherItem($data_debet);
+							$this->AcctSavingsAccount_model->insertAcctJournalVoucherItem($data_debet);
+						}
 
 						$account_id = $this->AcctSavingsAccount_model->getAccountID($data['savings_id']);
 
@@ -491,22 +492,24 @@
 
 					$account_id_default_status = $this->AcctSavingsAccount_model->getAccountIDDefaultStatus($preferencecompany['account_cash_id']);
 
-					$data_debet = array (
-						'journal_voucher_id'			=> $journal_voucher_id,
-						'account_id'					=> $preferencecompany['account_cash_id'],
-						'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-						'journal_voucher_amount'		=> $data['savings_account_first_deposit_amount'],
-						'journal_voucher_debit_amount'	=> $data['savings_account_first_deposit_amount'],
-						'account_id_default_status'		=> $account_id_default_status,
-						'account_id_status'				=> 0,
-						'journal_voucher_item_token'	=> $data['savings_account_token'].$preferencecompany['account_cash_id'],
-						'created_id' 					=> $auth['user_id'],
-					);
+					if($data['savings_account_first_deposit_amount'] > 0){
+						$data_debet = array (
+							'journal_voucher_id'			=> $journal_voucher_id,
+							'account_id'					=> $preferencecompany['account_cash_id'],
+							'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+							'journal_voucher_amount'		=> $data['savings_account_first_deposit_amount'],
+							'journal_voucher_debit_amount'	=> $data['savings_account_first_deposit_amount'],
+							'account_id_default_status'		=> $account_id_default_status,
+							'account_id_status'				=> 0,
+							'journal_voucher_item_token'	=> $data['savings_account_token'].$preferencecompany['account_cash_id'],
+							'created_id' 					=> $auth['user_id'],
+						);
 
-					$journal_voucher_item_token = $this->AcctSavingsAccount_model->getJournalVoucherItemToken($data_debet['journal_voucher_item_token']);
+						$journal_voucher_item_token = $this->AcctSavingsAccount_model->getJournalVoucherItemToken($data_debet['journal_voucher_item_token']);
 
-					if($journal_voucher_item_token->num_rows() == 0){
-						$this->AcctSavingsAccount_model->insertAcctJournalVoucherItem($data_debet);
+						if($journal_voucher_item_token->num_rows() == 0){
+							$this->AcctSavingsAccount_model->insertAcctJournalVoucherItem($data_debet);
+						}
 					}
 
 					$account_id = $this->AcctSavingsAccount_model->getAccountID($data['savings_id']);

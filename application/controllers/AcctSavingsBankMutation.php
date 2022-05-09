@@ -222,20 +222,23 @@
 								'created_id'					=> $auth['user_id'],
 							);
 
-							$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_credit);
-							$data_debet = array (
-							'journal_voucher_id'			=> $journal_voucher_id,
-							'account_id'					=> $preferencecompany['account_cash_id'],
-							'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-							'journal_voucher_amount'		=> $data['savings_bank_mutation_amount_adm'],
-							'journal_voucher_debit_amount'	=> $data['savings_bank_mutation_amount_adm'],
-							'account_id_default_status'		=> $account_id_default_status,
-							'account_id_status'				=> 0,
-							'journal_voucher_item_token'	=> $data['savings_bank_mutation_token'].$data['savings_bank_mutation_amount_adm'],
-							'created_id'					=> $auth['user_id'],
-						);
+						$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_credit);
 
-						$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_debet);
+						if($data['savings_bank_mutation_amount_adm'] > 0){
+							$data_debet = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $preferencecompany['account_cash_id'],
+								'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+								'journal_voucher_amount'		=> $data['savings_bank_mutation_amount_adm'],
+								'journal_voucher_debit_amount'	=> $data['savings_bank_mutation_amount_adm'],
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'journal_voucher_item_token'	=> $data['savings_bank_mutation_token'].$data['savings_bank_mutation_amount_adm'],
+								'created_id'					=> $auth['user_id'],
+							);
+
+							$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_debet);
+						}
 
 						$preferencecompany = $this->AcctSavingsBankMutation_model->getPreferenceCompany();
 
@@ -290,19 +293,23 @@
 							);
 
 							$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_credit);
-							$data_debet = array (
-							'journal_voucher_id'			=> $journal_voucher_id,
-							'account_id'					=> $preferencecompany['account_cash_id'],
-							'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
-							'journal_voucher_amount'		=> $data['savings_bank_mutation_amount_adm'],
-							'journal_voucher_debit_amount'	=> $data['savings_bank_mutation_amount_adm'],
-							'account_id_default_status'		=> $account_id_default_status,
-							'account_id_status'				=> 0,
-							'journal_voucher_item_token'	=> 'PNR1'.$data['savings_bank_mutation_token'].$data['savings_bank_mutation_amount_adm'],
-							'created_id'					=> $auth['user_id'],
-						);
 
-						$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_debet);
+							
+						if($data['savings_bank_mutation_amount_adm'] > 0){
+							$data_debet = array (
+								'journal_voucher_id'			=> $journal_voucher_id,
+								'account_id'					=> $preferencecompany['account_cash_id'],
+								'journal_voucher_description'	=> $data_journal['journal_voucher_title'],
+								'journal_voucher_amount'		=> $data['savings_bank_mutation_amount_adm'],
+								'journal_voucher_debit_amount'	=> $data['savings_bank_mutation_amount_adm'],
+								'account_id_default_status'		=> $account_id_default_status,
+								'account_id_status'				=> 0,
+								'journal_voucher_item_token'	=> 'PNR1'.$data['savings_bank_mutation_token'].$data['savings_bank_mutation_amount_adm'],
+								'created_id'					=> $auth['user_id'],
+							);
+
+							$this->AcctSavingsBankMutation_model->insertAcctJournalVoucherItem($data_debet);
+						}
 
 						$preferencecompany = $this->AcctSavingsBankMutation_model->getPreferenceCompany();
 
