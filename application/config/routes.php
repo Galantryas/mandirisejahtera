@@ -909,17 +909,21 @@ $route['credits-account-paid-off']      			               = 'AcctCreditsAccountP
 $route['credits-payment-suspend-report']      			           = 'AcctCreditsPaymentSuspendReport';
 
 //AcctNominativeSavingsReportPickup
-$route['nominative-savings-report-pickup']      			           = 'AcctNominativeSavingsReportPickup';
-$route['nominative-savings-report-pickup/viewreport']                  = 'AcctNominativeSavingsReportPickup/viewreport';
+$route['nominative-savings-report-pickup']      			       = 'AcctNominativeSavingsReportPickup';
+$route['nominative-savings-report-pickup/viewreport']              = 'AcctNominativeSavingsReportPickup/viewreport';
+
+//TaxReport
+$route['tax-report']      			                               = 'TaxReport';
+$route['tax-report/viewreport']                                    = 'TaxReport/viewreport';
 
 //AcctCashPaymentsBranch  
-$route['cash-payments-branch']                    			           = 'AcctCashPaymentsBranch';
-$route['cash-payments-branch/ind-cash-payment']                        = 'AcctCashPaymentsBranch/indAcctCashPayment';
-$route['cash-payments-branch/print-note-cash-payment/(:num)']          = 'AcctCashPaymentsBranch/printNoteCashPayment/$1';
-$route['cash-payments-branch/add-cash-payment/(:num)']                 = 'AcctCashPaymentsBranch/addAcctCashPayment/$1';
-$route['cash-payments-branch/add-cash-payment']                        = 'AcctCashPaymentsBranch/addAcctCashPayment';
-$route['cash-payments-branch/reset-search']                            = 'AcctCashPaymentsBranch/reset_search';
-$route['cash-payments-branch/filter-cash-payment']                     = 'AcctCashPaymentsBranch/filteracctcashpayment';
-$route['cash-payments-branch/get-cash-payment']                        = 'AcctCashPaymentsBranch/getAcctCashPayment';
-$route['cash-payments-branch/process-add-cash-payment']                = 'AcctCashPaymentsBranch/processAddAcctCashPayment';
-$route['cash-payments-branch/akad-list-tunai']                         = 'AcctCashPaymentsBranch/akadlisttunai';
+$route['cash-payments-branch']                    			       = 'AcctCashPaymentsBranch';
+$route['cash-payments-branch/ind-cash-payment']                    = 'AcctCashPaymentsBranch/indAcctCashPayment';
+$route['cash-payments-branch/print-note-cash-payment/(:num)']      = 'AcctCashPaymentsBranch/printNoteCashPayment/$1';
+$route['cash-payments-branch/add-cash-payment/(:num)']             = 'AcctCashPaymentsBranch/addAcctCashPayment/$1';
+$route['cash-payments-branch/add-cash-payment']                    = 'AcctCashPaymentsBranch/addAcctCashPayment';
+$route['cash-payments-branch/reset-search']                        = 'AcctCashPaymentsBranch/reset_search';
+$route['cash-payments-branch/filter-cash-payment']                 = 'AcctCashPaymentsBranch/filteracctcashpayment';
+$route['cash-payments-branch/get-cash-payment']                    = 'AcctCashPaymentsBranch/getAcctCashPayment';
+$route['cash-payments-branch/process-add-cash-payment']            = 'AcctCashPaymentsBranch/processAddAcctCashPayment';
+$route['cash-payments-branch/akad-list-tunai']                     = 'AcctCashPaymentsBranch/akadlisttunai';

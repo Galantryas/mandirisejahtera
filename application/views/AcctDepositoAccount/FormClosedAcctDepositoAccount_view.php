@@ -256,13 +256,13 @@
 										<input type="hidden" class="easyui-textbox" name="tax_total" id="tax_total" autocomplete="off" value="<?php echo $tax_total ?>"/></td>
 										
 									</tr>
-									<tr>
+									<!-- <tr>
 										<td width="35%">Jasa Diterima (Rp)</td>
 										<td width="5%">:</td>
 										<td width="60%"><input type="text" class="easyui-textbox" name="interest_received_total_view" id="interest_received_total_view" autocomplete="off" style="width: 100%" value="<?php echo nominal($interest_total - $tax_total) ?>" readonly/>
 										<input type="hidden" class="easyui-textbox" name="interest_received_total" id="interest_received_total" autocomplete="off" value="<?php echo $interest_total - $tax_total ?>"/></td>
 										
-									</tr>
+									</tr> -->
 									<tr>
 										<td width="35%">Biaya Adm (Rp)</td>
 										<td width="5%">:</td>
