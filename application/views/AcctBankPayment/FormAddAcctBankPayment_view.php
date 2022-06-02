@@ -330,16 +330,19 @@ $saldobunga = $accountcredit['credits_account_interest_last_balance'] + $account
 
 	if($accountcredit['payment_type_id'] == 1){
 		$angsuranpokok 		= $accountcredit['credits_account_principal_amount'];
-		$angsuranbunga 	 	= $accountcredit['credits_account_interest_amount'] + $interest_plus;
+		// $angsuranbunga 	 	= $accountcredit['credits_account_interest_amount'] + $interest_plus;
+		$angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($accountcredit['payment_type_id'] == 2){
-		$angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
 		$angsuranpokok 		= $anuitas[$angsuranke]['angsuran_pokok'];
+		// $angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($accountcredit['payment_type_id'] == 3){
-		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
 		$angsuranpokok 		= $slidingrate[$angsuranke]['angsuran_pokok'];
+		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		// $angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($accountcredit['payment_type_id'] == 4){
-		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
 		$angsuranpokok		= 0;
+		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
 	}
 
 ?>
@@ -507,7 +510,7 @@ $saldobunga = $accountcredit['credits_account_interest_last_balance'] + $account
 										<td>Angsuran Pokok</td>
 										<td>:</td> 
 										<td>
-											<?php if($accountcredit['payment_type_id'] == 4){?>
+											<?php if($accountcredit['payment_type_id'] == 4 || $accountcredit['payment_type_id'] == 3){?>
 												<input type="text" class="easyui-textbox" name="angsuran_pokok_view" id="angsuran_pokok_view"  value="<?php echo number_format($angsuranpokok, 2); ?>"/>
 											<?php }else{?>
 												<input type="text" class="easyui-textbox" name="angsuran_pokok_view" id="angsuran_pokok_view"  value="<?php echo number_format($angsuranpokok, 2); ?>" readonly/>

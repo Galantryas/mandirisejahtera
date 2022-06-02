@@ -2547,7 +2547,7 @@
 					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$i." months", strtotime($credistaccount['credits_account_date'])));
 				}
 				
-				$angsuran_pokok									= $credistaccount['credits_account_principal_amount'];				
+				$angsuran_pokok									= $credistaccount['credits_account_amount']/$credits_account_period;				
 
 				$angsuran_margin								= $opening_balance*$credits_account_interest/100;				
 
@@ -3631,7 +3631,7 @@
 			$month_due 				= date('m', (strtotime($acctcreditsaccount['credits_account_due_date'])));
 			$day_due 				= date('d', (strtotime($acctcreditsaccount['credits_account_due_date'])));
 			$year_due				= date('Y', (strtotime($acctcreditsaccount['credits_account_due_date'])));
-			$total_administration	= $acctcreditsaccount['credits_account_provisi'] + $acctcreditsaccount['credits_account_komisi'] + $acctcreditsaccount['credits_account_insurance'] + $acctcreditsaccount['credits_account_materai'] + $acctcreditsaccount['credits_account_risk_reserve'] + $acctcreditsaccount['credits_account_stash'] + $acctcreditsaccount['credits_account_adm_cost'];
+			$total_administration	= $acctcreditsaccount['credits_account_provisi'] + $acctcreditsaccount['credits_account_komisi'] + $acctcreditsaccount['credits_account_insurance'] + $acctcreditsaccount['credits_account_materai'] + $acctcreditsaccount['credits_account_risk_reserve'] + $acctcreditsaccount['credits_account_stash'] + $acctcreditsaccount['credits_account_adm_cost'] + $acctcreditsaccount['credits_account_principal'];
 			$pencairan				= $acctcreditsaccount['credits_account_amount'] - $total_administration;
 
 			if($acctcreditsaccount['credits_id'] == 16 || $acctcreditsaccount['credits_id'] == 17 || $acctcreditsaccount['credits_id'] == 18){

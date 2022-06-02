@@ -121,6 +121,7 @@
 			    </tr>				
 			</table>";
 
+			if(count($datatax) > 0){
 			foreach($datatax as $key => $val){
 				$tbl1 .= "
 						<tr>
@@ -129,6 +130,12 @@
 							<td width=\"30%\" style=\"border-bottom: 1px solid black;border-top: 1px solid black\"><div style=\"text-align: right;font-size:10;\">".number_format($val['journal_voucher_debit_amount'], 2)."</div></td>
 						</tr>";
 				$totaltax += $val['journal_voucher_debit_amount'];
+			}
+			}else{
+				$tbl1 .= "
+					<tr>
+						<td width=\"100%\" colspan =\"3\" style=\"border-bottom: 1px solid black;border-top: 1px solid black\"><div style=\"text-align: center;font-size:10;\">Data Kosong</div></td>
+					</tr>";
 			}
 			
 			$tbltot = "
