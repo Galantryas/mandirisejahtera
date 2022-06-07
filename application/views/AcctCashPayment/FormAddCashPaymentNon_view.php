@@ -344,15 +344,15 @@ input:-moz-read-only { /* For Firefox */
 	if($credit_account['payment_type_id'] == 1){
 		$angsuranpokok 		= $credit_account['credits_account_principal_amount'];
 		// $angsuranbunga 	 	= $credit_account['credits_account_interest_amount'] + $interest_plus;
-		$angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
+		$angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 2){
 		$angsuranpokok 		= $anuitas[$angsuranke]['angsuran_pokok'];
 		// $angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
-		$angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
+		$angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 3){
 		$angsuranpokok 		= $slidingrate[$angsuranke]['angsuran_pokok'];
 		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
-		// $angsuranbunga 	 	= $accountcredit['credits_account_payment_amount'] - $angsuranpokok;
+		// $angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 4){
 		$angsuranpokok		= 0;
 		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
