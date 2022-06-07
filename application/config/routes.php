@@ -53,7 +53,7 @@ $route['default_controller'] = 'MainPage';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-/*USER User/processEditUser*/ 
+/*USER User/processEditUser*/
 $route['user']                                        = 'User';
 $route['change-password']                             = 'User/changePassword';
 $route['change-password/(:num)']                      = 'User/changePassword/$1';
@@ -87,7 +87,7 @@ $route['member/edit-member-savings/(:num)']             = 'CoreMember/editCoreMe
 $route['member/edit-member-savings']                    = 'CoreMember/editCoreMemberSavings';
 $route['member/edit-debet-member-savings']              = 'CoreMember/editDebetCoreMemberSavings';
 $route['member/edit-debet-member-savings/(:num)']       = 'CoreMember/editDebetCoreMemberSavings/$1';
-$route['member/edit-debet-member-savings/(:num)/(:num)']= 'CoreMember/editDebetCoreMemberSavings/$1/$1';
+$route['member/edit-debet-member-savings/(:num)/(:num)'] = 'CoreMember/editDebetCoreMemberSavings/$1/$1';
 $route['member/process-edit-member-savings']            = 'CoreMember/processEditCoreMemberSavings';
 $route['member/process-edit-debet-member-savings']      = 'CoreMember/processEditDebetCoreMemberSavings';
 $route['member/process-edit-member']                    = 'CoreMember/processEditCoreMember';
@@ -505,69 +505,69 @@ $route['item-category/reset-add']            = 'InvtItemCategory/reset_add';
 $route['item-category/reset-edit/(:num)']    = 'InvtItemCategory/reset_edit/$1';
 
 /* CORE COMPANY */
-$route['company'] 			                = 'CoreCompany';
-$route['company/add'] 			            = 'CoreCompany/addCoreCompany';
-$route['company/edit/(:num)']	            = 'CoreCompany/editCoreCompany/$1';
-$route['company/delete/(:num)']	            = 'CoreCompany/deleteCoreCompany/$1';
-$route['company/process-add'] 	            = 'CoreCompany/processAddCoreCompany';
-$route['company/process-edit'] 	            = 'CoreCompany/processEditCoreCompany';
-$route['company/get-company-name'] 	        = 'CoreCompany/getCompanyName';
-$route['company/elements-add'] 	            = 'CoreCompany/function_elements_add';
-$route['company/state-add'] 	            = 'CoreCompany/function_state_add';
-$route['company/reset-add'] 	            = 'CoreCompany/reset_add';
-$route['company/reset-edit/(:num)'] 	    = 'CoreCompany/reset_edit/$1';
+$route['company']                             = 'CoreCompany';
+$route['company/add']                         = 'CoreCompany/addCoreCompany';
+$route['company/edit/(:num)']                = 'CoreCompany/editCoreCompany/$1';
+$route['company/delete/(:num)']                = 'CoreCompany/deleteCoreCompany/$1';
+$route['company/process-add']                 = 'CoreCompany/processAddCoreCompany';
+$route['company/process-edit']                 = 'CoreCompany/processEditCoreCompany';
+$route['company/get-company-name']             = 'CoreCompany/getCompanyName';
+$route['company/elements-add']                 = 'CoreCompany/function_elements_add';
+$route['company/state-add']                 = 'CoreCompany/function_state_add';
+$route['company/reset-add']                 = 'CoreCompany/reset_add';
+$route['company/reset-edit/(:num)']         = 'CoreCompany/reset_edit/$1';
 
 /* CORE MEMBER CLASS */
-$route['member-class'] 			                = 'CoreMemberClass';
-$route['member-class/add'] 			            = 'CoreMemberClass/addCoreMemberClass';
-$route['member-class/edit/(:num)']	            = 'CoreMemberClass/editCoreMemberClass/$1';
-$route['member-class/delete/(:num)']	        = 'CoreMemberClass/deleteCoreMemberClass/$1';
-$route['member-class/process-add'] 	            = 'CoreMemberClass/processAddCoreMemberClass';
-$route['member-class/process-edit'] 	        = 'CoreMemberClass/processEditCoreMemberClass';
-$route['member-class/get-member-class-name'] 	= 'CoreMemberClass/getMemberClassName';
-$route['member-class/elements-add'] 	        = 'CoreMemberClass/function_elements_add';
-$route['member-class/reset-add'] 	            = 'CoreMemberClass/reset_add';
-$route['member-class/reset-edit/(:num)'] 	    = 'CoreMemberClass/reset_edit/$1';
+$route['member-class']                             = 'CoreMemberClass';
+$route['member-class/add']                         = 'CoreMemberClass/addCoreMemberClass';
+$route['member-class/edit/(:num)']                = 'CoreMemberClass/editCoreMemberClass/$1';
+$route['member-class/delete/(:num)']            = 'CoreMemberClass/deleteCoreMemberClass/$1';
+$route['member-class/process-add']                 = 'CoreMemberClass/processAddCoreMemberClass';
+$route['member-class/process-edit']             = 'CoreMemberClass/processEditCoreMemberClass';
+$route['member-class/get-member-class-name']     = 'CoreMemberClass/getMemberClassName';
+$route['member-class/elements-add']             = 'CoreMemberClass/function_elements_add';
+$route['member-class/reset-add']                 = 'CoreMemberClass/reset_add';
+$route['member-class/reset-edit/(:num)']         = 'CoreMemberClass/reset_edit/$1';
 
 
 /* CORE BRANCH */
-$route['branch'] 			                = 'CoreBranch';
-$route['branch/add'] 			            = 'CoreBranch/addCoreBranch';
-$route['branch/edit/(:num)']	            = 'CoreBranch/editCoreBranch/$1';
-$route['branch/delete/(:num)']	            = 'CoreBranch/deleteCoreBranch/$1';
-$route['branch/process-add'] 	            = 'CoreBranch/processAddCoreBranch';
-$route['branch/process-edit'] 	            = 'CoreBranch/processEditCoreBranch';
-$route['branch/get-branch-name'] 	        = 'CoreBranch/getBranchName';
-$route['branch/elements-add'] 	            = 'CoreBranch/function_elements_add';
-$route['branch/reset-add'] 	                = 'CoreBranch/reset_add';
-$route['branch/reset-edit/(:num)'] 	        = 'CoreBranch/reset_edit/$1';
+$route['branch']                             = 'CoreBranch';
+$route['branch/add']                         = 'CoreBranch/addCoreBranch';
+$route['branch/edit/(:num)']                = 'CoreBranch/editCoreBranch/$1';
+$route['branch/delete/(:num)']                = 'CoreBranch/deleteCoreBranch/$1';
+$route['branch/process-add']                 = 'CoreBranch/processAddCoreBranch';
+$route['branch/process-edit']                 = 'CoreBranch/processEditCoreBranch';
+$route['branch/get-branch-name']             = 'CoreBranch/getBranchName';
+$route['branch/elements-add']                 = 'CoreBranch/function_elements_add';
+$route['branch/reset-add']                     = 'CoreBranch/reset_add';
+$route['branch/reset-edit/(:num)']             = 'CoreBranch/reset_edit/$1';
 
 // ACCT SAVINGS ACCOUNT DETAIL AcctSavingsAccountDetail
-$route['savings-account-detail/show-detail'] 	                    = 'AcctSavingsAccountDetail/showdetail';
-$route['savings-account-detail/filter'] 	                        = 'AcctSavingsAccountDetail/filter';
-$route['savings-account-detail/reset_search'] 	                    = 'AcctSavingsAccountDetail/reset_search';
-$route['savings-account-detail/get-list-savings-account'] 	        = 'AcctSavingsAccountDetail/getListAcctSavingsAccount';
-$route['savings-account-detail/show-detail/(:num)'] 	            = 'AcctSavingsAccountDetail/showdetail/$1';
+$route['savings-account-detail/show-detail']                         = 'AcctSavingsAccountDetail/showdetail';
+$route['savings-account-detail/filter']                             = 'AcctSavingsAccountDetail/filter';
+$route['savings-account-detail/reset_search']                         = 'AcctSavingsAccountDetail/reset_search';
+$route['savings-account-detail/get-list-savings-account']             = 'AcctSavingsAccountDetail/getListAcctSavingsAccount';
+$route['savings-account-detail/show-detail/(:num)']                 = 'AcctSavingsAccountDetail/showdetail/$1';
 
 // ACCT ACCOUNT AcctAccount
-$route['account'] 			                = 'AcctAccount';
-$route['account/export-account']     		= 'AcctAccount/exportAcctAccount';
-$route['account/add'] 			            = 'AcctAccount/addAcctAccount';
-$route['account/edit/(:num)'] 			    = 'AcctAccount/editAcctAccount/$1';
-$route['account/process-edit'] 			    = 'AcctAccount/processEditAcctAccount';
-$route['account/process-add'] 			    = 'AcctAccount/processAddAcctAccount';
-$route['account/delete/(:num)'] 			= 'AcctAccount/deleteAcctAccount/$1';
+$route['account']                             = 'AcctAccount';
+$route['account/export-account']             = 'AcctAccount/exportAcctAccount';
+$route['account/add']                         = 'AcctAccount/addAcctAccount';
+$route['account/edit/(:num)']                 = 'AcctAccount/editAcctAccount/$1';
+$route['account/process-edit']                 = 'AcctAccount/processEditAcctAccount';
+$route['account/process-add']                 = 'AcctAccount/processAddAcctAccount';
+$route['account/delete/(:num)']             = 'AcctAccount/deleteAcctAccount/$1';
 
 // ACCT AcctJournalVoucher AcctJournalVoucher
-$route['journal-voucher'] 			                = 'AcctJournalVoucher';
-$route['journal-voucher/add'] 			            = 'AcctJournalVoucher/addAcctJournalVoucher';
-$route['journal-voucher/elements-add'] 			    = 'AcctJournalVoucher/function_elements_add';
-$route['journal-voucher/reset-data'] 			    = 'AcctJournalVoucher/reset_data';
-$route['journal-voucher/reset-search'] 			    = 'AcctJournalVoucher/reset_search';
-$route['journal-voucher/process-add-array'] 		= 'AcctJournalVoucher/processAddArrayAcctjournalVoucher';
-$route['journal-voucher/process-add'] 		        = 'AcctJournalVoucher/processAddAcctJournalVoucher';
-$route['journal-voucher/filter'] 		            = 'AcctJournalVoucher/filter';
-$route['journal-voucher/process-printing/(:num)'] 	= 'AcctJournalVoucher/processPrinting/$1';
+$route['journal-voucher']                             = 'AcctJournalVoucher';
+$route['journal-voucher/add']                         = 'AcctJournalVoucher/addAcctJournalVoucher';
+$route['journal-voucher/elements-add']                 = 'AcctJournalVoucher/function_elements_add';
+$route['journal-voucher/reset-data']                 = 'AcctJournalVoucher/reset_data';
+$route['journal-voucher/reset-search']                 = 'AcctJournalVoucher/reset_search';
+$route['journal-voucher/process-add-array']         = 'AcctJournalVoucher/processAddArrayAcctjournalVoucher';
+$route['journal-voucher/process-add']                 = 'AcctJournalVoucher/processAddAcctJournalVoucher';
+$route['journal-voucher/filter']                     = 'AcctJournalVoucher/filter';
+$route['journal-voucher/process-printing/(:num)']     = 'AcctJournalVoucher/processPrinting/$1';
 
 // ACCT AcctJournalVoucher AcctJournalVoucher
 $route['memorial-journal']                          = 'AcctMemorialJournal';
@@ -590,330 +590,330 @@ $route['general-ledger-report/process-printing']                = 'AcctGeneralLe
 $route['general-ledger-report/export/(:num)/(:num)']            = 'AcctGeneralLedgerReport/export/$1/$1';
 $route['general-ledger-report/pdf/(:num)/(:num)']               = 'AcctGeneralLedgerReport/pdf/$1/$1';
 
- 
+
 //Savings AcctSavings
-$route['savings'] 			                = 'AcctSavings';
-$route['savings/add'] 			            = 'AcctSavings/addAcctSavings';
-$route['savings/state-add'] 			    = 'AcctSavings/function_state_add';
-$route['savings/elements-add'] 			    = 'AcctSavings/function_elements_add';
-$route['savings/reset-data'] 			    = 'AcctSavings/reset_data';
-$route['savings/process-add-account'] 		= 'AcctSavings/processAddAcctAccount';
-$route['savings/process-add'] 		        = 'AcctSavings/processAddAcctSavings';
-$route['savings/process-edit'] 			    = 'AcctSavings/processEditAcctSavings';
-$route['savings/edit/(:num)'] 			    = 'AcctSavings/editAcctSavings/$1';
-$route['savings/delete/(:num)'] 			= 'AcctSavings/deleteAcctSavings/$1';
+$route['savings']                             = 'AcctSavings';
+$route['savings/add']                         = 'AcctSavings/addAcctSavings';
+$route['savings/state-add']                 = 'AcctSavings/function_state_add';
+$route['savings/elements-add']                 = 'AcctSavings/function_elements_add';
+$route['savings/reset-data']                 = 'AcctSavings/reset_data';
+$route['savings/process-add-account']         = 'AcctSavings/processAddAcctAccount';
+$route['savings/process-add']                 = 'AcctSavings/processAddAcctSavings';
+$route['savings/process-edit']                 = 'AcctSavings/processEditAcctSavings';
+$route['savings/edit/(:num)']                 = 'AcctSavings/editAcctSavings/$1';
+$route['savings/delete/(:num)']             = 'AcctSavings/deleteAcctSavings/$1';
 
 
 //deposito AcctDeposito
-$route['deposito'] 			                    = 'AcctDeposito';
-$route['deposito/add'] 			                = 'AcctDeposito/addAcctDeposito';
-$route['deposito/elements-add'] 			    = 'AcctDeposito/function_elements_add';
-$route['deposito/state-add'] 			        = 'AcctDeposito/function_state_add';
-$route['deposito/reset-data'] 			        = 'AcctDeposito/reset_data';
-$route['deposito/process-add-account'] 		    = 'AcctDeposito/processAddAcctAccount';
-$route['deposito/process-add'] 		            = 'AcctDeposito/processAddAcctDeposito';
-$route['deposito/process-edit'] 			    = 'AcctDeposito/processEditAcctDeposito';
-$route['deposito/edit/(:num)'] 			        = 'AcctDeposito/editAcctDeposito/$1';
-$route['deposito/delete/(:num)'] 			    = 'AcctDeposito/deleteAcctDeposito/$1';
+$route['deposito']                                 = 'AcctDeposito';
+$route['deposito/add']                             = 'AcctDeposito/addAcctDeposito';
+$route['deposito/elements-add']                 = 'AcctDeposito/function_elements_add';
+$route['deposito/state-add']                     = 'AcctDeposito/function_state_add';
+$route['deposito/reset-data']                     = 'AcctDeposito/reset_data';
+$route['deposito/process-add-account']             = 'AcctDeposito/processAddAcctAccount';
+$route['deposito/process-add']                     = 'AcctDeposito/processAddAcctDeposito';
+$route['deposito/process-edit']                 = 'AcctDeposito/processEditAcctDeposito';
+$route['deposito/edit/(:num)']                     = 'AcctDeposito/editAcctDeposito/$1';
+$route['deposito/delete/(:num)']                 = 'AcctDeposito/deleteAcctDeposito/$1';
 
 //credits AcctCredits
-$route['credits'] 			                    = 'AcctCredits';
-$route['credits/add'] 			                = 'AcctCredits/addAcctCredits';
-$route['credits/elements-add'] 			        = 'AcctCredits/function_elements_add';
-$route['credits/state-add'] 			        = 'AcctCredits/function_state_add';
-$route['credits/reset-data'] 			        = 'AcctCredits/reset_data';
-$route['credits/process-add-account'] 		    = 'AcctCredits/processAddAcctAccount';
-$route['credits/process-add'] 		            = 'AcctCredits/processAddAcctCredits';
-$route['credits/process-edit'] 			        = 'AcctCredits/processEditAcctCredits';
-$route['credits/edit/(:num)'] 			        = 'AcctCredits/editAcctCredits/$1';
-$route['credits/delete/(:num)'] 			    = 'AcctCredits/deleteAcctCredits/$1';
+$route['credits']                                 = 'AcctCredits';
+$route['credits/add']                             = 'AcctCredits/addAcctCredits';
+$route['credits/elements-add']                     = 'AcctCredits/function_elements_add';
+$route['credits/state-add']                     = 'AcctCredits/function_state_add';
+$route['credits/reset-data']                     = 'AcctCredits/reset_data';
+$route['credits/process-add-account']             = 'AcctCredits/processAddAcctAccount';
+$route['credits/process-add']                     = 'AcctCredits/processAddAcctCredits';
+$route['credits/process-edit']                     = 'AcctCredits/processEditAcctCredits';
+$route['credits/edit/(:num)']                     = 'AcctCredits/editAcctCredits/$1';
+$route['credits/delete/(:num)']                 = 'AcctCredits/deleteAcctCredits/$1';
 
 //office CoreOffice
-$route['office'] 			                    = 'CoreOffice';
-$route['office/add'] 			                = 'CoreOffice/addCoreOffice';
-$route['office/add-dusun'] 			            = 'CoreOffice/addCoreDusun';
-$route['office/elements-add'] 			        = 'CoreOffice/function_elements_add';
-$route['office/elements-edit'] 			        = 'CoreOffice/function_elements_edit';
-$route['office/state-add'] 			            = 'CoreOffice/function_state_add';
-$route['office/reset-data'] 			        = 'CoreOffice/reset_data';
-$route['office/process-add-account'] 		    = 'CoreOffice/processAddAcctAccount';
-$route['office/process-add'] 		            = 'CoreOffice/processAddCoreOffice';
-$route['office/process-edit'] 			        = 'CoreOffice/processEditCoreOffice';
-$route['office/edit/(:num)'] 			        = 'CoreOffice/editCoreOffice/$1';
-$route['office/edit-dusun'] 			        = 'CoreOffice/editCoreDusun';
-$route['office/delete/(:num)'] 			        = 'CoreOffice/deleteCoreOffice/$1';
-$route['office/delete-dusun/(:num)'] 			= 'CoreOffice/deleteCoreDusun/$1';
-$route['office/delete-edit-dusun/(:num)/(:num)']= 'CoreOffice/deleteEditCoreDusun/$1/$1';
-$route['office/get-kecamatan/(:num)'] 			= 'CoreOffice/getCoreKecamatan/$1';
-$route['office/get-kelurahan/(:num)'] 			= 'CoreOffice/getCoreKelurahan/$1';
+$route['office']                                 = 'CoreOffice';
+$route['office/add']                             = 'CoreOffice/addCoreOffice';
+$route['office/add-dusun']                         = 'CoreOffice/addCoreDusun';
+$route['office/elements-add']                     = 'CoreOffice/function_elements_add';
+$route['office/elements-edit']                     = 'CoreOffice/function_elements_edit';
+$route['office/state-add']                         = 'CoreOffice/function_state_add';
+$route['office/reset-data']                     = 'CoreOffice/reset_data';
+$route['office/process-add-account']             = 'CoreOffice/processAddAcctAccount';
+$route['office/process-add']                     = 'CoreOffice/processAddCoreOffice';
+$route['office/process-edit']                     = 'CoreOffice/processEditCoreOffice';
+$route['office/edit/(:num)']                     = 'CoreOffice/editCoreOffice/$1';
+$route['office/edit-dusun']                     = 'CoreOffice/editCoreDusun';
+$route['office/delete/(:num)']                     = 'CoreOffice/deleteCoreOffice/$1';
+$route['office/delete-dusun/(:num)']             = 'CoreOffice/deleteCoreDusun/$1';
+$route['office/delete-edit-dusun/(:num)/(:num)'] = 'CoreOffice/deleteEditCoreDusun/$1/$1';
+$route['office/get-kecamatan/(:num)']             = 'CoreOffice/getCoreKecamatan/$1';
+$route['office/get-kelurahan/(:num)']             = 'CoreOffice/getCoreKelurahan/$1';
 
 //configuration collectibility ConfigurationCollectibility
-$route['configuration-collectibility'] 			                    = 'ConfigurationCollectibility';
-$route['configuration-collectibility/add'] 			                = 'ConfigurationCollectibility/addConfigurationCollectibility';
-$route['configuration-collectibility/elements-add'] 			    = 'ConfigurationCollectibility/function_elements_add';
-$route['configuration-collectibility/state-add'] 			        = 'ConfigurationCollectibility/function_state_add';
-$route['configuration-collectibility/reset-data'] 			        = 'ConfigurationCollectibility/reset_data';
-$route['configuration-collectibility/process-add-account'] 		    = 'ConfigurationCollectibility/processAddAcctAccount';
-$route['configuration-collectibility/process-add'] 		            = 'ConfigurationCollectibility/processAddConfigurationCollectibility';
-$route['configuration-collectibility/process-edit'] 			    = 'ConfigurationCollectibility/processEditConfigurationCollectibility';
-$route['configuration-collectibility/edit/(:num)'] 			        = 'ConfigurationCollectibility/editConfigurationCollectibility/$1';
-$route['configuration-collectibility/delete/(:num)'] 			    = 'ConfigurationCollectibility/deleteConfigurationCollectibility/$1';
+$route['configuration-collectibility']                                 = 'ConfigurationCollectibility';
+$route['configuration-collectibility/add']                             = 'ConfigurationCollectibility/addConfigurationCollectibility';
+$route['configuration-collectibility/elements-add']                 = 'ConfigurationCollectibility/function_elements_add';
+$route['configuration-collectibility/state-add']                     = 'ConfigurationCollectibility/function_state_add';
+$route['configuration-collectibility/reset-data']                     = 'ConfigurationCollectibility/reset_data';
+$route['configuration-collectibility/process-add-account']             = 'ConfigurationCollectibility/processAddAcctAccount';
+$route['configuration-collectibility/process-add']                     = 'ConfigurationCollectibility/processAddConfigurationCollectibility';
+$route['configuration-collectibility/process-edit']                 = 'ConfigurationCollectibility/processEditConfigurationCollectibility';
+$route['configuration-collectibility/edit/(:num)']                     = 'ConfigurationCollectibility/editConfigurationCollectibility/$1';
+$route['configuration-collectibility/delete/(:num)']                 = 'ConfigurationCollectibility/deleteConfigurationCollectibility/$1';
 
 
 //Mutation AcctMutation
-$route['mutation'] 			                    = 'AcctMutation';
-$route['mutation/add'] 			                = 'AcctMutation/addAcctMutation';
-$route['mutation/elements-add'] 			    = 'AcctMutation/function_elements_add';
-$route['mutation/state-add'] 			        = 'AcctMutation/function_state_add';
-$route['mutation/reset-data'] 			        = 'AcctMutation/reset_data';
-$route['mutation/process-add'] 		            = 'AcctMutation/processAddAcctMutation';
-$route['mutation/process-edit'] 			    = 'AcctMutation/processEditAcctMutation';
-$route['mutation/edit/(:num)'] 			        = 'AcctMutation/editAcctMutation/$1';
-$route['mutation/delete/(:num)'] 			    = 'AcctMutation/deleteAcctMutation/$1';
+$route['mutation']                                 = 'AcctMutation';
+$route['mutation/add']                             = 'AcctMutation/addAcctMutation';
+$route['mutation/elements-add']                 = 'AcctMutation/function_elements_add';
+$route['mutation/state-add']                     = 'AcctMutation/function_state_add';
+$route['mutation/reset-data']                     = 'AcctMutation/reset_data';
+$route['mutation/process-add']                     = 'AcctMutation/processAddAcctMutation';
+$route['mutation/process-edit']                 = 'AcctMutation/processEditAcctMutation';
+$route['mutation/edit/(:num)']                     = 'AcctMutation/editAcctMutation/$1';
+$route['mutation/delete/(:num)']                 = 'AcctMutation/deleteAcctMutation/$1';
 
 //Mutation AcctMutation
-$route['mutation'] 			                    = 'AcctMutation';
-$route['mutation/add'] 			                = 'AcctMutation/addAcctMutation';
-$route['mutation/elements-add'] 			    = 'AcctMutation/function_elements_add';
-$route['mutation/state-add'] 			        = 'AcctMutation/function_state_add';
-$route['mutation/reset-data'] 			        = 'AcctMutation/reset_data';
-$route['mutation/process-add'] 		            = 'AcctMutation/processAddAcctMutation';
-$route['mutation/process-edit'] 			    = 'AcctMutation/processEditAcctMutation';
-$route['mutation/edit/(:num)'] 			        = 'AcctMutation/editAcctMutation/$1';
-$route['mutation/delete/(:num)'] 			    = 'AcctMutation/deleteAcctMutation/$1';
+$route['mutation']                                 = 'AcctMutation';
+$route['mutation/add']                             = 'AcctMutation/addAcctMutation';
+$route['mutation/elements-add']                 = 'AcctMutation/function_elements_add';
+$route['mutation/state-add']                     = 'AcctMutation/function_state_add';
+$route['mutation/reset-data']                     = 'AcctMutation/reset_data';
+$route['mutation/process-add']                     = 'AcctMutation/processAddAcctMutation';
+$route['mutation/process-edit']                 = 'AcctMutation/processEditAcctMutation';
+$route['mutation/edit/(:num)']                     = 'AcctMutation/editAcctMutation/$1';
+$route['mutation/delete/(:num)']                 = 'AcctMutation/deleteAcctMutation/$1';
 
 //source fund AcctSourceFund
-$route['source-fund'] 			                    = 'AcctSourceFund';
-$route['source-fund/add'] 			                = 'AcctSourceFund/addAcctSourceFund';
-$route['source-fund/elements-add'] 			        = 'AcctSourceFund/function_elements_add';
-$route['source-fund/state-add'] 			        = 'AcctSourceFund/function_state_add';
-$route['source-fund/reset-data'] 			        = 'AcctSourceFund/reset_data';
-$route['source-fund/process-add'] 		            = 'AcctSourceFund/processAddAcctSourceFund';
-$route['source-fund/process-edit'] 			        = 'AcctSourceFund/processEditAcctSourceFund';
-$route['source-fund/edit/(:num)'] 			        = 'AcctSourceFund/editAcctSourceFund/$1';
-$route['source-fund/delete/(:num)'] 			    = 'AcctSourceFund/deleteAcctSourceFund/$1';
+$route['source-fund']                                 = 'AcctSourceFund';
+$route['source-fund/add']                             = 'AcctSourceFund/addAcctSourceFund';
+$route['source-fund/elements-add']                     = 'AcctSourceFund/function_elements_add';
+$route['source-fund/state-add']                     = 'AcctSourceFund/function_state_add';
+$route['source-fund/reset-data']                     = 'AcctSourceFund/reset_data';
+$route['source-fund/process-add']                     = 'AcctSourceFund/processAddAcctSourceFund';
+$route['source-fund/process-edit']                     = 'AcctSourceFund/processEditAcctSourceFund';
+$route['source-fund/edit/(:num)']                     = 'AcctSourceFund/editAcctSourceFund/$1';
+$route['source-fund/delete/(:num)']                 = 'AcctSourceFund/deleteAcctSourceFund/$1';
 
 
 //dusun CoreDusun
-$route['dusun'] 			                    = 'CoreDusun';
-$route['dusun/add'] 			                = 'CoreDusun/addCoreDusun';
-$route['dusun/filter'] 			                = 'CoreDusun/filter';
-$route['dusun/elements-add'] 			        = 'CoreDusun/function_elements_add';
-$route['dusun/state-add'] 			            = 'CoreDusun/function_state_add';
-$route['dusun/reset-data'] 			            = 'CoreDusun/reset_data';
-$route['dusun/process-add'] 		            = 'CoreDusun/processAddCoreDusun';
-$route['dusun/process-edit'] 			        = 'CoreDusun/processEditCoreDusun';
-$route['dusun/edit/(:num)'] 			        = 'CoreDusun/editCoreDusun/$1';
-$route['dusun/delete/(:num)'] 			        = 'CoreDusun/deleteCoreDusun/$1';
-$route['dusun/get-kecamatan'] 			        = 'CoreDusun/getCoreKecamatan/$1';
-$route['dusun/get-kelurahan'] 			        = 'CoreDusun/getCoreKelurahan/$1';
+$route['dusun']                                 = 'CoreDusun';
+$route['dusun/add']                             = 'CoreDusun/addCoreDusun';
+$route['dusun/filter']                             = 'CoreDusun/filter';
+$route['dusun/elements-add']                     = 'CoreDusun/function_elements_add';
+$route['dusun/state-add']                         = 'CoreDusun/function_state_add';
+$route['dusun/reset-data']                         = 'CoreDusun/reset_data';
+$route['dusun/process-add']                     = 'CoreDusun/processAddCoreDusun';
+$route['dusun/process-edit']                     = 'CoreDusun/processEditCoreDusun';
+$route['dusun/edit/(:num)']                     = 'CoreDusun/editCoreDusun/$1';
+$route['dusun/delete/(:num)']                     = 'CoreDusun/deleteCoreDusun/$1';
+$route['dusun/get-kecamatan']                     = 'CoreDusun/getCoreKecamatan/$1';
+$route['dusun/get-kelurahan']                     = 'CoreDusun/getCoreKelurahan/$1';
 
 
 //preference income PreferenceIncome
-$route['preference-income'] 			                    = 'PreferenceIncome';
-$route['preference-income/add'] 			                = 'PreferenceIncome/addPreferenceIncome';
-$route['preference-income/process-add-account'] 		    = 'PreferenceIncome/processAddAcctAccount';
-$route['preference-income/process-add'] 		            = 'PreferenceIncome/processAddPreferenceIncome';
-$route['preference-income/process-edit'] 			        = 'PreferenceIncome/processEditPreferenceIncome';
-$route['preference-income/edit/(:num)'] 			        = 'PreferenceIncome/editPreferenceIncome/$1';
-$route['preference-income/delete/(:num)'] 			        = 'PreferenceIncome/deletePreferenceIncome/$1';
+$route['preference-income']                                 = 'PreferenceIncome';
+$route['preference-income/add']                             = 'PreferenceIncome/addPreferenceIncome';
+$route['preference-income/process-add-account']             = 'PreferenceIncome/processAddAcctAccount';
+$route['preference-income/process-add']                     = 'PreferenceIncome/processAddPreferenceIncome';
+$route['preference-income/process-edit']                     = 'PreferenceIncome/processEditPreferenceIncome';
+$route['preference-income/edit/(:num)']                     = 'PreferenceIncome/editPreferenceIncome/$1';
+$route['preference-income/delete/(:num)']                     = 'PreferenceIncome/deletePreferenceIncome/$1';
 
 //bank account AcctBankAccount
-$route['bank-account'] 			                        = 'AcctBankAccount';
-$route['bank-account/add'] 			                    = 'AcctBankAccount/addAcctBankAccount';
-$route['bank-account/process-add-account'] 		        = 'AcctBankAccount/processAddAcctAccount';
-$route['bank-account/process-add'] 		                = 'AcctBankAccount/processAddAcctBankAccount';
-$route['bank-account/process-edit'] 			        = 'AcctBankAccount/processEditAcctBankAccount';
-$route['bank-account/edit/(:num)'] 			            = 'AcctBankAccount/editAcctBankAccount/$1';
-$route['bank-account/delete/(:num)'] 			        = 'AcctBankAccount/deleteAcctBankAccount/$1';
+$route['bank-account']                                     = 'AcctBankAccount';
+$route['bank-account/add']                                 = 'AcctBankAccount/addAcctBankAccount';
+$route['bank-account/process-add-account']                 = 'AcctBankAccount/processAddAcctAccount';
+$route['bank-account/process-add']                         = 'AcctBankAccount/processAddAcctBankAccount';
+$route['bank-account/process-edit']                     = 'AcctBankAccount/processEditAcctBankAccount';
+$route['bank-account/edit/(:num)']                         = 'AcctBankAccount/editAcctBankAccount/$1';
+$route['bank-account/delete/(:num)']                     = 'AcctBankAccount/deleteAcctBankAccount/$1';
 
 
 //bank account EmptyData
-$route['empty-data'] 			                        = 'EmptyData';
-$route['empty-data/process-empty-data'] 		        = 'EmptyData/processEmptyData';
+$route['empty-data']                                     = 'EmptyData';
+$route['empty-data/process-empty-data']                 = 'EmptyData/processEmptyData';
 
 //bank account EmptyData 
-$route['end-of-days/open-branch'] 			            = 'SystemEndOfDays/OpenBranch';
-$route['end-of-days/process-open-branch'] 			    = 'SystemEndOfDays/ProcessOpenBranch';
-$route['end-of-days/close-branch'] 		                = 'SystemEndOfDays/CloseBranch';
-$route['end-of-days/process-close-branch'] 		        = 'SystemEndOfDays/ProcessCloseBranch';
+$route['end-of-days/open-branch']                         = 'SystemEndOfDays/OpenBranch';
+$route['end-of-days/process-open-branch']                 = 'SystemEndOfDays/ProcessOpenBranch';
+$route['end-of-days/close-branch']                         = 'SystemEndOfDays/CloseBranch';
+$route['end-of-days/process-close-branch']                 = 'SystemEndOfDays/ProcessCloseBranch';
 
 //AcctNominativeRecap
-$route['nominative/rekap'] 			                    = 'AcctNominativeRecapReport';
-$route['nominative-rekap'] 			                    = 'AcctNominativeRecapReport';
-$route['nominative-rekap/viewreport'] 			        = 'AcctNominativeRecapReport/viewreport';
+$route['nominative/rekap']                                 = 'AcctNominativeRecapReport';
+$route['nominative-rekap']                                 = 'AcctNominativeRecapReport';
+$route['nominative-rekap/viewreport']                     = 'AcctNominativeRecapReport/viewreport';
 
 //AcctBalanceSheetReportNew1 
-$route['balance-sheet'] 			                    = 'AcctBalanceSheetReportNew1';
+$route['balance-sheet']                                 = 'AcctBalanceSheetReportNew1';
 
 //AcctProfitLossReportNew1
-$route['profit-loss'] 			                        = 'AcctProfitLossReportNew1';
+$route['profit-loss']                                     = 'AcctProfitLossReportNew1';
 
 //AcctBalanceSheetComparationReportNew 
-$route['balance-sheet-comparation'] 			        = 'AcctBalanceSheetComparationReportNew';
+$route['balance-sheet-comparation']                     = 'AcctBalanceSheetComparationReportNew';
 
 //AcctProfitLossComparationReport 
-$route['profit-loss-comparation'] 			            = 'AcctProfitLossComparationReport';
+$route['profit-loss-comparation']                         = 'AcctProfitLossComparationReport';
 
 
 //AcctFinancialAnalysisReport   
-$route['fincancial-analysis'] 			                = 'AcctFinancialAnalysisReport';
+$route['fincancial-analysis']                             = 'AcctFinancialAnalysisReport';
 
 //UserGroup
-$route['user-group'] 			                        = 'UserGroup';
-$route['user-group/add'] 			                    = 'UserGroup/Add';
-$route['user-group/process-add'] 			            = 'UserGroup/processAddUserGroup';
-$route['user-group/process-edit'] 			            = 'UserGroup/processEditUserGroup';
-$route['user-group/edit/(:num)'] 			            = 'UserGroup/Edit/$1';
-$route['user-group/delete/(:num)'] 			            = 'UserGroup/delete/$1';
+$route['user-group']                                     = 'UserGroup';
+$route['user-group/add']                                 = 'UserGroup/Add';
+$route['user-group/process-add']                         = 'UserGroup/processAddUserGroup';
+$route['user-group/process-edit']                         = 'UserGroup/processEditUserGroup';
+$route['user-group/edit/(:num)']                         = 'UserGroup/Edit/$1';
+$route['user-group/delete/(:num)']                         = 'UserGroup/delete/$1';
 
 //AcctSavingsProfitSharingNew 
-$route['savings-profit-sharing'] 			            = 'AcctSavingsProfitSharingNew';
-$route['savings-profit-sharing/list-data'] 			    = 'AcctSavingsProfitSharingNew/listdata';
-$route['savings-profit-sharing/process-add'] 		    = 'AcctSavingsProfitSharingNew/processAddAcctSavingsProfitSharing';
-$route['savings-profit-sharing/process-update'] 		= 'AcctSavingsProfitSharingNew/processUpdateAcctSavingsProfitSharing';
-$route['savings-profit-sharing/recalculate/(:num)'] 	= 'AcctSavingsProfitSharingNew/recalculate/$1';
+$route['savings-profit-sharing']                         = 'AcctSavingsProfitSharingNew';
+$route['savings-profit-sharing/list-data']                 = 'AcctSavingsProfitSharingNew/listdata';
+$route['savings-profit-sharing/process-add']             = 'AcctSavingsProfitSharingNew/processAddAcctSavingsProfitSharing';
+$route['savings-profit-sharing/process-update']         = 'AcctSavingsProfitSharingNew/processUpdateAcctSavingsProfitSharing';
+$route['savings-profit-sharing/recalculate/(:num)']     = 'AcctSavingsProfitSharingNew/recalculate/$1';
 
 //AcctSavingsAccountBlockir 
-$route['savings-account-blockir'] 			            = 'AcctSavingsAccountBlockir';
-$route['savings-account-blockir/unblockir'] 			= 'AcctSavingsAccountBlockir/unBlockirAcctSavingsAccount';
-$route['savings-account-blockir/add'] 			        = 'AcctSavingsAccountBlockir/addAcctSavingsAccountBlockir';
+$route['savings-account-blockir']                         = 'AcctSavingsAccountBlockir';
+$route['savings-account-blockir/unblockir']             = 'AcctSavingsAccountBlockir/unBlockirAcctSavingsAccount';
+$route['savings-account-blockir/add']                     = 'AcctSavingsAccountBlockir/addAcctSavingsAccountBlockir';
 $route['savings-account-blockir/process-add-unblockir'] = 'AcctSavingsAccountBlockir/processAddAcctSavingsAccountUnBlockir';
 $route['savings-account-blockir/process-add-blockir']   = 'AcctSavingsAccountBlockir/processAddAcctSavingsAccountBlockir';
-$route['savings-account-blockir/add-unblockir/(:num)'] 	= 'AcctSavingsAccountBlockir/addAcctSavingsAccountUnBlockir/$1';
-$route['savings-account-blockir/get-list'] 			    = 'AcctSavingsAccountBlockir/getAcctSavingsAccountBlockirList';
-$route['savings-account-blockir/function-elements-edit']= 'AcctSavingsAccountBlockir/function_elements_edit';
+$route['savings-account-blockir/add-unblockir/(:num)']     = 'AcctSavingsAccountBlockir/addAcctSavingsAccountUnBlockir/$1';
+$route['savings-account-blockir/get-list']                 = 'AcctSavingsAccountBlockir/getAcctSavingsAccountBlockirList';
+$route['savings-account-blockir/function-elements-edit'] = 'AcctSavingsAccountBlockir/function_elements_edit';
 $route['savings-account-blockir/reset-edit/(:num)']     = 'AcctSavingsAccountBlockir/reset_edit/$1';
 
 //AcctDepositoAccountBlockir 
-$route['deposito-account-blockir'] 			                = 'AcctDepositoAccountBlockir';
-$route['deposito-account-blockir/unblockir'] 			    = 'AcctDepositoAccountBlockir/unBlockirAcctDepositoAccount';
-$route['deposito-account-blockir/process-add-unblockir'] 	= 'AcctDepositoAccountBlockir/processAddAcctDepositoAccountUnBlockir';
-$route['deposito-account-blockir/process-add-blockir'] 	    = 'AcctDepositoAccountBlockir/processAddAcctDepositoAccountBlockir';
-$route['deposito-account-blockir/add'] 			            = 'AcctDepositoAccountBlockir/addAcctDepositoAccountBlockir';
-$route['deposito-account-blockir/add-unblockir/(:num)'] 	= 'AcctDepositoAccountBlockir/addAcctDepositoAccountUnBlockir/$1';
-$route['deposito-account-blockir/get-list'] 			    = 'AcctDepositoAccountBlockir/getAcctDepositoAccountBlockirList';
-$route['deposito-account-blockir/get-list-unblockir'] 	    = 'AcctDepositoAccountBlockir/getAcctDepositoAccountUnBlockirList';
+$route['deposito-account-blockir']                             = 'AcctDepositoAccountBlockir';
+$route['deposito-account-blockir/unblockir']                 = 'AcctDepositoAccountBlockir/unBlockirAcctDepositoAccount';
+$route['deposito-account-blockir/process-add-unblockir']     = 'AcctDepositoAccountBlockir/processAddAcctDepositoAccountUnBlockir';
+$route['deposito-account-blockir/process-add-blockir']         = 'AcctDepositoAccountBlockir/processAddAcctDepositoAccountBlockir';
+$route['deposito-account-blockir/add']                         = 'AcctDepositoAccountBlockir/addAcctDepositoAccountBlockir';
+$route['deposito-account-blockir/add-unblockir/(:num)']     = 'AcctDepositoAccountBlockir/addAcctDepositoAccountUnBlockir/$1';
+$route['deposito-account-blockir/get-list']                 = 'AcctDepositoAccountBlockir/getAcctDepositoAccountBlockirList';
+$route['deposito-account-blockir/get-list-unblockir']         = 'AcctDepositoAccountBlockir/getAcctDepositoAccountUnBlockirList';
 $route['deposito-account-blockir/function-elements-edit']   = 'AcctDepositoAccountBlockir/function_elements_edit';
 $route['deposito-account-blockir/reset-edit/(:num)']        = 'AcctDepositoAccountBlockir/reset_edit/$1';
 
 //AcctSavingsCloseBook
-$route['savings-close-book'] 			                    = 'AcctSavingsCloseBook';
-$route['savings-close-book/process-add'] 			        = 'AcctSavingsCloseBook/processAddAcctSavingsCloseBook';
+$route['savings-close-book']                                 = 'AcctSavingsCloseBook';
+$route['savings-close-book/process-add']                     = 'AcctSavingsCloseBook/processAddAcctSavingsCloseBook';
 
 //AcctSavingsAccountUtility
-$route['savings-account-utility'] 			                = 'AcctSavingsAccountUtility';
-$route['savings-account-utility/filter'] 			        = 'AcctSavingsAccountUtility/filter';
-$route['savings-account-utility/process-add'] 			    = 'AcctSavingsAccountUtility/processAddAcctSavingsAccountUtility';
-$route['savings-account-utility/add'] 			            = 'AcctSavingsAccountUtility/addAcctSavingsAccountUtility';
-$route['savings-account-utility/add/(:num)'] 			    = 'AcctSavingsAccountUtility/addAcctSavingsAccountUtility/$1';
-$route['savings-account-utility/print-validation/(:num)'] 	= 'AcctSavingsAccountUtility/printValidationAcctSavingsAccountUtility/$1';
-$route['savings-account-utility/validation/(:num)'] 	    = 'AcctSavingsAccountUtility/validationAcctSavingsAccountUtility/$1';
-$route['savings-account-utility/print-note/(:num)'] 	    = 'AcctSavingsAccountUtility/printNoteAcctSavingsAccountUtility/$1';
-$route['savings-account-utility/get-master'] 			    = 'AcctSavingsAccountUtility/getMasterDataSavingsAccount';
-$route['savings-account-utility/get-list'] 			        = 'AcctSavingsAccountUtility/getAcctSavingsAccountUtilityList';
-$route['savings-account-utility/function-elements-add'] 	= 'AcctSavingsAccountUtility/function_elements_add';
-$route['savings-account-utility/reset-data'] 	            = 'AcctSavingsAccountUtility/reset_data';
-$route['savings-account-utility/get-savings-account-no'] 	= 'AcctSavingsAccountUtility/getSavingsAccountNo';
-$route['savings-account-utility/get-list-core-member']  	= 'AcctSavingsAccountUtility/getListCoreMember';
+$route['savings-account-utility']                             = 'AcctSavingsAccountUtility';
+$route['savings-account-utility/filter']                     = 'AcctSavingsAccountUtility/filter';
+$route['savings-account-utility/process-add']                 = 'AcctSavingsAccountUtility/processAddAcctSavingsAccountUtility';
+$route['savings-account-utility/add']                         = 'AcctSavingsAccountUtility/addAcctSavingsAccountUtility';
+$route['savings-account-utility/add/(:num)']                 = 'AcctSavingsAccountUtility/addAcctSavingsAccountUtility/$1';
+$route['savings-account-utility/print-validation/(:num)']     = 'AcctSavingsAccountUtility/printValidationAcctSavingsAccountUtility/$1';
+$route['savings-account-utility/validation/(:num)']         = 'AcctSavingsAccountUtility/validationAcctSavingsAccountUtility/$1';
+$route['savings-account-utility/print-note/(:num)']         = 'AcctSavingsAccountUtility/printNoteAcctSavingsAccountUtility/$1';
+$route['savings-account-utility/get-master']                 = 'AcctSavingsAccountUtility/getMasterDataSavingsAccount';
+$route['savings-account-utility/get-list']                     = 'AcctSavingsAccountUtility/getAcctSavingsAccountUtilityList';
+$route['savings-account-utility/function-elements-add']     = 'AcctSavingsAccountUtility/function_elements_add';
+$route['savings-account-utility/reset-data']                 = 'AcctSavingsAccountUtility/reset_data';
+$route['savings-account-utility/get-savings-account-no']     = 'AcctSavingsAccountUtility/getSavingsAccountNo';
+$route['savings-account-utility/get-list-core-member']      = 'AcctSavingsAccountUtility/getListCoreMember';
 
 //AcctNominativeSavingsPickup
-$route['nominative-savings-pickup'] 			            = 'AcctNominativeSavingsPickup';
-$route['nominative-savings-pickup/function-elements-add'] 	= 'AcctNominativeSavingsPickup/function_elements_add';
-$route['nominative-savings-pickup/process-val-nominative'] 	= 'AcctNominativeSavingsPickup/processValAcctNominativeSavingsPickup';
-$route['nominative-savings-pickup/show-detail/(:num)'] 		= 'AcctNominativeSavingsPickup/showdetail/$1';
+$route['nominative-savings-pickup']                         = 'AcctNominativeSavingsPickup';
+$route['nominative-savings-pickup/function-elements-add']     = 'AcctNominativeSavingsPickup/function_elements_add';
+$route['nominative-savings-pickup/process-val-nominative']     = 'AcctNominativeSavingsPickup/processValAcctNominativeSavingsPickup';
+$route['nominative-savings-pickup/show-detail/(:num)']         = 'AcctNominativeSavingsPickup/showdetail/$1';
 
 //AcctPaymentPrintMutation 
-$route['payment-print-mutation/ind-payment'] 	                    = 'AcctPaymentPrintMutation/indPayment';
-$route['payment-print-mutation/ind-payment/(:num)'] 	            = 'AcctPaymentPrintMutation/indPayment/$1';
-$route['payment-print-mutation/reset-search'] 	                    = 'AcctPaymentPrintMutation/reset_search';
-$route['payment-print-mutation/filter'] 	                        = 'AcctPaymentPrintMutation/filter';
-$route['payment-print-mutation/process-printing/preview/(:num)'] 	= 'AcctPaymentPrintMutation/processPrinting/$1';
-$route['payment-print-mutation/process-printing/print/(:num)'] 	= 'AcctPaymentPrintMutation/processPrinting/$1';
+$route['payment-print-mutation/ind-payment']                         = 'AcctPaymentPrintMutation/indPayment';
+$route['payment-print-mutation/ind-payment/(:num)']                 = 'AcctPaymentPrintMutation/indPayment/$1';
+$route['payment-print-mutation/reset-search']                         = 'AcctPaymentPrintMutation/reset_search';
+$route['payment-print-mutation/filter']                             = 'AcctPaymentPrintMutation/filter';
+$route['payment-print-mutation/process-printing/preview/(:num)']     = 'AcctPaymentPrintMutation/processPrinting/$1';
+$route['payment-print-mutation/process-printing/print/(:num)']     = 'AcctPaymentPrintMutation/processPrinting/$1';
 
 
 //CoreMemberReport 
-$route['member-report']     			            = 'CoreMemberReport';
-$route['member-report/viewport']     			    = 'CoreMemberReport/viewreport';
+$route['member-report']                             = 'CoreMemberReport';
+$route['member-report/viewport']                     = 'CoreMemberReport/viewreport';
 
 //AcctNominativeSavingsReport
-$route['nominative-savings-report']     			            = 'AcctNominativeSavingsReport';
+$route['nominative-savings-report']                             = 'AcctNominativeSavingsReport';
 $route['nominative-savings-report/viewreport']                  = 'AcctNominativeSavingsReport/viewreport';
 
 
 //AcctNominativeDepositoReport
-$route['nominative-deposito-report']     			            = 'AcctNominativeDepositoReport';
+$route['nominative-deposito-report']                             = 'AcctNominativeDepositoReport';
 $route['nominative-deposito-report/viewreport']                 = 'AcctNominativeDepositoReport/viewreport';
 
 //AcctNominativeCreditsReport 
-$route['nominative-credits-report']     			           = 'AcctNominativeCreditsReport';
+$route['nominative-credits-report']                            = 'AcctNominativeCreditsReport';
 $route['nominative-credits-report/viewreport']                 = 'AcctNominativeCreditsReport/viewreport';
 
 //AcctSavingsAccountOfficerReport 
-$route['savings-account-officer-report']     			       = 'AcctSavingsAccountOfficerReport';
+$route['savings-account-officer-report']                        = 'AcctSavingsAccountOfficerReport';
 $route['savings-account-officer-report/viewreport']            = 'AcctSavingsAccountOfficerReport/viewreport';
 
 //AcctDepositoAccountOfficerReport  
-$route['deposito-account-officer-report']      			       = 'AcctDepositoAccountOfficerReport';
+$route['deposito-account-officer-report']                         = 'AcctDepositoAccountOfficerReport';
 $route['deposito-account-officer-report/viewreport']           = 'AcctDepositoAccountOfficerReport/viewreport';
 
 
 //AcctCreditsAccountOfficerReport  
-$route['credits-account-officer-report']      			       = 'AcctCreditsAccountOfficerReport';
+$route['credits-account-officer-report']                         = 'AcctCreditsAccountOfficerReport';
 $route['credits-account-officer-report/viewreport']            = 'AcctCreditsAccountOfficerReport/viewreport';
 
 //AcctSavingsProfitSharingReport  
-$route['savings-profit-sharing-report']      			       = 'AcctSavingsProfitSharingReport';
+$route['savings-profit-sharing-report']                         = 'AcctSavingsProfitSharingReport';
 
 //AcctDepositoProfitSharingReport  
-$route['deposito-profit-sharing-report']      			       = 'AcctDepositoProfitSharingReport';
+$route['deposito-profit-sharing-report']                         = 'AcctDepositoProfitSharingReport';
 
 //AcctSavingsDailyTransferMutation 
-$route['savings-daily-transfer-mutation']      			       = 'AcctSavingsDailyTransferMutation';
+$route['savings-daily-transfer-mutation']                         = 'AcctSavingsDailyTransferMutation';
 
 //AcctSavingsMandatoryHasntPaidReport
-$route['savings-mandatory-hasnt-paid-report']      			   = 'AcctSavingsMandatoryHasntPaidReport';
+$route['savings-mandatory-hasnt-paid-report']                     = 'AcctSavingsMandatoryHasntPaidReport';
 $route['savings-mandatory-hasnt-paid-report/viewreport']       = 'AcctSavingsMandatoryHasntPaidReport/viewreport';
 
 //AcctDepositoAccountClosedReport
-$route['deposito-account-closed-report']      			        = 'AcctDepositoAccountClosedReport';
+$route['deposito-account-closed-report']                          = 'AcctDepositoAccountClosedReport';
 $route['deposito-account-closed-report/viewreport']             = 'AcctDepositoAccountClosedReport/viewreport';
 
 //AcctCreditsPaymentReport
-$route['credits-payment-report']      			                = 'AcctCreditsPaymentReport';
+$route['credits-payment-report']                                  = 'AcctCreditsPaymentReport';
 $route['credits-payment-report/viewreport']                     = 'AcctCreditsPaymentReport/viewreport';
 
 //AcctCreditsPaymentDailyReport
-$route['credits-payment-daily-report']      			        = 'AcctCreditsPaymentDailyReport';
+$route['credits-payment-daily-report']                          = 'AcctCreditsPaymentDailyReport';
 $route['credits-payment-daily-report/viewreport']               = 'AcctCreditsPaymentDailyReport/viewreport';
 
 //AcctCreditsHasntPaidReport 
-$route['credits-hasnt-paid-report']      			               = 'AcctCreditsHasntPaidReport';
+$route['credits-hasnt-paid-report']                                 = 'AcctCreditsHasntPaidReport';
 $route['credits-hasnt-paid-report/viewreport']                     = 'AcctCreditsHasntPaidReport/viewreport';
 
 //AcctCreditsPaymentDueReport 
-$route['credits-payment-due-report']      			               = 'AcctCreditsPaymentDueReport';
+$route['credits-payment-due-report']                                 = 'AcctCreditsPaymentDueReport';
 $route['credits-payment-due-report/viewreport']                    = 'AcctCreditsPaymentDueReport/viewreport';
 
 //AcctCreditsRescheduleReport 
-$route['credits-reschedule-report']      			               = 'AcctCreditsRescheduleReport';
+$route['credits-reschedule-report']                                 = 'AcctCreditsRescheduleReport';
 $route['credits-reschedule-report/viewreport']                     = 'AcctCreditsRescheduleReport/viewreport';
 
 //AcctCreditsCollectibility 
-$route['credits-collectibility']      			                   = 'AcctCreditsCollectibility';
+$route['credits-collectibility']                                     = 'AcctCreditsCollectibility';
 
 //AcctCreditsAccountPaidOff 
-$route['credits-account-paid-off']      			               = 'AcctCreditsAccountPaidOff';
+$route['credits-account-paid-off']                                 = 'AcctCreditsAccountPaidOff';
 
 //AcctCreditsPaymentSuspendReport 
-$route['credits-payment-suspend-report']      			           = 'AcctCreditsPaymentSuspendReport';
+$route['credits-payment-suspend-report']                             = 'AcctCreditsPaymentSuspendReport';
 
 //AcctNominativeSavingsReportPickup
-$route['nominative-savings-report-pickup']      			           = 'AcctNominativeSavingsReportPickup';
+$route['nominative-savings-report-pickup']                             = 'AcctNominativeSavingsReportPickup';
 $route['nominative-savings-report-pickup/viewreport']                  = 'AcctNominativeSavingsReportPickup/viewreport';
 
 //AcctCashPaymentsBranch  
-$route['cash-payments-branch']                    			           = 'AcctCashPaymentsBranch';
+$route['cash-payments-branch']                                           = 'AcctCashPaymentsBranch';
 $route['cash-payments-branch/ind-cash-payment']                        = 'AcctCashPaymentsBranch/indAcctCashPayment';
 $route['cash-payments-branch/print-note-cash-payment/(:num)']          = 'AcctCashPaymentsBranch/printNoteCashPayment/$1';
 $route['cash-payments-branch/add-cash-payment/(:num)']                 = 'AcctCashPaymentsBranch/addAcctCashPayment/$1';
