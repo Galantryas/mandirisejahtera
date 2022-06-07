@@ -732,4 +732,3 @@
         return $this->db->count_all_results();
     }
 	}
-?>
