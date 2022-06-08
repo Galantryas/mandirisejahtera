@@ -161,6 +161,7 @@
 			if(empty($token)){
 				$token = md5(date('Y-m-d H:i:s'));
 				$this->session->set_userdata('acctcreditsaccounttoken-'.$unique['unique'], $token);
+				$this->session->unset_userdata('addcreditaccount-' . $unique['unique']);
 			}
 
 			$data['main_view']['memberidentity']			= $this->configuration->MemberIdentity();
@@ -408,6 +409,7 @@
 				"credits_account_period"					=> $this->input->post('credit_account_period',true),
 				"credits_account_due_date"					=> tgltodb($this->input->post('credit_account_due_date',true)),
 				"credits_account_amount"					=> $this->input->post('credits_account_last_balance_principal',true),
+				"credits_account_sales_name"				=> $this->input->post('credit_account_sales_name',true),
 				"credits_account_interest"					=> $this->input->post('credit_account_interest',true),
 				"credits_account_provisi"					=> $this->input->post('credit_account_provisi',true),
 				"credits_account_komisi"					=> $this->input->post('credit_account_komisi',true),
