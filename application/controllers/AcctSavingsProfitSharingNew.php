@@ -414,7 +414,7 @@
 							foreach ($acctsavings as $key => $val) {
 								$totalsavingstax 	= $this->AcctSavingsProfitSharingNew_model->getSubTotalSavingsTax($val['savings_id'], $vCB['branch_id']);
 						
-								$transaction_module_code 	= "BS";
+								$transaction_module_code 	= "PS";
 
 								$transaction_module_id 		= $this->AcctSavingsProfitSharingNew_model->getTransactionModuleID($transaction_module_code);
 	

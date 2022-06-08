@@ -343,16 +343,19 @@ input:-moz-read-only { /* For Firefox */
 
 	if($credit_account['payment_type_id'] == 1){
 		$angsuranpokok 		= $credit_account['credits_account_principal_amount'];
-		$angsuranbunga 	 	= $credit_account['credits_account_interest_amount'] + $interest_plus;
+		// $angsuranbunga 	 	= $credit_account['credits_account_interest_amount'] + $interest_plus;
+		$angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 2){
-		$angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
 		$angsuranpokok 		= $anuitas[$angsuranke]['angsuran_pokok'];
+		// $angsuranbunga 	 	= $anuitas[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		$angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 3){
-		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
 		$angsuranpokok 		= $slidingrate[$angsuranke]['angsuran_pokok'];
+		$angsuranbunga 	 	= $slidingrate[$angsuranke]['angsuran_bunga'] + $interest_plus;
+		// $angsuranbunga 	 	= $credit_account['credits_account_payment_amount'] - $angsuranpokok;
 	} else if($credit_account['payment_type_id'] == 4){
-		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
 		$angsuranpokok		= 0;
+		$angsuranbunga		= $angsuran_bunga_menurunharian + $interest_plus;
 	}
 ?>
 <script>
@@ -523,13 +526,13 @@ input:-moz-read-only { /* For Firefox */
 										<td width="35%">Angsuran Pokok (Rp)<span class="required">*</span></td>
 										<td width="5%"></td>
 										<td width="60%">
-											<?php if($credit_account['payment_type_id'] == 4){ ?>
+											<?php if($credit_account['payment_type_id'] == 4 || $credit_account['payment_type_id'] == 3){ ?>
 												<input type="text" class="easyui-textbox" name="credits_payment_principal_view" id="credits_payment_principal_view" autocomplete="off" value="<?php echo number_format($angsuranpokok, 2);?>" style="width: 70%"/>
 											<?php }else{ ?>
 												<input type="text" class="easyui-textbox" name="credits_payment_principal_view" id="credits_payment_principal_view" autocomplete="off" value="<?php echo number_format($angsuranpokok, 2);?>" style="width: 70%" readonly/>
 											<?php } ?>
 											<input type="hidden" class="easyui-textbox" name="payment_type_id" id="payment_type_id" value="<?php echo $accountcredit['payment_type_id']; ?>" />
-											<input type="hidden" class="easyui-textbox" name="credits_payment_principal" id="credits_payment_principal" autocomplete="off" value="<?php echo intval($angsuranpokok);?>"/>
+											<input type="hidden" class="easyui-textbox" name="credits_payment_principal" id="credits_payment_principal" autocomplete="off" value="<?php echo $angsuranpokok;?>"/>
 											<input type="hidden" class="easyui-textbox" name="credits_payment_principal_actualy" id="credits_payment_principal_actualy" autocomplete="off" value="<?php echo intval($angsuranpokok);?>"/>
 										</td>
 									</tr>

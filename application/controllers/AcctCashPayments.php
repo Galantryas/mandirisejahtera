@@ -189,7 +189,7 @@
 					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$i." months", strtotime($credistaccount['credits_account_date'])));
 				}
 				
-				$angsuran_pokok									= $credistaccount['credits_account_principal_amount'];				
+				$angsuran_pokok									= $credistaccount['credits_account_amount']/$credits_account_period;				
 
 				$angsuran_margin								= $opening_balance*$credits_account_interest/100;				
 
@@ -225,6 +225,7 @@
 			$total			= ceil($accountcredit['credits_account_payment_amount']/1000)*1000;
 			$interest_plus	= $total - $accountcredit['credits_account_payment_amount'];
 			$accountcredit['credits_account_payment_amount'] = $total;
+			// print_r($interest_plus);exit;
 
 			if($accountcredit['payment_type_id'] == 2){
 				$anuitas = $this->anuitas($accountcredit['credits_account_id']);
@@ -276,7 +277,7 @@
 
 				$total			= ceil($angsuran_bunga/1000)*1000;
 				$interest_plus	= $total - $angsuran_bunga;
-
+				
 				$accountcredit['credits_account_payment_amount'] 		= $total;
 				$data['main_view']['angsuran_bunga_menurunharian']		=  $angsuran_bunga;
 			}
@@ -1085,7 +1086,7 @@
 					$creditaccount['credits_account_payment_amount'] 		= $total;
 					$data['main_view']['angsuran_bunga_menurunharian']		=  $angsuran_bunga;
 				}
-
+				// print_r($interest_plus);exit;
 				$data['main_view']['credit_account'] 	= $creditaccount;
 				$data['main_view']['interest_plus'] 	= $interest_plus;
 			if($id4 != ""){

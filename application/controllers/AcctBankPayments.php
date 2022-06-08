@@ -187,7 +187,7 @@
 					$tanggal_angsuran 								= date('d-m-Y', strtotime("+".$i." months", strtotime($credistaccount['credits_account_date'])));
 				}
 				
-				$angsuran_pokok									= $credistaccount['credits_account_principal_amount'];				
+				$angsuran_pokok									= $credistaccount['credits_account_amount']/$credits_account_period;				
 
 				$angsuran_margin								= $opening_balance*$credits_account_interest/100;				
 
