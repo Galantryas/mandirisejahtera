@@ -2,7 +2,7 @@
 	defined('BASEPATH') or exit('No direct script access allowed');
 	class CoreMember_model extends CI_Model {
 		var $table = "core_member";
-		var $column_order = array(null, 'member_no','member_name','user_alamat','member_address',); //field yang ada di table user
+		var $column_order = array(null, 'member_no','member_name','member_address','member_status','member_phone','member_principal_savings_last_balance','member_special_savings_last_balance','member_mandatory_savings_last_balance'); //field yang ada di table user
 		var $column_search = array('member_id','member_name','member_no','member_address'); //field yang diizin untuk pencarian 
 		var $order = array('member_id' => 'asc');
 		
@@ -591,7 +591,7 @@
 
 		private function _get_datatables_query($branch_id)
     	{
-         
+		$column_order = array(null, 'member_no','member_name','member_address','member_status','member_character','member_phone','member_principal_savings_last_balance','member_mandatory_savings_last_balance');
         $this->db->from($this->table);
  		$this->db->where('data_state', 0);
  		// if(!empty($company_id)){
@@ -623,7 +623,7 @@
          
         if(isset($_POST['order'])) 
         {
-            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db->order_by($column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } 
         else if(isset($this->order))
         {
