@@ -32,6 +32,10 @@
 <script>
 	base_url = '<?php echo base_url();?>';
 
+    function reset_date(){
+		document.location = base_url = "deposito-profit-sharing-check/reset-search";
+	}
+
     $(document).ready(function(){
         $('#myModal').modal('show');
     });
@@ -563,7 +567,20 @@
                 } ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <?php if(count($acctdepositoprofitsharing) >0){
+                 ?>
+
+                 <button onClick="reset_date();" class="btn btn-default" >open</button>
+                 <button type="reset" class="btn btn-default" data-dismiss="modal">close</button>
+
+                <?php 
+                }else{
+                ?>
+
+                <button type="reset" class="btn btn-default" data-dismiss="modal">close</button>
+
+                <?php 
+                } ?>
             </div>
         </div>
     </div>
