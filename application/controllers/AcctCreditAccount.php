@@ -3116,7 +3116,10 @@
 			$tbl2 = "<table cellspacing=\"0\" cellpadding=\"1\" border=\"1\" width=\"100%\">";
 		
 			foreach ($datapola as $key => $val) {
-				// print_r($acctcreditspayment);exit;
+				
+				$roundAngsuran=round($val['angsuran'],-3);
+				$sisaRoundAngsuran = $val['angsuran'] - $roundAngsuran;
+				$sumAngsuranBunga = $val['angsuran_bunga'] + $sisaRoundAngsuran;
 
 				$tbl3 .= "
 					<tr>
@@ -3124,17 +3127,17 @@
 				    	<td width=\"12%\"><div style=\"text-align: right;\">".tgltoview($val['tanggal_angsuran'])." &nbsp; </div></td>
 				        <td width=\"18%\"><div style=\"text-align: right;\">".number_format($val['opening_balance'], 2)." &nbsp; </div></td>
 				        <td width=\"15%\"><div style=\"text-align: right;\">".number_format($val['angsuran_pokok'], 2)." &nbsp; </div></td>
-				        <td width=\"15%\"><div style=\"text-align: right;\">".number_format($val['angsuran_bunga'], 2)." &nbsp; </div></td>
-				        <td width=\"18%\"><div style=\"text-align: right;\">".number_format($val['angsuran'], 2)." &nbsp; </div></td>
+				        <td width=\"15%\"><div style=\"text-align: right;\">".number_format($sumAngsuranBunga,2)." &nbsp; </div></td>
+				        <td width=\"18%\"><div style=\"text-align: right;\">".number_format($roundAngsuran,2)." &nbsp; </div></td>
 				        <td width=\"18%\"><div style=\"text-align: right;\">".number_format($val['last_balance'], 2)." &nbsp; </div></td>
 				       	
-				    </tr>
+				    </tr>	
 				";
 
 				$no++;
 				$totalpokok += $val['angsuran_pokok'];
-				$totalmargin += $val['angsuran_bunga'];
-				$total += $val['angsuran'];
+				$totalmargin += $sumAngsuranBunga;
+				$total += $roundAngsuran;
 			}
 
 			$tbl4 = "
