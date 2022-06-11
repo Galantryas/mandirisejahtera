@@ -26,8 +26,8 @@
 			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
-			<a href="<?php echo base_url();?>credits-hasnt-paid-report">
-				Daftar Nasabah Belum Angsur
+			<a href="<?php echo base_url();?>credits-payment-due-paid-report">
+                Daftar Nasabah Jatuh Tempo Angsur
 			</a>
 			<i class="fa fa-angle-right"></i>
 		</li>
@@ -36,7 +36,7 @@
 			<!-- END PAGE TITLE & BREADCRUMB-->
 
 <h3 class="page-title">
-	Daftar Nasabah Belum Angsur<small> Kelola Daftar Nasabah Belum Angsur</small>
+	Daftar Nasabah Jatuh Tempo Angsur<small> Kelola Daftar Nasabah Jatuh Tempo Angsur</small>
 </h3>
 <?php
 	echo $this->session->userdata('message');
@@ -44,7 +44,7 @@
 
 	$auth = $this->session->userdata('auth');
 ?>	
-<?php	echo form_open('credits-hasnt-paid-report/viewreport',array('id' => 'myform', 'class' => '')); 
+<?php	echo form_open('credits-payment-due-paid-report/viewreport',array('id' => 'myform', 'class' => '')); 
 ?>
 <div class="row">
 	<div class="col-md-12">

@@ -57,7 +57,7 @@
 			<div class="portlet-body">
 				<div class="form-body form">
 					 <div class = "row">
-						<!-- <div class = "col-md-4">
+						<div class = "col-md-4">
 							<div class="form-group form-md-line-input">
 								<input class="form-control form-control-inline input-medium date-picker" data-date-format="dd-mm-yyyy" type="text" name="start_date" id="start_date" value="<?php echo date('d-m-Y');?>" autocomplate="off"/>
 								<label class="control-label">Mulai Tanggal
@@ -66,11 +66,11 @@
 									</span>
 								</label>
 							</div>
-						</div> -->
+						</div>
 						<div class = "col-md-4">
 							<div class="form-group form-md-line-input">
 								<input class="form-control form-control-inline input-medium date-picker" data-date-format="dd-mm-yyyy" type="text" name="end_date" id="end_date" value="<?php echo date('d-m-Y');?>" autocomplate="off"/>
-								<label class="control-label">Tanggal
+								<label class="control-label">Sampai Tanggal
 									<span class="required">
 										*
 									</span>

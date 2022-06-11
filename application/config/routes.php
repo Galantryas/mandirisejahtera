@@ -895,6 +895,9 @@ $route['credits-hasnt-paid-report/viewreport']                     = 'AcctCredit
 $route['credits-payment-due-report']      			               = 'AcctCreditsPaymentDueReport';
 $route['credits-payment-due-report/viewreport']                    = 'AcctCreditsPaymentDueReport/viewreport';
 
+$route['credits-payment-due-paid-report']                          = 'AcctCreditsPaymentDuePaidReport';
+$route['credits-payment-due-paid-report/viewreport']               = 'AcctCreditsPaymentDuePaidReport/viewreport';
+
 //AcctCreditsRescheduleReport 
 $route['credits-reschedule-report']      			               = 'AcctCreditsRescheduleReport';
 $route['credits-reschedule-report/viewreport']                     = 'AcctCreditsRescheduleReport/viewreport';
