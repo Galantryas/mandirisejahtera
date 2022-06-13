@@ -61,8 +61,17 @@ input:read-only {
 				if(angsuran == 1){
 					var a 		= moment(date1); 
 					var b 		= a.add(period, 'month'); 
+
+					var testDate = new Date(date);
+					var tmp2 = testDate.setMonth(testDate.getMonth() + 1);
+					var date_first = testDate.toISOString();
+					var day2 = date_first.substring(8, 10);
+					var month2 = date_first.substring(5, 7);
+					var year2 = date_first.substring(0, 4);
+					var first = day2 + '-' + month2 + '-' + year2;
 					
 					$('#credits_account_due_date').textbox('setValue',b.format('DD-MM-YYYY'));
+					$('#credits_account_payment_date').textbox('setValue',first);
 				}else{
 					var week 		= period * 7;
 					var testDate 	= new Date(date1);
@@ -73,8 +82,17 @@ input:read-only {
 					var year 		= date_tmp.substring(0, 4); 
 					var name 		= 'credit_account_due_date';
 					var value 		= day + '-' + month + '-' + year;
+					
+					var testDate2 = new Date(date1);
+					var tmp2 = testDate2.setDate(testDate2.getDate() + 7);
+					var date_first = testDate2.toISOString();
+					var day2 = date_first.substring(8, 10);
+					var month2 = date_first.substring(5, 7);
+					var year2 = date_first.substring(0, 4);
+					var first = day2 + '-' + month2 + '-' + year2;
 
 					$('#credits_account_due_date').textbox('setValue',value);
+					$('#credits_account_payment_date').textbox('setValue',first);
 				}
 
 			}
@@ -192,6 +210,7 @@ input:read-only {
 									<td width="5%"> : </td>
 									<td width="60%">
 										<input name="credits_account_due_date" id="credits_account_due_date" value="<?php echo tgltoview($acctcreditsaccount['credits_account_due_date']); ?>" type="text" class="easyui-textbox" style="width: 100%" readonly>
+										<input name="credits_account_payment_date" id="credits_account_payment_date" value="<?php echo tgltoview($acctcreditsaccount['credits_account_payment_date']); ?>" type="hidden" class="easyui-textbox" style="width: 100%" readonly>
 
 									</td>
 								</tr>

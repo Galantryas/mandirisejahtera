@@ -190,9 +190,10 @@
 
 		public function processEditDateAcctCreditAccount(){
 			$data = array(
-				'credits_account_id'		=> $this->input->post('credits_account_id', true),
-				'credits_account_date' 		=> tgltodb($this->input->post('credits_account_date', true)),
-				'credits_account_due_date' 	=> tgltodb($this->input->post('credits_account_due_date', true)),
+				'credits_account_id'			=> $this->input->post('credits_account_id', true),
+				'credits_account_date' 			=> tgltodb($this->input->post('credits_account_date', true)),
+				'credits_account_due_date' 		=> tgltodb($this->input->post('credits_account_due_date', true)),
+				'credits_account_payment_date' 	=> tgltodb($this->input->post('credits_account_payment_date', true)),
 			);
 
 			if($this->AcctCreditAccount_model->updatedata($data, $data['credits_account_id'])){
