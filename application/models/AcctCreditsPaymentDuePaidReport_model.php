@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') or exit('No direct script access allowed');
-	class AcctCreditsHasntPaidReport_model extends CI_Model {
+	class AcctCreditsPaymentDuePaidReport_model extends CI_Model {
 		var $table = "acct_savings_account";
 	
 
@@ -24,16 +24,13 @@
 		}
 		
 		public function getCreditsAccount($end_date,$branch_id ){
-			// $date = new DateTime("now");
- 			// $curr_date = $date->format('Y-m-d ');
 
 			$this->db->select('acct_credits_account.credits_account_id, acct_credits_account.credits_account_serial, acct_credits_account.member_id, core_member.member_name, core_member.member_address, acct_credits_account.credits_account_amount, acct_credits_account.credits_account_principal_amount, acct_credits_account.credits_account_interest_amount, acct_credits_account.credits_account_last_balance, acct_credits_account.credits_account_payment_date,acct_credits_account.credits_account_last_payment_date, acct_credits_account.credits_account_payment_amount,acct_credits_account.credits_account_accumulated_fines, acct_credits_account.credits_account_period, acct_credits_account.credits_account_payment_to, acct_credits_account.credits_account_status');
 			$this->db->from('acct_credits_account');
 			$this->db->join('core_member', 'acct_credits_account.member_id = core_member.member_id');
 			$this->db->where('acct_credits_account.data_state ', 0);
 			$this->db->where('acct_credits_account.credits_account_status ', 0);	
-			// $this->db->where('acct_credits_account.credits_account_payment_date >=', $start_date);
-			$this->db->where('acct_credits_account.credits_account_payment_date <=', $end_date);
+			$this->db->where('acct_credits_account.credits_account_payment_date =', $end_date);
 			$this->db->where('CURDATE() >= acct_credits_account.credits_account_payment_date');
 
 			if(!empty($branch_id)){

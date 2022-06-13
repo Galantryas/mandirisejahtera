@@ -1,12 +1,12 @@
 <?php
 	defined('BASEPATH') or exit('No direct script access allowed');
-	Class AcctCreditsHasntPaidReport extends CI_Controller{
+	Class AcctCreditsPaymentDuePaidReport extends CI_Controller{
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('Connection_model');
 			$this->load->model('MainPage_model');
 			$this->load->model('AcctCreditAccount_model');
-			$this->load->model('AcctCreditsHasntPaidReport_model');
+			$this->load->model('AcctCreditsPaymentDuePaidReport_model');
 			$this->load->helper('sistem');
 			$this->load->helper('url');
 			$this->load->database('default');
@@ -16,14 +16,13 @@
 		}
 		
 		public function index(){
-			$data['main_view']['corebranch']	= create_double($this->AcctCreditsHasntPaidReport_model->getCoreBranch(),'branch_id','branch_name');
-			$data['main_view']['content']		= 'AcctCreditsHasntPaidReport/ListAcctCreditsHasntPaidReport_view';
+			$data['main_view']['corebranch']	= create_double($this->AcctCreditsPaymentDuePaidReport_model->getCoreBranch(),'branch_id','branch_name');
+			$data['main_view']['content']		= 'AcctCreditsPaymentDuePaidReport/ListAcctCreditsPaymentDuePaidReport_view';
 			$this->load->view('MainPage_view',$data);
 		}
 
 		public function viewreport(){
 			$sesi = array (
-				// "start_date" 							=> tgltodb($this->input->post('start_date',true)),
 				"end_date" 								=> tgltodb($this->input->post('end_date',true)),
 				"branch_id"								=> $this->input->post('branch_id',true),
 				"view"									=> $this->input->post('view',true),
@@ -40,7 +39,7 @@
 
 		public function processPrinting($sesi){
 			$auth 	=	$this->session->userdata('auth'); 
-			$preferencecompany = $this->AcctCreditsHasntPaidReport_model->getPreferenceCompany();
+			$preferencecompany = $this->AcctCreditsPaymentDuePaidReport_model->getPreferenceCompany();
 			if($auth['branch_status'] == 1){
 				if($sesi['branch_id'] == '' || $sesi['branch_id'] == 0){
 					$branch_id = '';
@@ -51,11 +50,11 @@
 				$branch_id = $auth['branch_id'];
 			}
 			
-			// $coremember 		= $this->AcctCreditsHasntPaidReport_model->getCoreMemberDetail($sesi['start_date'],$sesi['end_date'], $branch_id);
+			// $coremember 		= $this->AcctCreditsPaymentDuePaidReport_model->getCoreMemberDetail($sesi['start_date'],$sesi['end_date'], $branch_id);
 
-			$acctcreditsaccount	= $this->AcctCreditsHasntPaidReport_model->getCreditsAccount($sesi['end_date'], $branch_id);
+			$acctcreditsaccount	= $this->AcctCreditsPaymentDuePaidReport_model->getCreditsAccount($sesi['end_date'], $branch_id);
 			
-			$acctcredits 		= $this->AcctCreditsHasntPaidReport_model->getAcctCredits();
+			$acctcredits 		= $this->AcctCreditsPaymentDuePaidReport_model->getAcctCredits();
 
 			// $acctcredits_fine	= $this->AcctCreditAccount_model->getDetailByID($acctcreditsaccount['credits_account_id']);
 
@@ -134,13 +133,13 @@
 			<br/>
 				<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">
 				    <tr>
-				        <td><div style=\"text-align: center; font-size:14px\">DAFTAR NASABAH BELUM MENGANGSUR TANGGAL ".tgltoview($sesi['end_date'])."</div></td>
+				        <td><div style=\"text-align: center; font-size:14px\">DAFTAR NASABAH JATUH TEMPO ANGSUR TANGGAL ".tgltoview($sesi['end_date'])."</div></td>
 				    </tr>
 				   
 				</table>";
 
 			$pdf->writeHTML($tbl, true, false, false, false, '');
-
+            
 			$tbl1 = "
 			<br>
 			<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\" width=\"100%\">
@@ -231,7 +230,7 @@
 
 			$tbl4 = "
 				<tr>
-					<td colspan =\"3\"><div style=\"font-size:8;text-align:left;font-style:italic\">Printed : ".date('d-m-Y H:i:s')."  ".$this->AcctCreditsHasntPaidReport_model->getUserName($auth['user_id'])."</div></td>
+					<td colspan =\"3\"><div style=\"font-size:8;text-align:left;font-style:italic\">Printed : ".date('d-m-Y H:i:s')."  ".$this->AcctCreditsPaymentDuePaidReport_model->getUserName($auth['user_id'])."</div></td>
 					<td style=\"border-bottom: 1px solid black;border-top: 1px solid black\"><div style=\"font-size:8;font-weight:bold;text-align:center\">Total </div></td>
 					<td style=\"border-bottom: 1px solid black;border-top: 1px solid black\"><div style=\"font-size:8;text-align:right\">".number_format($totalplafon, 2)."</div></td>
 					<td style=\"border-bottom: 1px solid black;border-top: 1px solid black\"><div style=\"font-size:8;text-align:right\">".number_format($totalangspokok, 2)."</div></td>
@@ -251,7 +250,7 @@
 			// -----------------------------------------------------------------------------
 			
 			//Close and output PDF document
-			$filename = 'DAFTAR NASABAH BELUM MENGANGSUR.pdf';
+			$filename = 'DAFTAR NASABAH JATUH TEMPO ANGSUR.pdf';
 			$pdf->Output($filename, 'I');
 
 			//============================================================+
@@ -271,8 +270,8 @@
 				$branch_id = $auth['branch_id'];
 			}
 
-			$acctcreditsaccount	= $this->AcctCreditsHasntPaidReport_model->getCreditsAccount($sesi['end_date'] ,$branch_id);
-			$acctcredits 		= $this->AcctCreditsHasntPaidReport_model->getAcctCredits();
+			$acctcreditsaccount	= $this->AcctCreditsPaymentDuePaidReport_model->getCreditsAccount($sesi['end_date'] ,$branch_id);
+			$acctcredits 		= $this->AcctCreditsPaymentDuePaidReport_model->getAcctCredits();
 
 			
 			if(count($acctcreditsaccount) !=0){
@@ -280,11 +279,11 @@
 				
 				$this->excel->getProperties()->setCreator("CST FISRT")
 									 ->setLastModifiedBy("CST FISRT")
-									 ->setTitle("DAFTAR NASABAH BELUM MENGANGSUR")
+									 ->setTitle("DAFTAR NASABAH JATUH TEMPO ANGSUR")
 									 ->setSubject("")
-									 ->setDescription("DAFTAR NASABAH BELUM MENGANGSUR")
-									 ->setKeywords("DAFTAR, NASABAH, BELUM, MENGANGSUR")
-									 ->setCategory("DAFTAR NASABAH BELUM MENGANGSUR");
+									 ->setDescription("DAFTAR NASABAH JATUH TEMPO ANGSUR")
+									 ->setKeywords("DAFTAR, NASABAH, JATUH, TEMPO, ANGSUR")
+									 ->setCategory("DAFTAR NASABAH JATUH TEMPO ANGSUR");
 									 
 				$this->excel->setActiveSheetIndex(0);
 				$this->excel->getActiveSheet()->getPageSetup()->setFitToWidth(1);
@@ -309,7 +308,7 @@
 				$this->excel->getActiveSheet()->getStyle('B3:M3')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 				$this->excel->getActiveSheet()->getStyle('B3:M3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 				$this->excel->getActiveSheet()->getStyle('B3:M3')->getFont()->setBold(true);
-				$this->excel->getActiveSheet()->setCellValue('B1',"DAFTAR NASABAH BELUM MENGANGSUR TANGGAL ".tgltoview($sesi['end_date']));					
+				$this->excel->getActiveSheet()->setCellValue('B1',"DAFTAR NASABAH JATUH TEMPO ANGSUR TANGGAL ".tgltoview($sesi['end_date']));					
 				
 				$this->excel->getActiveSheet()->setCellValue('B3',"No");
 				$this->excel->getActiveSheet()->setCellValue('C3',"No. Perjanjian");
@@ -410,7 +409,7 @@
 				$this->excel->getActiveSheet()->setCellValue('J'.$i, number_format($totalsisa,2));
 				$this->excel->getActiveSheet()->setCellValue('K'.$i, number_format($totaldenda,2));
 				
-				$filename='DAFTAR NASABAH BELUM MENGANGSUR.xls';
+				$filename='DAFTAR NASABAH JATUH TEMPO ANGSUR.xls';
 				header('Content-Type: application/vnd.ms-excel');
 				header('Content-Disposition: attachment;filename="'.$filename.'"');
 				header('Cache-Control: max-age=0');
