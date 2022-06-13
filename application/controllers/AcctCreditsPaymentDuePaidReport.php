@@ -53,6 +53,7 @@
 			// $coremember 		= $this->AcctCreditsPaymentDuePaidReport_model->getCoreMemberDetail($sesi['start_date'],$sesi['end_date'], $branch_id);
 
 			$acctcreditsaccount	= $this->AcctCreditsPaymentDuePaidReport_model->getCreditsAccount($sesi['end_date'], $branch_id);
+// 			print_r($acctcreditsaccount);exit;
 			
 			$acctcredits 		= $this->AcctCreditsPaymentDuePaidReport_model->getAcctCredits();
 
@@ -173,7 +174,8 @@
 			$tbl2 = "<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\" width=\"100%\">";
 		
 			foreach ($acctcreditsaccount as $key => $val) {
-				$acctcredits_fine	= $this->AcctCreditAccount_model->getDetailByID($val['credits_account_id']);				
+				$acctcredits_fine	= $this->AcctCreditAccount_model->getDetailByID($val['credits_account_id']);	
+				// print_r($acctcredits_fine);exit;
 
 				$day 		= date('d-m-Y');
 				$start_ 	= new DateTime($day);
@@ -194,7 +196,7 @@
 				$credits_account_payment_to = ($val['credits_account_payment_to'] + 1); 
 
 				//print_r($credits_account_accumulated_fines);exit;
-			if(($Keterlambatan >= 1) && ($status == 0)){
+// 			if(($Keterlambatan >= 1)){
 					$tbl3 .= "
 						<tr>
 					    	<td width=\"3%\"><div style=\"text-align: left;\">".$no."</div></td>
@@ -225,7 +227,7 @@
 				$totaldenda			+= $val['credits_account_accumulated_fines'];
 
 				$no++;
-			}
+// 			}
 		}
 
 			$tbl4 = "

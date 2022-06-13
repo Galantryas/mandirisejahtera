@@ -69,7 +69,7 @@
 						</div> -->
 						<div class = "col-md-4">
 							<div class="form-group form-md-line-input">
-								<input class="form-control form-control-inline input-medium date-picker" data-date-format="dd-mm-yyyy" type="text" name="end_date" id="end_date" value="<?php echo date('d-m-Y');?>" autocomplate="off"/>
+								<input class="form-control form-control-inline input-medium date-picker" data-date-format="dd-mm-yyyy" type="text" name="end_date" id="end_date" value="<?php echo date('d-m-Y');?>" autocomplate="off" readonly/>
 								<label class="control-label">Tanggal
 									<span class="required">
 										*

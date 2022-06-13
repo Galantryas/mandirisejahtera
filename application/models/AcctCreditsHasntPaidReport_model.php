@@ -31,7 +31,8 @@
 			$this->db->from('acct_credits_account');
 			$this->db->join('core_member', 'acct_credits_account.member_id = core_member.member_id');
 			$this->db->where('acct_credits_account.data_state ', 0);
-			$this->db->where('acct_credits_account.credits_account_status ', 0);	
+			$this->db->where('acct_credits_account.credits_account_status !=', 2);
+			$this->db->where('acct_credits_account.credits_approve_status', 1);	
 			// $this->db->where('acct_credits_account.credits_account_payment_date >=', $start_date);
 			$this->db->where('acct_credits_account.credits_account_payment_date <=', $end_date);
 			$this->db->where('CURDATE() >= acct_credits_account.credits_account_payment_date');
