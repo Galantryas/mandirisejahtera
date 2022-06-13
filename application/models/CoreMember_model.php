@@ -591,7 +591,7 @@
 
 		private function _get_datatables_query($branch_id)
     	{
-		$column_order = array(null, 'member_no','member_name','member_address','member_status','member_character','member_phone','member_principal_savings_last_balance','member_mandatory_savings_last_balance');
+		$column_order = array(null, 'member_no','member_name','member_address','member_status','member_phone','member_principal_savings_last_balance', 'member_special_savings_last_balance' ,'member_mandatory_savings_last_balance');
         $this->db->from($this->table);
  		$this->db->where('data_state', 0);
  		// if(!empty($company_id)){
