@@ -1646,7 +1646,7 @@
 
 						$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
 
-						if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+						if($principal_amount <> 0 || $principal_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
@@ -1656,7 +1656,7 @@
 								'account_id'					=> $account_id,
 								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
 								'journal_voucher_amount'		=> $principal_amount*-1,
-								'journal_voucher_debet_amount'	=> $principal_amount*-1,
+								'journal_voucher_debit_amount'	=> $principal_amount*-1,
 								'account_id_default_status'		=> $account_id_default_status,
 								'account_id_status'				=> 0,
 								'created_id' 					=> $auth['user_id'],
@@ -1666,7 +1666,7 @@
 							$this->CoreMember_model->insertAcctJournalVoucherItem($data_debet);	
 						}
 
-						if($data['member_mandatory_savings'] <> 0 || $data['member_mandatory_savings'] <> ''){
+						if($mandatory_amount <> 0 || $mandatory_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['mandatory_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
@@ -1687,7 +1687,7 @@
 						}
 						
 
-						if($data['member_special_savings'] <> 0 || $data['member_special_savings'] <> ''){
+						if($special_amount <> 0 || $special_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['special_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
@@ -1770,7 +1770,7 @@
 
 						$preferencecompany 				= $this->CoreMember_model->getPreferenceCompany();
 
-						if($data['member_principal_savings'] <> 0 || $data['member_principal_savings'] <> ''){
+						if($principal_amount <> 0 || $principal_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['principal_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
@@ -1780,7 +1780,7 @@
 								'account_id'					=> $account_id,
 								'journal_voucher_description'	=> 'SETORAN DEBET '.$coremember['member_name'],
 								'journal_voucher_amount'		=> $principal_amount*-1,
-								'journal_voucher_debet_amount'	=> $principal_amount*-1,
+								'journal_voucher_debit_amount'	=> $principal_amount*-1,
 								'account_id_default_status'		=> $account_id_default_status,
 								'account_id_status'				=> 0,
 								'created_id' 					=> $auth['user_id'],
@@ -1794,7 +1794,7 @@
 							}
 						}
 
-						if($data['member_mandatory_savings'] <> 0 || $data['member_mandatory_savings'] <> ''){
+						if($mandatory_amount <> 0 || $mandatory_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['mandatory_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);
@@ -1819,7 +1819,7 @@
 						}
 						
 
-						if($data['member_special_savings'] <> 0 || $data['member_special_savings'] <> ''){
+						if($special_amount <> 0 || $special_amount <> ''){
 							$account_id = $this->CoreMember_model->getAccountID($preferencecompany['special_savings_id']);
 
 							$account_id_default_status = $this->CoreMember_model->getAccountIDDefaultStatus($account_id);

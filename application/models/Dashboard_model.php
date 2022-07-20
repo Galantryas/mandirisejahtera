@@ -86,6 +86,14 @@
 			$result = $this->db->get()->row_array();
 			return $result['total_akun'];
 		}
+		public function getUserMenus($user_id){
+			$this->db->select('system_menu_mapping.id_menu');
+			$this->db->from('system_user');
+			$this->db->join('system_menu_mapping','system_menu_mapping.user_group_level = system_user.user_group_id');
+			$this->db->where('system_user.user_id', $user_id);
+			$result = $this->db->get()->result_array();
+			return $result;
+		}
 		/*public function getInvtItem($date){
 			$this->db->select('sales_invoice_item.item_id');
 			$this->db->from('sales_invoice_item');

@@ -231,8 +231,10 @@
 						
 						$savings_account_last_balance 			= $v['savings_account_last_balance'] + $savings_interest_temp_amount;
 
-						if($savings_interest_temp_amount > 240000){
-							$savings_tax_temp_amount = $savings_interest_temp_amount * 10 / 100;
+						$preferencecompany				= $this->AcctSavingsProfitSharingNew_model->getPreferenceCompany();
+
+						if($savings_interest_temp_amount > $preferencecompany['tax_minimum_amount']){
+							$savings_tax_temp_amount = $savings_interest_temp_amount * $preferencecompany['tax_percentage'] / 100;
 						}else{
 							$savings_tax_temp_amount = 0;
 						}

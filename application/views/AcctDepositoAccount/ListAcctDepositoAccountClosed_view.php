@@ -165,8 +165,11 @@
 									$deposito_accrual_last_balance = $this->AcctDepositoAccount_model->getAcctDepositoAccrualLastBalance($val['deposito_account_id']);
 
 									$interest_total		 		   = $deposito_accrual_last_balance + $val['deposito_account_nisbah'];
-									if($interest_total > 240000){
-										$tax_total	= $interest_total * 10 / 100;
+									
+									$preferencecompany = $this->AcctDepositoAccount_model->getPreferenceCompany();
+
+									if($interest_total > $preferencecompany['tax_minimum_amount']){
+										$tax_total	= $interest_total * $preferencecompany['tax_percentage'] / 100;
 									}else{
 										$tax_total 	= 0;
 									}

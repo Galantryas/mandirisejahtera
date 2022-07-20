@@ -108,19 +108,22 @@
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/edit-date/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green-jungle" role="button"><i class="fa fa-print"></i> Edit Tanggal</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
-						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>';
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>
+						<a href="'.base_url().'credit-account/print-agunan-receipt/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple-medium" role="button"><i class="fa fa-print"></i> Tanda Terima Jaminan</a>';
 				}else if($creditsaccount->credits_approve_status == 1){
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
-						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>';
+						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>
+						<a href="'.base_url().'credit-account/print-agunan-receipt/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple-medium" role="button"><i class="fa fa-print"></i> Tanda Terima Jaminan</a>';
 				}else{
 					$row[] = '
 						<a href="'.base_url().'credit-account/print-note/'.$creditsaccount->credits_account_id.'" class="btn btn-xs blue" role="button"><i class="fa fa-print"></i> Kwitansi</a> &nbsp;
 						<a href="'.base_url().'credit-account/process-print-akad/'.$creditsaccount->credits_account_id.'" class="btn btn-xs green" role="button"><i class="fa fa-print"></i> Akad</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment/'.$creditsaccount->credits_account_id.'" class="btn btn-xs yellow-lemon" role="button"><i class="fa fa-print"></i> Jadwal Angsuran</a>
 						<a href="'.base_url().'credit-account/print-schedule-credits-payment-member/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple" role="button"><i class="fa fa-print"></i> Jadwal Angsuran Untuk Anggota</a>
+						<a href="'.base_url().'credit-account/print-agunan-receipt/'.$creditsaccount->credits_account_id.'" class="btn btn-xs purple-medium" role="button"><i class="fa fa-print"></i> Tanda Terima Jaminan</a>
 						<a href="'.base_url().'credit-account/delete/'.$creditsaccount->credits_account_id.'" class="btn btn-xs red" role="button"><i class="fa fa-trash"></i> Hapus</a>';
 				}
 			    // }
@@ -3175,6 +3178,491 @@
 			//============================================================+
 		}
 
+		public function printAgunanReceipt(){
+			$credits_account_id 	= $this->uri->segment(3);
+
+			$acctcreditsaccount		= $this->AcctCreditAccount_model->getAcctCreditsAccount_Detail($credits_account_id);
+
+			$acctcreditsagunan 			= $this->AcctCreditAccount_model->getAcctCreditsAgunan_Detail($credits_account_id);
+			
+			require_once('tcpdf/config/tcpdf_config.php');
+			require_once('tcpdf/tcpdf.php');
+			
+			$pdf = new TCPDF('P', PDF_UNIT, 'A4', true, 'UTF-8', false);
+
+			$pdf->SetPrintHeader(false);
+			$pdf->SetPrintFooter(false);
+
+			$pdf->SetMargins(20, 50, 20, 10); 
+			
+			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			    require_once(dirname(__FILE__).'/lang/eng.php');
+			    $pdf->setLanguageArray($l);
+			}
+
+			// ---------------------------------------------------------
+
+			// set font
+			$pdf->SetFont('helvetica', 'B', 20);
+
+			// add a page
+			$pdf->AddPage();
+
+			/*$pdf->Write(0, 'Example of HTML tables', '', 0, 'L', true, 0, false, false, 0);*/
+
+			$pdf->SetFont('helvetica', '', 9);
+
+			$tbl = "
+				<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+					<tr>
+						<td style=\"text-align:center;\" width=\"100%\">
+							<div style=\"font-size:14px\";><b>TANDA TERIMA JAMINAN</b></div>
+						</td>			
+	 				</tr>
+					<br>
+					<br>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"100%\">
+						   <div style=\"font-size:12px\";>Telah diterima barang jaminan dari :</div>
+					   </td>	
+					</tr>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"5%\">
+					   </td>
+					   <td style=\"text-align:left;\" width=\"28%\">
+						   <div style=\"font-size:12px\";>Nama</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"2%\">
+						   <div style=\"font-size:12px\";>:</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"65%\">
+						   <div style=\"font-size:12px\";>".$acctcreditsaccount['member_name']."</div>
+					   </td>		
+					</tr>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"5%\">
+					   </td>
+					   <td style=\"text-align:left;\" width=\"28%\">
+						   <div style=\"font-size:12px\";>No. KTP</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"2%\">
+						   <div style=\"font-size:12px\";>:</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"65%\">
+						   <div style=\"font-size:12px\";>".$acctcreditsaccount['member_identity_no']."</div>
+					   </td>		
+					</tr>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"5%\">
+					   </td>
+					   <td style=\"text-align:left;\" width=\"28%\">
+						   <div style=\"font-size:12px\";>Pekerjaan</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"2%\">
+						   <div style=\"font-size:12px\";>:</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"65%\">
+						   <div style=\"font-size:12px\";>".$acctcreditsaccount['member_company_job_title']."</div>
+					   </td>		
+					</tr>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"5%\">
+					   </td>
+					   <td style=\"text-align:left;\" width=\"28%\">
+						   <div style=\"font-size:12px\";>Alamat</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"2%\">
+						   <div style=\"font-size:12px\";>:</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"65%\">
+						   <div style=\"font-size:12px\";>".$acctcreditsaccount['member_address']."</div>
+					   </td>		
+					</tr>
+					<tr>
+					   <td style=\"text-align:left;\" width=\"5%\">
+					   </td>
+					   <td style=\"text-align:left;\" width=\"28%\">
+						   <div style=\"font-size:12px\";>Telepon</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"2%\">
+						   <div style=\"font-size:12px\";>:</div>
+					   </td>
+					   <td style=\"text-align:left;\" width=\"65%\">
+						   <div style=\"font-size:12px\";>".$acctcreditsaccount['member_phone']."</div>
+					   </td>		
+					</tr>";
+					foreach($acctcreditsagunan as $key => $val){
+						if($val['credits_agunan_type'] == 1){
+						$tbl .= "
+						<tr>
+						   <td style=\"text-align:left;\" width=\"100%\">
+							   <div style=\"font-size:12px\";>Jaminan BPKB dengan data sebagai berikut :</div>
+						   </td>	
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>No. BPKB</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_nomor']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>No. Polisi</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_nopol']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>No. Rangka</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_no_rangka']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>No. Mesin</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_no_mesin']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>Merk/Type/Thn/Warna</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_keterangan']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>A/N Nama</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_nama']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"28%\">
+								<div style=\"font-size:12px\";>Alamat</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"2%\">
+								<div style=\"font-size:12px\";>:</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"65%\">
+								<div style=\"font-size:12px\";>".$val['credits_agunan_bpkb_address']."</div>
+							</td>		
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">-
+							</td>
+							<td style=\"text-align:left;\" width=\"95%\">
+								<div style=\"font-size:12px\";><b>BPKB Baru dalam Proses Pembuatan Dealer ".$val['credits_agunan_bpkb_dealer_name'].", dan setelah selesai akan diberikan ke pihak KSU “Mandiri Sejahtera”</b></div>
+							</td>		
+						</tr>
+						";
+						}else if($val['credits_agunan_type'] == 2){
+							$tbl .= "
+							<tr>
+							   <td style=\"text-align:left;\" width=\"100%\">
+								   <div style=\"font-size:12px\";>Jaminan Sertifikat dengan data sebagai berikut :</div>
+							   </td>	
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>No Sertifikat</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_shm_no_sertifikat']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>Luas</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_shm_luas']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>A/N Nama</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_shm_atas_nama']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>Kedudukan</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_shm_kedudukan']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>Keterangan</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_shm_keterangan']."</div>
+								</td>		
+							</tr>
+							";
+						}else if($val['credits_agunan_type'] == 7){
+							$tbl .= "
+							<tr>
+							   <td style=\"text-align:left;\" width=\"100%\">
+								   <div style=\"font-size:12px\";>Jaminan ATM/Jamsostek dengan data sebagai berikut :</div>
+							   </td>	
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>No ATM</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_atmjamsostek_nomor']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>Nama Bank</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_atmjamsostek_bank']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>A/N Nama</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_atmjamsostek_nama']."</div>
+								</td>		
+							</tr>
+							<br>
+							<tr>
+								<td style=\"text-align:left;\" width=\"5%\">-
+								</td>
+								<td style=\"text-align:left;\" width=\"28%\">
+									<div style=\"font-size:12px\";>Rek Tbgn / No. BPJS</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"2%\">
+									<div style=\"font-size:12px\";>:</div>
+								</td>
+								<td style=\"text-align:left;\" width=\"65%\">
+									<div style=\"font-size:12px\";>".$val['credits_agunan_atmjamsostek_keterangan']."</div>
+								</td>		
+							</tr>
+							";
+						}
+						$tbl .= "
+						<br>
+						<tr>
+							<td style=\"text-align:left;font-size:12px;\" width=\"100%\"><b>Dan akan diterimakan kembali saat pinjaman lunas.</b></td>	
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;font-size:12px;\" width=\"100%\">Karanganyar,</td>	
+						</tr>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>
+							<td style=\"text-align:center;\" width=\"20%\">
+								<div style=\"font-size:12px\";>Yang Menyerahkan</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"50%\">
+								<div style=\"font-size:12px\";></div>
+							</td>
+							<td style=\"text-align:center;\" width=\"20%\">
+								<div style=\"font-size:12px\";>Yang Menerima</div>
+							</td>	
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>	
+						</tr>
+						<br>
+						<br>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>
+							<td style=\"text-align:center;\" width=\"20%\">
+								<div style=\"font-size:12px\";>(".$acctcreditsaccount['member_name'].")</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"50%\">
+								<div style=\"font-size:12px\";></div>
+							</td>
+							<td style=\"text-align:center;\" width=\"20%\">
+								<div style=\"font-size:12px\";>(Siti Fatimah)</div>
+							</td>	
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>	
+						</tr>
+						<br>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>
+							<td style=\"text-align:center;\" width=\"50%\">
+								<div style=\"font-size:12px\";>Mengetahui</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>	
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>	
+						</tr>
+						<br>
+						<br>
+						<br>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>
+							<td style=\"text-align:center;\" width=\"50%\">
+								<div style=\"font-size:12px;text-decoration: underline;\";>Herry Warsilo</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>	
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>	
+						</tr>
+						<tr>
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>
+							<td style=\"text-align:center;\" width=\"50%\">
+								<div style=\"font-size:12px\";>Pimpinan Cabang</div>
+							</td>
+							<td style=\"text-align:left;\" width=\"20%\">
+							</td>	
+							<td style=\"text-align:left;\" width=\"5%\">
+							</td>	
+						</tr>
+						";
+					}
+	 			$tbl .= "</table>
+	 			<br><br>
+			";
+			
+			$pdf->writeHTML($tbl, true, false, false, false, '');
+
+			ob_clean();
+
+			$filename = 'Tanda_Terima_Agunan_'.$acctcreditsaccount['credits_account_serial'].'.pdf';
+			$pdf->Output($filename, 'I');
+
+			// exit;
+			// -----------------------------------------------------------------------------
+			
+			//Close and output PDF document
+			// $filename = 'IST Test '.$testingParticipantData['participant_name'].'.pdf';
+			// $pdf->Output($filename, 'I');
+
+			//============================================================+
+			// END OF FILE
+			//============================================================+
+		}
+
 		public function printScheduleCreditsPaymentMember(){
 			$credits_account_id 	= $this->uri->segment(3);
 
@@ -3604,7 +4092,7 @@
 			$pdf->SetPrintHeader(false);
 			$pdf->SetPrintFooter(false);
 
-			$pdf->SetMargins(20, 15, 20, 0); 
+			$pdf->SetMargins(20, 45, 20, 0); 
 			
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
@@ -3659,7 +4147,7 @@
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 					<tr>
 						<td style=\"text-align:left;\" width=\"100%\">
-							<div style=\"font-size:12px; font-weight:bold;\">Yang bertanda tangan dibawah ini : </div>
+							<div style=\"font-size:10px; font-weight:bold;\">Yang bertanda tangan dibawah ini : </div>
 						</td>			
 	 				</tr>
 	 				<br>
@@ -3667,10 +4155,10 @@
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\">
-							<div style=\"font-size:12px; font-weight:bold;\">1.</div>
+							<div style=\"font-size:10px; font-weight:bold;\">1.</div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"95%\">
-							<div style=\"font-size:12px;\">
+							<div style=\"font-size:10px;\">
 								<b>Nyonya Liany Widjaja</b>, Ketua<b> Koperasi Serba Usaha MANDIRI SEJAHTERA</b> yang berkedudukan di Pawisman Gedangan Rt 002 Rw 002 Kelurahan Kemiri, Kecamatan Kebakkramat, Kabupaten Karanganyar, dalam hal ini bertindak dalam jabatannya tersebut di atas, oleh karena itu sah mewakili untuk dan atas nama Koperasi,
 								<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								Selaku Pemberi Hutang selanjutnya disebut <b>PIHAK PERTAMA</b>.
@@ -3679,84 +4167,84 @@
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\">
-							<div style=\"font-size:12px; font-weight:bold;\">2.</div>
+							<div style=\"font-size:10px; font-weight:bold;\">2.</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">Nama</div>
+							<div style=\"font-size:10px; font-weight:bold;\">Nama</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_name']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_name']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\">
-							<div style=\"font-size:12px; font-weight:bold;\"></div>
+							<div style=\"font-size:10px; font-weight:bold;\"></div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">No. KTP</div>
+							<div style=\"font-size:10px; font-weight:bold;\">No. KTP</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_identity_no']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_identity_no']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\"></td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">Pekerjaan</div>
+							<div style=\"font-size:10px; font-weight:bold;\">Pekerjaan</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_company_job_title']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_company_job_title']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\"></td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">Alamat</div>
+							<div style=\"font-size:10px; font-weight:bold;\">Alamat</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_address']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_address']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\"></td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">No. Telpon</div>
+							<div style=\"font-size:10px; font-weight:bold;\">No. Telpon</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_phone']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_phone']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\"></td>	
 						<td style=\"text-align:left;\" width=\"20%\">
-							<div style=\"font-size:12px; font-weight:bold;\">Perusahaan</div>
+							<div style=\"font-size:10px; font-weight:bold;\">Perusahaan</div>
 						</td>
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px; font-weight:bold;\">:</div>
+							<div style=\"font-size:10px; font-weight:bold;\">:</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"80%\">
-							<div style=\"font-size:12px;\">".$acctcreditsaccount['member_company_name']."</div>
+							<div style=\"font-size:10px;\">".$acctcreditsaccount['member_company_name']."</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 	 					<td style=\"text-align:left;\" width=\"5%\"></td>
 						<td style=\"text-align:justify;\" colspan=\"3\">
-							<div style=\"font-size:12px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selaku yang berhutang, selanjutnya disebut 
+							<div style=\"font-size:10px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selaku yang berhutang, selanjutnya disebut 
 							<b>PIHAK KEDUA</b></div>
 						</td>			
 	 				</tr>
@@ -3764,26 +4252,26 @@
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 					<tr>
 						<td style=\"text-align:justify;\" colspan=\"4\" width=\"90%\">
-							<div style=\"font-size:12px;\">PIHAK PERTAMA dan PIHAK KEDUA telah bersepakat bahwa perjanjian hutang piutang ini dilakukan dan diterima dengan syarat - syarat dan ketentuan sebagai berikut :</div>
+							<div style=\"font-size:10px;\">PIHAK PERTAMA dan PIHAK KEDUA telah bersepakat bahwa perjanjian hutang piutang ini dilakukan dan diterima dengan syarat - syarat dan ketentuan sebagai berikut :</div>
 						</td>			
 	 				</tr>
 	 			</table>
 				<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 					<tr>
 						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Pasal 1</b></div>
+							<div style=\"font-size:10px\"><b>Pasal 1</b></div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:center;\" width=\"100%\">
-							<div style=\"font-size:12px\"><b>Jenis Kredit, Nilai Pinjaman, Jangka Waktu, Jatuh Tempo, Biaya</b></div>
+							<div style=\"font-size:10px\"><b>Jenis Kredit, Nilai Pinjaman, Jangka Waktu, Jatuh Tempo, Biaya</b></div>
 						</td>			
 	 				</tr>
 	 			</table>
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 					<tr>
 						<td style=\"text-align:left;\" width=\"100%\">
-							<div style=\"font-size:12px;\">
+							<div style=\"font-size:10px;\">
 							Dengan ini Pihak kedua menerima fasilitas kredit dari Pihak pertama dengan sistem angsuran : <b>Installment</b> : Angsuran Pokok dan Bunga dibayar tiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]." hingga saat jatuh tempo.
 							<br>
 							Pinjaman yang disetujui kepada Pihak kedua adalah sebesar
@@ -3795,90 +4283,90 @@
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Administrasi Total</div>
+							<div style=\"font-size:10px;\">Administrasi Total</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>: </b></div>
+							<div style=\"font-size:10px;\"><b>: </b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>Rp. ".nominal($total_administration)."</b></div>
+							<div style=\"font-size:10px;\"><b>Rp. ".nominal($total_administration)."</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Pencairan Pinjaman</div>
+							<div style=\"font-size:10px;\">Pencairan Pinjaman</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>: </b></div>
+							<div style=\"font-size:10px;\"><b>: </b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>Rp. ".nominal($pencairan)."</b></div>
+							<div style=\"font-size:10px;\"><b>Rp. ".nominal($pencairan)."</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Angsuran /".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
+							<div style=\"font-size:10px;\">Angsuran /".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>: </b></div>
+							<div style=\"font-size:10px;\"><b>: </b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>Rp. ".nominal($acctcreditsaccount['credits_account_payment_amount'])."</b></div>
+							<div style=\"font-size:10px;\"><b>Rp. ".nominal($acctcreditsaccount['credits_account_payment_amount'])."</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Jangka Waktu</div>
+							<div style=\"font-size:10px;\">Jangka Waktu</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>: </b></div>
+							<div style=\"font-size:10px;\"><b>: </b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>".$acctcreditsaccount['credits_account_period'].' '.$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</b></div>
+							<div style=\"font-size:10px;\"><b>".$acctcreditsaccount['credits_account_period'].' '.$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Periode Pinjaman</div>
+							<div style=\"font-size:10px;\">Periode Pinjaman</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>:</b></div>
+							<div style=\"font-size:10px;\"><b>:</b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>".$day.' '.$monthname[$month].' '.$year." s/d ".$day_due.' '.$monthname[$month_due].' '.$year_due."</b></div>
+							<div style=\"font-size:10px;\"><b>".$day.' '.$monthname[$month].' '.$year." s/d ".$day_due.' '.$monthname[$month_due].' '.$year_due."</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\">Jatuh Tempo</div>
+							<div style=\"font-size:10px;\">Jatuh Tempo</div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>:</b></div>
+							<div style=\"font-size:10px;\"><b>:</b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>Tanggal ".$day." setiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."nya</b></div>
+							<div style=\"font-size:10px;\"><b>Tanggal ".$day." setiap ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."nya</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\"><b>Denda</b></div>
+							<div style=\"font-size:10px;\"><b>Denda</b></div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>:</b></div>
+							<div style=\"font-size:10px;\"><b>:</b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>0,5% Per hari dari angsuran ditambah biaya tagih Rp. 15.000 (Lima Belas Ribu) Per kedatangan.</b></div>
+							<div style=\"font-size:10px;\"><b>0,5% Per hari dari angsuran ditambah biaya tagih Rp. 15.000 (Lima Belas Ribu) Per kedatangan.</b></div>
 						</td>			
 					</tr>
 					<tr>
 						<td style=\"text-align:left;\" width=\"25%\">
-							<div style=\"font-size:12px;\"><b>Pelunasan Di percepat</b></div>
+							<div style=\"font-size:10px;\"><b>Pelunasan Di percepat</b></div>
 						</td>	
 						<td style=\"text-align:left;\" width=\"2%\">
-							<div style=\"font-size:12px;\"><b>:</b></div>
+							<div style=\"font-size:10px;\"><b>:</b></div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"70%\">
-							<div style=\"font-size:12px;\"><b>Membayar Seluruh Sisa Angsuran. Apanila ingin memperpanjang Pinjaman, syaratnya Angsuran kurang 2 (dua) kali</b></div>
+							<div style=\"font-size:10px;\"><b>Membayar Seluruh Sisa Angsuran. Apabila ingin memperpanjang Pinjaman, syaratnya Angsuran kurang 2 (dua) kali</b></div>
 						</td>			
 					</tr>
 	 			</table>
@@ -3889,19 +4377,19 @@
 					$tblheader .="<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 2</b></div>
+								<div style=\"font-size:10px\"><b>Pasal 2</b></div>
 							</td>			
 						</tr>
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Jaminan</b></div>
+								<div style=\"font-size:10px\"><b>Jaminan</b></div>
 							</td>			
 						</tr>
 					</table>
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>	
 							<td style=\"text-align:justify;\" width=\"100%\">
-								<div style=\"font-size:12px;\">
+								<div style=\"font-size:10px;\">
 								Untuk menjamin pembayaran kembali dan sebagaimana mestinya dari hutang Pihak Kedua kepada Pihak Pertama berikut bunganya dan jumlah lainnya yang karena sebab apapun wajib dibayar oleh Pihak Kedua,
 								<br>";
 					$no = 1;
@@ -3915,30 +4403,30 @@
 							<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 								<tr>
 									<td style=\"text-align:left;\" width=\"5%\">
-										<div style=\"font-size:12px;\">".$no.'. '."</div>
+										<div style=\"font-size:10px;\">".$no.'. '."</div>
 									</td>
 									<td style=\"text-align:left;\" width=\"25%\">
-										<div style=\"font-size:12px;\"><b>No. ATM Asli</b></div>
+										<div style=\"font-size:10px;\"><b>No. ATM Asli</b></div>
 									</td>	
 									<td style=\"text-align:left;\" width=\"2%\">
-										<div style=\"font-size:12px;\"><b>: </b></div>
+										<div style=\"font-size:10px;\"><b>: </b></div>
 									</td>	
 									<td style=\"text-align:justify;\" width=\"70%\">
-										<div style=\"font-size:12px;\"><b>".$val['credits_agunan_atmjamsostek_nomor']."</b></div>
+										<div style=\"font-size:10px;\"><b>".$val['credits_agunan_atmjamsostek_nomor']."</b></div>
 									</td>			
 								</tr>
 								<tr>
 									<td style=\"text-align:left;\" width=\"5%\">
-										<div style=\"font-size:12px;\"></div>
+										<div style=\"font-size:10px;\"></div>
 									</td>
 									<td style=\"text-align:left;\" width=\"25%\">
-										<div style=\"font-size:12px;\"><b>Rek. Tabungan/No. BPJS</b></div>
+										<div style=\"font-size:10px;\"><b>Rek. Tabungan/No. BPJS</b></div>
 									</td>	
 									<td style=\"text-align:left;\" width=\"2%\">
-										<div style=\"font-size:12px;\"><b>: </b></div>
+										<div style=\"font-size:10px;\"><b>: </b></div>
 									</td>	
 									<td style=\"text-align:justify;\" width=\"70%\">
-										<div style=\"font-size:12px;\"><b>".$val['credits_agunan_atmjamsostek_keterangan']."</b></div>
+										<div style=\"font-size:10px;\"><b>".$val['credits_agunan_atmjamsostek_keterangan']."</b></div>
 									</td>			
 								</tr>
 							</table>";
@@ -3956,12 +4444,12 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 2</b></div>
+								<div style=\"font-size:10px\"><b>Pasal 2</b></div>
 							</td>			
 						</tr>
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Penyelesaian Hutang</b></div>
+								<div style=\"font-size:10px\"><b>Penyelesaian Hutang</b></div>
 							</td>			
 						</tr>
 					</table>";
@@ -3974,12 +4462,12 @@
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Pasal 3</b></div>
+								<div style=\"font-size:10px\"><b>Pasal 3</b></div>
 							</td>			
 						</tr>
 						<tr>
 							<td style=\"text-align:center;\" width=\"100%\">
-								<div style=\"font-size:12px\"><b>Penyelesaian Hutang</b></div>
+								<div style=\"font-size:10px\"><b>Penyelesaian Hutang</b></div>
 							</td>			
 						</tr>
 					</table>";
@@ -3987,28 +4475,28 @@
 				$tblheader .= "<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 	 				<tr>	
 						<td style=\"text-align:justify;\" width=\"100%\">
-							<div style=\"font-size:12px;\">Bilamana Pihak Kedua lalai dalam melakukan kewajibannya terhadap Koperasi dan telah pula disampaikan kepadanya peringatan - peringatan dan Pihak Kedua tetap melakukan wanprestasi, maka dengan perjanjian ini pula Pihak Kedua memberikan <b>KUASA</b> penuh kepada Koperasi untuk dan atas nama Pihak Kedua guna :</div>
+							<div style=\"font-size:10px;\">Bilamana Pihak Kedua lalai dalam melakukan kewajibannya terhadap Koperasi dan telah pula disampaikan kepadanya peringatan - peringatan dan Pihak Kedua tetap melakukan wanprestasi, maka dengan perjanjian ini pula Pihak Kedua memberikan <b>KUASA</b> penuh kepada Koperasi untuk dan atas nama Pihak Kedua guna :</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\">
-							<div style=\"font-size:12px;\">1.</div>
+							<div style=\"font-size:10px;\">1.</div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"95%\">
-							<div style=\"font-size:12px;\">Mengambil alih barang yang sesuai, dan pihak Pertama akan menyita barang - barang yang senilai dengan jumlah Pinjaman + Bunga serta Denga untuk menutup kerugian pinjaman.</div>
+							<div style=\"font-size:10px;\">Mengambil alih barang yang sesuai, dan pihak Pertama akan menyita barang - barang yang senilai dengan jumlah Pinjaman + Bunga serta Denda untuk menutup kerugian pinjaman.</div>
 						</td>			
 	 				</tr>
 	 				<tr>
 						<td style=\"text-align:left;\" width=\"5%\">
-							<div style=\"font-size:12px;\">2.</div>
+							<div style=\"font-size:10px;\">2.</div>
 						</td>	
 						<td style=\"text-align:justify;\" width=\"95%\">
-							<div style=\"font-size:12px;\">Menjual baik secara lelang maupun bawah tangan barang yang disita dengan harga yang dianggap layak oleh pihak Koperasi dan mengkonpensir hasil penualan barang jaminan tersebut dengan hutang Pihak kedua dan biaya - biaya lain serta denda yang harus dipikul oleh Pihak Kedua.</div>
+							<div style=\"font-size:10px;\">Menjual baik secara lelang maupun bawah tangan barang yang disita dengan harga yang dianggap layak oleh pihak Koperasi dan mengkonpensir hasil penualan barang jaminan tersebut dengan hutang Pihak kedua dan biaya - biaya lain serta denda yang harus dipikul oleh Pihak Kedua.</div>
 						</td>			
 	 				</tr>
 	 				<tr>	
 						<td style=\"text-align:justify;\" width=\"100%\">
-							<div style=\"font-size:12px;\">Demikian Surat Perjanjian Hutang Piutang ini ditandatangani di Kantor KSU \"MANDIRI SEJAHTERA\" di kabupaten Karanganyar, Kecamatan Kebakkrmat, Desa Kemiri, <b>".$day.' '.$monthname[$month].' '.$year."</b></div>
+							<div style=\"font-size:10px;\">Demikian Surat Perjanjian Hutang Piutang ini ditandatangani di Kantor KSU \"MANDIRI SEJAHTERA\" di kabupaten Karanganyar, Kecamatan Kebakkrmat, Desa Kemiri, <b>".$day.' '.$monthname[$month].' '.$year."</b></div>
 						</td>			
 	 				</tr>
 	 			</table>
@@ -4021,21 +4509,21 @@
 
 	 			<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 	 				<tr>	
-						<td style=\"text-align:center;\" width=\"50%\" height=\"100px\">
-							<div style=\"font-size:12px;font-weight:bold;\">
+						<td style=\"text-align:center;\" width=\"50%\" height=\"80px\">
+							<div style=\"font-size:10px;font-weight:bold;\">
 								PIHAK PERTAMA</div>
 						</td>
-						<td style=\"text-align:center;\" width=\"50%\" height=\"100px\">
-							<div style=\"font-size:12px;font-weight:bold;\">
+						<td style=\"text-align:center;\" width=\"50%\" height=\"80px\">
+							<div style=\"font-size:10px;font-weight:bold;\">
 								PIHAK KEDUA</div>
 						</td>			
 	 				</tr>
 	 				<tr>	
 						<td style=\"text-align:center;\" width=\"50%\">
-							<div style=\"font-size:12px;font-weight:bold\">Liany Widjaja</div>
+							<div style=\"font-size:10px;font-weight:bold\">Liany Widjaja</div>
 						</td>
 						<td style=\"text-align:center;\" width=\"50%\">
-							<div style=\"font-size:12px;font-weight:bold\">
+							<div style=\"font-size:10px;font-weight:bold\">
 								".$acctcreditsaccount['member_name']."</div>
 						</td>			
 	 				</tr>
@@ -4424,6 +4912,9 @@
 								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_amount'])."</div>
 							</td>	
 						</tr>";
+					$hutangpembiayaan = ($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])+$acctcreditsaccount['credits_account_amount'];
+					$roundPembiayaan=round($hutangpembiayaan,-3);
+					$sisaRoundPembiayaan = $roundPembiayaan - $hutangpembiayaan;
 					if($acctcreditsaccount['payment_type_id'] == 3){
 						$tblheader .= "
 						<tr>
@@ -4451,7 +4942,7 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>	
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])."</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal(($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])+$sisaRoundPembiayaan)."</div>
 							</td>	
 						</tr>";
 					}
@@ -4466,7 +4957,7 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>	
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal(($acctcreditsaccount['credits_account_amount']*$acctcreditsaccount['credits_account_interest']/100*$acctcreditsaccount['credits_account_period'])+$acctcreditsaccount['credits_account_amount'])."</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal($roundPembiayaan)."</div>
 							</td>	
 						</tr>
 						<tr>
@@ -4523,7 +5014,7 @@
 								<div style=\"font-size:12px;\"><b>: </b></div>
 							</td>
 							<td style=\"text-align:justify;\" width=\"68%\">
-								<div style=\"font-size:12px;\">Rp. ".nominal($acctcreditsaccount['credits_account_payment_amount'])." per ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
+								<div style=\"font-size:12px;\">Rp. ".nominal(round($acctcreditsaccount['credits_account_payment_amount'],-3))." per ".$akad_payment_period[$acctcreditsaccount['credits_payment_period']]."</div>
 							</td>	
 						</tr>";
 					}
@@ -4568,7 +5059,7 @@
 							</td>	
 						</tr>
 					 </table>
-					 <br><br><br><br><br>";
+					 <br><br>";
 					 $no_pasal = 2;
 			if($acctcreditsaccount['credits_account_insurance'] > 0){
 				$no_pasal += 1;
@@ -5298,7 +5789,7 @@
 							</td>	
 						</tr>
 					</table>
-					<br><br><br><br><br>
+					<br>
 
 					<table id=\"items\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 						<tr>

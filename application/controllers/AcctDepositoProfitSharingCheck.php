@@ -153,8 +153,8 @@
 
 						$total_amount	= $data['deposito_profit_sharing_amount'];
 						$tax_amount		= 0;
-						if($total_amount > 240000){
-							$tax_amount 			= $total_amount * 10 / 100;
+						if($total_amount > $preferencecompany['tax_minimum_amount']){
+							$tax_amount = $total_amount * $preferencecompany['tax_percentage'] / 100;
 						}
 						$total_amount_min_tax	= $total_amount - $tax_amount;
 
@@ -296,8 +296,8 @@
 
 					$total_amount	= $data['deposito_profit_sharing_amount'];
 					$tax_amount		= 0;
-					if($total_amount > 240000){
-						$tax_amount 			= $total_amount * 10 / 100;
+					if($total_amount > $preferencecompany['tax_minimum_amount']){
+						$tax_amount = $total_amount * $preferencecompany['tax_percentage'] / 100;
 					}
 					$total_amount_min_tax	= $total_amount - $tax_amount;
 

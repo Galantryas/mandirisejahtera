@@ -138,7 +138,7 @@
 							
 							<tr>
 								<td colspan="6" rowspan="2">
-									<?php if($totaldebet != $totalkredit){?>
+									<?php if(round($totaldebet) != round($totalkredit)){?>
 										<div class="alert alert-danger alert-dismissable">                 
 											Total Debet dan Kredit masih belum seimbang !
 										</div>
@@ -155,7 +155,7 @@
 						</tbody>
 					</table>
 					
-					<?php if($totaldebet == $totalkredit){?>
+					<?php if(round($totaldebet) == round($totalkredit)){?>
 						<?php if($endofdays['end_of_days_status'] == '1'){?>
 							<div class="row">
 								<div class="col-md-12 " style="text-align  : right !important;">

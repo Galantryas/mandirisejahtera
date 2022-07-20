@@ -371,7 +371,7 @@
 				'deposito_account_no'					=> $this->input->post('deposito_account_no', true),
 				'deposito_account_serial_no'			=> $this->input->post('deposito_account_serial_no', true),
 				'deposito_account_amount'				=> $this->input->post('deposito_account_amount', true),
-				'deposito_account_nisbah'				=> $this->input->post('deposito_account_nisbah', true),
+				// 'deposito_account_nisbah'				=> $this->input->post('deposito_account_nisbah', true),
 				'deposito_account_period'				=> $this->input->post('deposito_period', true),
 				'deposito_member_heir'					=> $this->input->post('deposito_member_heir', true),
 				'deposito_member_heir_address'			=> $this->input->post('deposito_member_heir_address', true),
@@ -420,7 +420,7 @@
 								'deposito_account_id'				=> $deposito_account_id,
 								'branch_id'							=> $auth['branch_id'],
 								'deposito_id'						=> $data['deposito_id'],
-								'deposito_account_nisbah'			=> $data['deposito_account_nisbah'],
+								'deposito_account_nisbah'			=> $this->input->post('deposito_account_nisbah', true),
 								'member_id'							=> $data['member_id'],
 								'deposito_profit_sharing_due_date'	=> $deposito_profit_sharing_due_date,
 								'deposito_daily_average_balance'	=> $data['deposito_account_amount'],
@@ -1625,6 +1625,8 @@
 			$unique 				= $this->session->userdata('unique');
 			$token 					= $this->session->userdata('acctdepositoaccounttoken-'.$unique['unique']);
 
+			$preferencecompany = $this->AcctDepositoAccount_model->getPreferenceCompany();
+
 			if(empty($token)){
 				$token = md5(date('Y-m-d H:i:s'));
 				$this->session->set_userdata('acctdepositoaccounttoken-'.$unique['unique'], $token);
@@ -1634,8 +1636,8 @@
 			$acctdepositoaccount 		   = $this->AcctDepositoAccount_model->getAcctDepositoAccountDetail($this->uri->segment(3));
 
 			$interest_total		 		   = $deposito_accrual_last_balance + $acctdepositoaccount['deposito_account_nisbah'];
-			if($interest_total > 240000){
-				$tax_total	= $interest_total * 10 / 100;
+			if($interest_total > $preferencecompany['tax_minimum_amount']){
+				$tax_total	= $interest_total * $preferencecompany['tax_percentage'] / 100;
 			}else{
 				$tax_total 	= 0;
 			}

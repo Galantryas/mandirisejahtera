@@ -168,10 +168,12 @@
 					$index++;
 				}
 				$kolektibilitas 	= json_encode($data_kolektibilitas);
+				$menus = $this->Dashboard_model->getUserMenus($auth['user_id']);
 				
 				$data['main_view']['dayname']							= $this->configuration->DayName();
 				$data['main_view']['json_pencairan_month_to_date']		= $data_pencairan;
 				$data['main_view']['kolektibilitas']					= $kolektibilitas;
+				$data['main_view']['menus']								= $menus;
 				$data['main_view']['monthname']							= $this->configuration->Month();
 				$deposito_profit_sharing_due_date		= date('d-m-Y');
 

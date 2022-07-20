@@ -300,7 +300,11 @@
 	// if(substr($accountcredit['credits_account_payment_to'], -1) == '*'){
 	// 	$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -2, 1);
 	// }else{
-	$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -1) + 1;
+	if(strpos($accountcredit['credits_account_payment_to'], ',') == true ||strpos($accountcredit['credits_account_payment_to'], '*') == true ){
+		$angsuranke 					= substr($accountcredit['credits_account_payment_to'], -1) + 1;
+		}else{
+			$angsuranke 				= $accountcredit['credits_account_payment_to'] + 1;
+		}
 	// }
 
 

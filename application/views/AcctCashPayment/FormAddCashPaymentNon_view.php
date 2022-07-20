@@ -328,7 +328,11 @@ input:-moz-read-only { /* For Firefox */
 	// if(substr($credit_account['credits_account_payment_to'], -1) == '*'){
 	// 	$angsuranke 					= substr($credit_account['credits_account_payment_to'], -2, 1);
 	// }else{
-	$angsuranke 					= substr($credit_account['credits_account_payment_to'], -1) + 1;
+	if(strpos($credit_account['credits_account_payment_to'], ',') == true ||strpos($credit_account['credits_account_payment_to'], '*') == true ){
+		$angsuranke 					= substr($credit_account['credits_account_payment_to'], -1) + 1;
+		}else{
+			$angsuranke 				= $credit_account['credits_account_payment_to'] + 1;
+		}
 	// }
 
 	if($date1 > $date2){

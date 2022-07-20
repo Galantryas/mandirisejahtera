@@ -268,6 +268,7 @@ $route['credit-account/print-book/(:num)']                         = 'AcctCredit
 $route['credit-account/process-print-akad/(:num)']                 = 'AcctCreditAccount/processPrintingAkad/$1';
 $route['credit-account/print-schedule-credits-payment/(:num)']     = 'AcctCreditAccount/printScheduleCreditsPayment/$1';
 $route['credit-account/print-schedule-credits-payment-member/(:num)']     = 'AcctCreditAccount/printScheduleCreditsPaymentMember/$1';
+$route['credit-account/print-agunan-receipt/(:num)']                     = 'AcctCreditAccount/printAgunanReceipt/$1';
 $route['credit-account/print-pola-angsuran-credits/(:num)']        = 'AcctCreditAccount/printPolaAngsuranCredits/$1';
 $route['credit-account/add-function-element']                      = 'AcctCreditAccount/function_elements_add';
 $route['credit-account/get-credits-account-serial']                = 'AcctCreditAccount/getCreditsAccountSerial';

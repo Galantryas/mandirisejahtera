@@ -1268,33 +1268,33 @@
 			$temp_cicilan = 0; $credits_payment_to="";
 			$jumlah_angsuran_kali_ini = 0;
 			$pembayaran_angsuran_bulan_ini =$pokok+$credits_account_temp_installment;
-			if($pembayaran_angsuran_bulan_ini >= $angsuran_seharusnya){
-				$jumlah_angsuran_kali_ini = floor($pembayaran_angsuran_bulan_ini / $angsuran_seharusnya);
-				$temp_cicilan = fmod($pembayaran_angsuran_bulan_ini, $angsuran_seharusnya);
-				$jumlah_angsurran = $jumlah_angsuran_kali_ini+$angsuran_ke;
-					for($i = $angsuran_ke; $i < $jumlah_angsurran; $i++){
-						$credits_payment_to = $credits_payment_to.','.$i;
-					}
-					if(substr($credits_payment_to, -1) >= $total_angsuran){
-						$credits_account_status = 1;
-					} else {
-						$credits_account_status = 0;
-					}
+			// if($pembayaran_angsuran_bulan_ini >= $angsuran_seharusnya){
+			// 	$jumlah_angsuran_kali_ini = floor($pembayaran_angsuran_bulan_ini / $angsuran_seharusnya);
+			// 	$temp_cicilan = fmod($pembayaran_angsuran_bulan_ini, $angsuran_seharusnya);
+			// 	$jumlah_angsurran = $jumlah_angsuran_kali_ini+$angsuran_ke;
+			// 		for($i = $angsuran_ke; $i < $jumlah_angsurran; $i++){
+			// 			$credits_payment_to = $credits_payment_to.','.$i;
+			// 		}
+			// 		if(substr($credits_payment_to, -1) >= $total_angsuran){
+			// 			$credits_account_status = 1;
+			// 		} else {
+			// 			$credits_account_status = 0;
+			// 		}
 
-					if($angsuran_tiap == 1){
-						$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
-						$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." months", strtotime($credits_account_payment_date_old)));
-					} else {
-						$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
-						$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." weeks", strtotime($credits_account_payment_date_old)));
-					}
-			}else{
+			// 		if($angsuran_tiap == 1){
+			// 			$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
+			// 			$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." months", strtotime($credits_account_payment_date_old)));
+			// 		} else {
+			// 			$credits_account_payment_date_old 	= tgltodb($this->input->post('credits_account_payment_date'));
+			// 			$credits_account_payment_date 		= date('Y-m-d', strtotime("+".$jumlah_angsuran_kali_ini." weeks", strtotime($credits_account_payment_date_old)));
+			// 		}
+			// }else{
 				$temp_cicilan = $pembayaran_angsuran_bulan_ini;
 				$credits_payment_to = $angsuran_ke.'*';
 				$credits_account_status = 0;
 				$credits_account_payment_date 	= tgltodb($this->input->post('credits_account_payment_date'));
 
-			}
+			// }
 
 			if($simpanan['savings_account_last_balance'] < $total){
 				$auth 	= $this->session->userdata('auth');

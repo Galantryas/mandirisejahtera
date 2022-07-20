@@ -808,9 +808,6 @@
 										<td width="5%">:</td>
 										<td width="60%">
 											<?php
-												/*print_r("province_id ");
-												print_r($data['province_id']);*/
-
 												if ($data['city_id'] != ''){
 													$corecity = create_double($this->CoreMember_model->getCoreCity($data['province_id']), 'city_id', 'city_name');
 

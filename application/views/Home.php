@@ -277,6 +277,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==21){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -287,6 +289,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==221){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -296,7 +301,8 @@
                                                         <a href="<?php echo base_url()."member/edit-member-savings"; ?>">Transaksi Simpanan Anggota</a>
                                                     </h3>
                                                 </div>
-                                            </li>                                                    
+                                            </li>     
+                                            <?php } }?>                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -313,6 +319,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==311){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -323,6 +331,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==312){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -332,7 +343,8 @@
                                                         <a href="<?php echo base_url()."deposito-account"?>">Simpanan Berjangka</a>
                                                     </h3>
                                                 </div>
-                                            </li>                                                    
+                                            </li>      
+                                            <?php } }?>                                                 
                                         </ul>
                                     </div>
                                 </div>
@@ -349,6 +361,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==51){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -359,6 +373,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==56){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -368,7 +385,8 @@
                                                         <a href="<?php echo base_url()."creddit-account/detail"?>">Histori Angsuran Pinjaman</a>
                                                     </h3>
                                                 </div>
-                                            </li>                                                    
+                                            </li>     
+                                            <?php } }?>                                                  
                                         </ul>
                                     </div>
                                 </div>
@@ -388,6 +406,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==411){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -398,6 +418,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==412){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -407,7 +430,8 @@
                                                         <a href="<?php echo base_url()."savings-transfer-mutation"?>">Mutasi Antar Rekening</a>
                                                     </h3>
                                                 </div>
-                                            </li>                                                    
+                                            </li>    
+                                            <?php } }?>                                                   
                                         </ul>
                                     </div>
                                 </div>
@@ -424,6 +448,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==422){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -434,6 +460,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==312){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -443,7 +472,8 @@
                                                         <a href="<?php echo base_url()."deposito-account/add-new-deposito-account"?>">Simp Berjangka Baru</a>
                                                     </h3>
                                                 </div>
-                                            </li>                                                    
+                                            </li>       
+                                            <?php } }?>                                                
                                         </ul>
                                     </div>
                                 </div>
@@ -460,6 +490,8 @@
                                     </a>
                                     <div class="panel-collapse collapse in" id="completed-simple">
                                         <ul>
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==61){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -470,6 +502,9 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
+                                        <?php foreach($menus as $menu){
+                                                if($menu['id_menu']==62){ ?>
                                             <li class="mt-list-item done">
                                                 <div class="list-icon-container">
                                                     <i class="icon-check"></i>
@@ -480,6 +515,7 @@
                                                     </h3>
                                                 </div>
                                             </li>
+                                            <?php } }?>   
                                         </ul>
                                     </div>
                                 </div>
@@ -500,45 +536,44 @@
 <div class="row">
     <div class="col-md-12"> 
         <div class="portlet box blue">
-                <div class="portlet-body">
-                    <div class="form-body form">
-                    <div class="row">
-                        <div class="col-md-12"> 
-                             <div class="mt-element-list">
-                                <div class="mt-list-container list-simple ext-1 group">
-                                     <a class="list-toggle-container">
-                                        <div class="list-toggle done uppercase">
-                                      
-                                        <?php $month = date('m'); ?>
-                                        Grafik Bulan <?php echo $monthname[$month]; ?>
-                                     </div>
-                                    </a>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="form-body">
-                                        <div id="chartdiv" style="width:100%; height:400px;"></div>
+            <div class="portlet-body">
+                <div class="form-body form">
+                <div class="row">
+                    <div class="col-md-12"> 
+                            <div class="mt-element-list">
+                            <div class="mt-list-container list-simple ext-1 group">
+                                    <a class="list-toggle-container">
+                                    <div class="list-toggle done uppercase">
+                                    
+                                    <?php $month = date('m'); ?>
+                                    Grafik Bulan <?php echo $monthname[$month]; ?>
                                     </div>
+                                </a>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="form-body">
+                                    <div id="chartdiv" style="width:100%; height:400px;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12"> 
-                            <div class="mt-element-list">
-                                <div class="mt-list-container list-simple ext-1 group">
-                                     <a class="list-toggle-container">
-                                        <div class="list-toggle done uppercase">
-                                         <?php $month = date('m'); ?>
-                                        Grafik Kolektibilitas Bulan <?php echo $monthname[$month]; ?>
-                                        </div>
-                                    </a>
-                                </div>
-                                    <div class="portlet-body">
-                                        <div class="form-body">
-                                            <div id="chart_kolektibilitas" style="width:100%; height:400px;"> </div>
-                                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="mt-element-list">
+                            <div class="mt-list-container list-simple ext-1 group">
+                                    <a class="list-toggle-container">
+                                    <div class="list-toggle done uppercase">
+                                        <?php $month = date('m'); ?>
+                                    Grafik Kolektibilitas Bulan <?php echo $monthname[$month]; ?>
                                     </div>
-                               
+                                </a>
+                            </div>
+                                <div class="portlet-body">
+                                    <div class="form-body">
+                                        <div id="chart_kolektibilitas" style="width:100%; height:400px;"> </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

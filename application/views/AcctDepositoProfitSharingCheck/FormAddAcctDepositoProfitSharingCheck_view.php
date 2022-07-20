@@ -173,7 +173,7 @@ $token 	= $this->session->userdata('acctdepositoprofitsharingcheck-'.$sesi['uniq
 									<td width="5%">:</td>
 									<td width="60%"><textarea rows="2" name="member_address" id="member_address" class="easyui-textarea" style="width: 100%" disabled="disabled"><?php echo $acctdepositoprofitsharing['member_address']; ?></textarea></td>
 								</tr>
-						<!-- 		<tr>
+						   <!-- <tr>
 									<td width="35%">Kabupaten</td>
 									<td width="5%">:</td>
 									<td width="60%"><input type="text" class="easyui-textbox" style="width: 100%" name="deposito_account_id" id="deposito_account_id" value="<?php echo $acctdepositoprofitsharing['city_name']; ?>"></td>
